@@ -1,6 +1,34 @@
 # gymratz
 
-A new Flutter project.
+# Development Guidelines
+![guidelines](https://media.tenor.com/images/a57d174dbb16b85b5b6dabebfa15a723/tenor.gif)
+
+
+## File Structure
+- Network folder
+    - External API requests
+- Widgets
+- Screens
+
+## Git guidelines
+- Master Branch
+	- Only push to master before deploying a new build. (Will be empty until alpha)
+	- Reviewed by everybody
+
+- Development
+	- Whenever a feature is finished you can push to development
+
+- Feature & Bugs
+	- titled feature/{featureName} or titled bug/{bugName}
+
+### Packages/Libraries
+- Scoped Model (https://pub.dartlang.org/packages/scoped_model)
+-
+
+
+
+## Testing
+
 
 ## Getting Started
 
