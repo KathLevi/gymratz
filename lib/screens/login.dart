@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:gymratz/network/firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gymratz/network/firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,10 +12,10 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   TextEditingController _emailCtrl;
   TextEditingController _pwdCtrl;
-
+  String _routeString;
   FocusNode _userFocusNode;
   FocusNode _passwordFocusNode;
-
+  
   bool _pwdHidden = true;
 
   @override
@@ -24,6 +24,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
+    getRoutes().listen((data){  
+      if (data.documents.length > 0) return _routeString = data.documents[0]['name'];
+    });
   }
 
   @override
@@ -176,16 +179,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                       ),
                       Container(
                           width: double.infinity,
-                          child: StreamBuilder(
-                              stream: Firestore.instance
-                                  .collection('routes')
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                print(snapshot);
-                                if (!snapshot.hasData)
-                                  return const Text("Loading...");
-                                return Text(snapshot.data.documents[0]['name']);
-                              }))
+                          child: Text(_routeString.isEmpty()?_routeString:"")
+                        )
                     ],
                   ),
                 )
