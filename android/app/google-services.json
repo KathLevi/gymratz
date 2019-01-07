@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1007219314013",
+    "firebase_url": "https://gymratz-96197.firebaseio.com",
+    "project_id": "gymratz-96197",
+    "storage_bucket": "gymratz-96197.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007219314013:android:e7f57897833fac00",
+        "android_client_info": {
+          "package_name": "com.example.gymratz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007219314013-vjujh12gvapuf5jogeibdt3mcfie8f38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG-Ih4YhOcPjpfPzjvjdN_RARfwWM-LUE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
