@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:gymratz/network/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -172,6 +174,18 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
+                      Container(
+                          width: double.infinity,
+                          child: StreamBuilder(
+                              stream: Firestore.instance
+                                  .collection('routes')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                print(snapshot);
+                                if (!snapshot.hasData)
+                                  return const Text("Loading...");
+                                return Text(snapshot.data.documents[0]['name']);
+                              }))
                     ],
                   ),
                 )
