@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/network/firestore.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,9 +23,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
-    getRoutes().listen((data){  
-      if (data.documents.length > 0) return _routeString = data.documents[0]['name'];
-    });
+    _routeString = "Loading...";
+    
   }
 
   @override
@@ -177,10 +175,6 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
-                      Container(
-                          width: double.infinity,
-                          child: Text(_routeString.isEmpty()?_routeString:"")
-                        )
                     ],
                   ),
                 )
