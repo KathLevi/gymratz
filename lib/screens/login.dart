@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymratz/network/firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,10 +11,10 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   TextEditingController _emailCtrl;
   TextEditingController _pwdCtrl;
-
+  String _routeString;
   FocusNode _userFocusNode;
   FocusNode _passwordFocusNode;
-
+  
   bool _pwdHidden = true;
 
   @override
@@ -22,6 +23,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
+    _routeString = "Loading...";
+    
   }
 
   @override
