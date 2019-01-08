@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/network/auth.dart';
+import 'package:gymratz/screens/register.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -152,7 +153,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                       Container(
                         child: InkWell(
                             onTap: () {
-                              print('password');
+                              print('navigating to register screen');
+                              Navigator.pushNamed(context, '/register');
                             },
                             child: Row(
                               children: <Widget>[
