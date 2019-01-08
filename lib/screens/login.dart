@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gymratz/network/firestore.dart';
+import 'package:gymratz/network/auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,12 +9,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
-  TextEditingController _emailCtrl;
-  TextEditingController _pwdCtrl;
-  String _routeString;
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _pwdCtrl = TextEditingController();
   FocusNode _userFocusNode;
   FocusNode _passwordFocusNode;
-  
+
   bool _pwdHidden = true;
 
   @override
@@ -23,8 +22,6 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
-    _routeString = "Loading...";
-    
   }
 
   @override
@@ -76,11 +73,12 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           FocusScope.of(context)
                               .requestFocus(_passwordFocusNode);
                         },
+                        style: TextStyle(color: Colors.orange),
                         validator: (val) {
                           return val.length < 10 ? "Email is not valid" : null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Username',
+                            labelText: 'Email',
                             labelStyle: TextStyle(color: Colors.white),
                             enabledBorder: new UnderlineInputBorder(
                                 borderSide:
@@ -98,6 +96,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
                             focusNode: _passwordFocusNode,
+                            style: TextStyle(color: Colors.orange),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
                                 labelText: 'Password',
@@ -143,6 +142,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                         child: RaisedButton(
                           onPressed: () {
                             print('log in');
+                            handleSignIn(_emailCtrl.text, _pwdCtrl.text);
                           },
                           color: Theme.of(context).primaryColor,
                           child: Text('Log In',
