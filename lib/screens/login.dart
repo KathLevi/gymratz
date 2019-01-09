@@ -74,7 +74,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           FocusScope.of(context)
                               .requestFocus(_passwordFocusNode);
                         },
-                        style: TextStyle(color: Colors.orange),
+                        style: TextStyle(color: Theme.of(context).accentColor),
                         validator: (val) {
                           return val.length < 10 ? "Email is not valid" : null;
                         },
@@ -97,7 +97,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
                             focusNode: _passwordFocusNode,
-                            style: TextStyle(color: Colors.orange),
+                            style: TextStyle(color: Theme.of(context).accentColor),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
                                 labelText: 'Password',
