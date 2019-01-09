@@ -64,8 +64,6 @@ getUsersByUserName(username){
 
 //favorite route getters
 
-
-
 // gym getters
 getGymById(id){
   return Firestore.instance
