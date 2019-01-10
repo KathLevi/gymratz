@@ -17,3 +17,9 @@ Future<String> handleRegister(String email, String password) async {
   // after register we need to add a new user document to the User collection in firestore
   return user.uid;
 }
+
+Future<FirebaseUser> getCurrentUser(){
+  FirebaseUser user = await _auth.instance.currentUser();
+  
+  return user;
+}
