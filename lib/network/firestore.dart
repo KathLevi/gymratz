@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gymratz/network/auth.dart';
 
 /**
  * EXAMPLE for inside a widget or something:
@@ -45,6 +46,14 @@ getUserById(id){
     .collection('users')
     .document(id)
     .snapshots();
+}
+
+getCurrentUserProfile(){
+   var user = getCurrentUser()
+   return Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .snapshots();
 }
 
 getAllUsers(){
