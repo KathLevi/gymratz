@@ -12,25 +12,17 @@ class ForgotPasswordScreen extends StatefulWidget {
 class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
     with WidgetsBindingObserver {
   final TextEditingController _emailCtrl = TextEditingController();
-  final TextEditingController _pwdCtrl = TextEditingController();
-  FocusNode _userFocusNode;
-  FocusNode _passwordFocusNode;
-
-  bool _pwdHidden = true;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _userFocusNode = FocusNode();
-    _passwordFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _userFocusNode.dispose();
-    _passwordFocusNode.dispose();
+    _emailCtrl.dispose();
     super.dispose();
   }
 
@@ -82,11 +74,9 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                         keyboardType: TextInputType.emailAddress,
                         textCapitalization: TextCapitalization.none,
                         autocorrect: false,
-                        focusNode: _userFocusNode,
                         onFieldSubmitted: (str) {
-                          _userFocusNode.unfocus();
-                          FocusScope.of(context)
-                              .requestFocus(_passwordFocusNode);
+                          //TODO: submit and send the email
+                          Navigator.pushNamed(context, '/');
                         },
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
