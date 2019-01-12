@@ -112,6 +112,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             //TODO: send forgot password email
                             sendPasResetEmail(_emailCtrl.text).then((msg){
                               print(msg);
+                              // Alert that an email has been sent.
                             });
                             Navigator.pushNamed(context, '/');
                           },
