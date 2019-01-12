@@ -191,7 +191,17 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 child: RaisedButton(
                                   padding: const EdgeInsets.all(10.0),
                                   onPressed: () {
-                                    //TODO: navigate to main page
+                                    // TODO: If (first time signed in) {
+                                    //   register anonymously
+                                    // } else {
+                                    //   look at phone storage for anonymous user id;
+                                    // }
+                                    registerAnonymous().then((user){
+                                      print(user.uid);
+                                      //save UID to phone storage so you can sign in with same
+                                      // guest account.
+                                      Navigator.pushNamed(context, '/home');
+                                    });
                                   },
                                   color: Colors.grey,
                                   child: Text('Continue As Guest',
