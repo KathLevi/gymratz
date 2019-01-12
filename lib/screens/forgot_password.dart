@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/network/auth.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -109,6 +110,9 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                           padding: const EdgeInsets.all(10.0),
                           onPressed: () {
                             //TODO: send forgot password email
+                            sendPasResetEmail(_emailCtrl.text).then((msg){
+                              print(msg);
+                            });
                             Navigator.pushNamed(context, '/');
                           },
                           color: Theme.of(context).primaryColor,
