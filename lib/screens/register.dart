@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymratz/main.dart';
 import 'package:gymratz/network/auth.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -20,8 +21,7 @@ class RegisterScreenState extends State<RegisterScreen>
   FocusNode _password1FocusNode;
   FocusNode _password2FocusNode;
 
-  bool _pwd1Hidden = true;
-  bool _pwd2Hidden = true;
+  bool _pwdHidden = true;
 
   @override
   void initState() {
@@ -73,7 +73,6 @@ class RegisterScreenState extends State<RegisterScreen>
                     children: <Widget>[
                       TextFormField(
                         controller: _userNameCtrl,
-                        keyboardType: TextInputType.text,
                         textCapitalization: TextCapitalization.none,
                         autocorrect: false,
                         focusNode: _userFocusNode,
@@ -81,7 +80,7 @@ class RegisterScreenState extends State<RegisterScreen>
                           _userFocusNode.unfocus();
                           FocusScope.of(context).requestFocus(_emailFocusNode);
                         },
-                        style: TextStyle(color: Theme.of(context).accentColor),
+                        style: TextStyle(color: Colors.white),
                         validator: (val) {
                           return val.length < 3
                               ? "Display Name must be longer than 3 characters"
@@ -100,15 +99,16 @@ class RegisterScreenState extends State<RegisterScreen>
                       ),
                       TextFormField(
                         controller: _emailCtrl,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         textCapitalization: TextCapitalization.none,
                         autocorrect: false,
                         focusNode: _emailFocusNode,
                         onFieldSubmitted: (str) {
                           _userFocusNode.unfocus();
-                          FocusScope.of(context).requestFocus(_password1FocusNode);
+                          FocusScope.of(context)
+                              .requestFocus(_password1FocusNode);
                         },
-                        style: TextStyle(color: Theme.of(context).accentColor),
+                        style: TextStyle(color: Colors.white),
                         validator: (val) {
                           return val.length < 10 ? "Invalid Email" : null;
                         },
@@ -127,11 +127,11 @@ class RegisterScreenState extends State<RegisterScreen>
                         children: <Widget>[
                           TextFormField(
                             controller: _pwd1Ctrl,
-                            obscureText: _pwd1Hidden,
+                            obscureText: _pwdHidden,
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
                             focusNode: _password1FocusNode,
-                            style: TextStyle(color: Theme.of(context).accentColor),
+                            style: TextStyle(color: Colors.white),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
                                 labelText: 'Password',
@@ -149,14 +149,14 @@ class RegisterScreenState extends State<RegisterScreen>
                             alignment: FractionalOffset.bottomRight,
                             child: IconButton(
                                 icon: Icon(
-                                  _pwd1Hidden
+                                  _pwdHidden
                                       ? Icons.visibility
                                       : Icons.visibility_off,
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    _pwd1Hidden = !_pwd1Hidden;
+                                    _pwdHidden = !_pwdHidden;
                                   });
                                 }),
                           )
@@ -166,14 +166,14 @@ class RegisterScreenState extends State<RegisterScreen>
                         children: <Widget>[
                           TextFormField(
                             controller: _pwd2Ctrl,
-                            obscureText: _pwd2Hidden,
+                            obscureText: _pwdHidden,
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
                             focusNode: _password2FocusNode,
-                            style: TextStyle(color: Colors.orange),
+                            style: TextStyle(color: Colors.white),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
-                                labelText: 'Password',
+                                labelText: 'Confirm Password',
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -188,43 +188,49 @@ class RegisterScreenState extends State<RegisterScreen>
                             alignment: FractionalOffset.bottomRight,
                             child: IconButton(
                                 icon: Icon(
-                                  _pwd2Hidden
+                                  _pwdHidden
                                       ? Icons.visibility
                                       : Icons.visibility_off,
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    _pwd2Hidden = !_pwd2Hidden;
+                                    _pwdHidden = !_pwdHidden;
                                   });
                                 }),
                           )
                         ],
                       ),
-                       Container(
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20.0),
                         width: double.infinity,
                         child: RaisedButton(
+                          padding: const EdgeInsets.all(10.0),
                           onPressed: () {
                             handleRegister(_emailCtrl.text, _pwd1Ctrl.text).then((user){
-                              //succesfully registered redirect to login screen;
+                              //succesfully registered now redirect to login screen;
                               Navigator.pushNamed(context, '/');
                             });
                           },
                           color: Theme.of(context).primaryColor,
                           child: Text('Register',
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: smallFont)),
                         ),
                       ),
                       Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20.0),
+                        width: double.infinity,
                         child: InkWell(
                             onTap: () {
-                              print('navigating to login screen');
                               Navigator.pushNamed(context, '/');
                             },
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text('Already have an account? ',
-                                    style: TextStyle(color: Colors.white)),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: xsFont)),
                                 Text('Log In!',
                                     style: TextStyle(
                                         color: Theme.of(context).accentColor)),
