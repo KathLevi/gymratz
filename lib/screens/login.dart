@@ -152,8 +152,10 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   padding: const EdgeInsets.all(10.0),
                                   onPressed: () {
                                     //TODO: navigate to home page after authenticating
-                                    handleSignIn(
-                                        _emailCtrl.text, _pwdCtrl.text);
+                                    handleSignIn(_emailCtrl.text, _pwdCtrl.text)
+                                        .then((user) {
+                                      Navigator.pushNamed(context, '/home');
+                                    });
                                   },
                                   color: Theme.of(context).primaryColor,
                                   child: Text('Log In',
@@ -168,6 +170,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     onTap: () {
                                       Navigator.pushNamed(context, '/register');
                                     },
+                                    key: new Key('signUpButton'),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

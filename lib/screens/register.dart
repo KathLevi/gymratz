@@ -207,8 +207,10 @@ class RegisterScreenState extends State<RegisterScreen>
                         child: RaisedButton(
                           padding: const EdgeInsets.all(10.0),
                           onPressed: () {
-                            //TODO: navigate to home screen
-                            handleRegister(_emailCtrl.text, _pwd1Ctrl.text);
+                            handleRegister(_emailCtrl.text, _pwd1Ctrl.text).then((user){
+                              //succesfully registered now redirect to login screen;
+                              Navigator.pushNamed(context, '/');
+                            });
                           },
                           color: Theme.of(context).primaryColor,
                           child: Text('Register',

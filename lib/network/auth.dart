@@ -7,12 +7,11 @@ Future handleSignIn(String email, String password) async {
     email: email,
     password: password,
   );
-  print("signed in " + user.displayName);
   return user;
 }
 
-Future<String> handleRegister(String email, String password) async {
+Future handleRegister(String email, String password) async {
   FirebaseUser user = await _auth.createUserWithEmailAndPassword(
       email: email, password: password);
-  return user.uid;
+  return user;
 }
