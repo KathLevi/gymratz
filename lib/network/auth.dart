@@ -15,4 +15,3 @@ Future handleRegister(String email, String password) async {
       email: email, password: password);
   return user;
 }
-

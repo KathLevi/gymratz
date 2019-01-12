@@ -23,7 +23,8 @@
 
 ### Packages/Libraries
 - Scoped Model (https://pub.dartlang.org/packages/scoped_model)
--
+- Firebase Auth (https://pub.dartlang.org/packages/firebase_auth)
+- Firestore DB (https://pub.dartlang.org/packages/cloud_firestore)
 
 
 
