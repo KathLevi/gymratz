@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/network/auth.dart';
-import 'package:gymratz/screens/register.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -143,7 +142,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                         child: RaisedButton(
                           onPressed: () {
                             print('log in');
-                            handleSignIn(_emailCtrl.text, _pwdCtrl.text);
+                            handleSignIn(_emailCtrl.text, _pwdCtrl.text).then((user){
+                              Navigator.pushNamed(context, '/home');
+                            });
                           },
                           color: Theme.of(context).primaryColor,
                           child: Text('Log In',

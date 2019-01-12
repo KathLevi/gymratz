@@ -205,7 +205,10 @@ class RegisterScreenState extends State<RegisterScreen>
                         width: double.infinity,
                         child: RaisedButton(
                           onPressed: () {
-                            handleRegister(_emailCtrl.text, _pwd1Ctrl.text);
+                            handleRegister(_emailCtrl.text, _pwd1Ctrl.text).then((user){
+                              //succesfully registered redirect to login screen;
+                              Navigator.pushNamed(context, '/');
+                            });
                           },
                           color: Theme.of(context).primaryColor,
                           child: Text('Register',
