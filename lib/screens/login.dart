@@ -157,6 +157,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               print('navigating to register screen');
                               Navigator.pushNamed(context, '/register');
                             },
+                            key: new Key('signUpButton'),
                             child: Row(
                               children: <Widget>[
                                 Text('Don\'t have an account? ',
