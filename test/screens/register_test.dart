@@ -10,23 +10,24 @@ import 'package:gymratz/routes.dart';
 // class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
-  testWidgets('Login screen functionality', (WidgetTester tester) async {
+  testWidgets('Register screen functionality', (WidgetTester tester) async {
     // arrange
-    
+        
     // act
     await tester.pumpWidget(MaterialApp(
       routes: routes,
-      initialRoute: '/',
+      initialRoute: '/register'
+
     ));
 
-    // expect LoginScreen from initialRoute
-    expect(find.byType(LoginScreen), findsOneWidget);
-    
-    await tester.tap(find.byKey(LoginScreen.signUpButtonKey));
+    // expect RegisterScreen from initialRoute
+    expect(find.byType(RegisterScreen), findsOneWidget);
+
+    await tester.tap(find.byKey(RegisterScreen.loginButtonKey));
     await tester.pumpAndSettle();
 
     // assert
-    expect(find.byType(RegisterScreen), findsOneWidget);
+    expect(find.byType(LoginScreen), findsOneWidget);
 
   });
 }

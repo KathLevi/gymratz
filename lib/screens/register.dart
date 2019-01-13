@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/network/auth.dart';
 
 class RegisterScreen extends StatefulWidget {
+  // Component ID Keys
+  static final Key loginButtonKey = new Key('loginButton');
+  
   @override
   State<StatefulWidget> createState() {
     return RegisterScreenState();
@@ -218,6 +221,7 @@ class RegisterScreenState extends State<RegisterScreen>
                               print('navigating to login screen');
                               Navigator.pushNamed(context, '/');
                             },
+                            key: RegisterScreen.loginButtonKey,
                             child: Row(
                               children: <Widget>[
                                 Text('Already have an account? ',
