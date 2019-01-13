@@ -196,7 +196,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     // } else {
                                     //   look at phone storage for anonymous user id;
                                     // }
-                                    registerAnonymous().then((user){
+                                    registerAnonymous().then((user) {
                                       print(user.uid);
                                       //save UID to phone storage so you can sign in with same
                                       // guest account.

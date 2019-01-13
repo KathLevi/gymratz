@@ -7,7 +7,7 @@ Future handleSignIn(String email, String password) async {
     email: email,
     password: password,
   );
-  
+
   return user;
 }
 
@@ -20,11 +20,20 @@ Future registerAnonymous() async {
 Future handleRegister(String email, String password) async {
   FirebaseUser user = await _auth.createUserWithEmailAndPassword(
       email: email, password: password);
-      user.sendEmailVerification();
+  user.sendEmailVerification();
   return user;
 }
 
 Future sendPasResetEmail(String email) async {
   await _auth.sendPasswordResetEmail(email: email);
   return ('password sent!');
+}
+
+Future logout() async {
+  try {
+    await _auth.signOut();
+    return ('logged out');
+  } catch (e) {
+    return ('could not log out user');
+  }
 }
