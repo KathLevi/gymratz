@@ -3,6 +3,8 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/auth.dart';
 
 class LoginScreen extends StatefulWidget {
+  // Component ID Keys
+  static final Key signUpButtonKey = new Key('signUpButton');
   @override
   State<StatefulWidget> createState() {
     return LoginScreenState();
@@ -141,6 +143,45 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                         ),
                       ),
                       Container(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          onPressed: () {
+                            print('log in');
+                            handleSignIn(_emailCtrl.text, _pwdCtrl.text);
+                          },
+                          color: Theme.of(context).primaryColor,
+                          child: Text('Log In',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                      Container(
+                        child: InkWell(
+                            onTap: () {
+                              print('navigating to register screen');
+                              Navigator.pushNamed(context, '/register');
+                            },
+                            key: LoginScreen.signUpButtonKey,
+                            child: Row(
+                              children: <Widget>[
+                                Text('Don\'t have an account? ',
+                                    style: TextStyle(color: Colors.white)),
+                                Text(' Sign Up!',
+                                    style: TextStyle(
+                                        color: Theme.of(context).accentColor)),
+                              ],
+                            )),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          onPressed: () {
+                            print('log in');
+                          },
+                          color: Colors.grey,
+                          child: Text('Continue As Guest',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
                           height: MediaQuery.of(context).size.height * 0.25,
                           margin: const EdgeInsets.only(top: 10.0),
                           child: Column(
