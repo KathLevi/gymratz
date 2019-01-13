@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/network/auth.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -207,7 +206,9 @@ class RegisterScreenState extends State<RegisterScreen>
                         child: RaisedButton(
                           padding: const EdgeInsets.all(10.0),
                           onPressed: () {
-                            handleRegister(_emailCtrl.text, _pwd1Ctrl.text).then((user){
+                            authAPI
+                                .handleRegister(_emailCtrl.text, _pwd1Ctrl.text)
+                                .then((user) {
                               //succesfully registered now redirect to login screen;
                               Navigator.pushNamed(context, '/');
                             });
