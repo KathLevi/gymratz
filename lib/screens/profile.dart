@@ -43,7 +43,8 @@ class ProfileScreenState extends State<ProfileScreen>
                     image: new DecorationImage(
                         fit: BoxFit.fill,
                         image: new NetworkImage(
-                            "https://images.medicaldaily.com/sites/medicaldaily.com/files/styles/full_breakpoints_theme_medicaldaily_desktop_1x/public/2015/08/18/selfie-time.jpg"))))
+                            "https://images.medicaldaily.com/sites/medicaldaily.com/files/styles/full_breakpoints_theme_medicaldaily_desktop_1x/public/2015/08/18/selfie-time.jpg")))),
+            Text('{{username}}', style: TextStyle(color: Colors.white))
           ]))
     ]);
   }
