@@ -143,7 +143,6 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                         ),
                       ),
                       Container(
-<<<<<<< HEAD
                         width: double.infinity,
                         child: RaisedButton(
                           onPressed: () {
@@ -183,7 +182,6 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
-=======
                           height: MediaQuery.of(context).size.height * 0.25,
                           margin: const EdgeInsets.only(top: 10.0),
                           child: Column(
@@ -255,7 +253,6 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               ),
                             ],
                           ))
->>>>>>> 33aba7fac92d157d92433826824ad6d9a5b0182a
                     ],
                   ),
                 )
