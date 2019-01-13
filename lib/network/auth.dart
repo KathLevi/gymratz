@@ -7,12 +7,24 @@ Future handleSignIn(String email, String password) async {
     email: email,
     password: password,
   );
-  print("signed in " + user.displayName);
+  
   return user;
 }
 
-Future<String> handleRegister(String email, String password) async {
+Future registerAnonymous() async {
+  FirebaseUser user = await _auth.signInAnonymously();
+
+  return user;
+}
+
+Future handleRegister(String email, String password) async {
   FirebaseUser user = await _auth.createUserWithEmailAndPassword(
       email: email, password: password);
-  return user.uid;
+      user.sendEmailVerification();
+  return user;
+}
+
+Future sendPasResetEmail(String email) async {
+  await _auth.sendPasswordResetEmail(email: email);
+  return ('password sent!');
 }

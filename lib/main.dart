@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:gymratz/theme.dart';
+
 import 'routes.dart';
+
+part "constants.dart";
 
 void main() => runApp(MyApp());
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymratz/main.dart';
 import 'package:gymratz/network/auth.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -75,7 +76,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           FocusScope.of(context)
                               .requestFocus(_passwordFocusNode);
                         },
-                        style: TextStyle(color: Theme.of(context).accentColor),
+                        style: TextStyle(color: Colors.white),
                         validator: (val) {
                           return val.length < 10 ? "Email is not valid" : null;
                         },
@@ -98,7 +99,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
                             focusNode: _passwordFocusNode,
-                            style: TextStyle(color: Theme.of(context).accentColor),
+                            style: TextStyle(color: Colors.white),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
                                 labelText: 'Password',
@@ -130,16 +131,19 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                         ],
                       ),
                       Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         alignment: Alignment.bottomRight,
                         child: InkWell(
                           onTap: () {
-                            print('password');
+                            Navigator.pushNamed(context, '/forgotPassword');
                           },
                           child: Text('Forgot Password?',
-                              style: TextStyle(color: Colors.white)),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: xsFont)),
                         ),
                       ),
                       Container(
+<<<<<<< HEAD
                         width: double.infinity,
                         child: RaisedButton(
                           onPressed: () {
@@ -179,6 +183,79 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
+=======
+                          height: MediaQuery.of(context).size.height * 0.25,
+                          margin: const EdgeInsets.only(top: 10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  padding: const EdgeInsets.all(10.0),
+                                  onPressed: () {
+                                    //TODO: navigate to home page after authenticating
+                                    handleSignIn(_emailCtrl.text, _pwdCtrl.text)
+                                        .then((user) {
+                                      Navigator.pushNamed(context, '/home');
+                                    });
+                                  },
+                                  color: Theme.of(context).primaryColor,
+                                  child: Text('Log In',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: smallFont)),
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, '/register');
+                                    },
+                                    key: new Key('signUpButton'),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text('Don\'t have an account? ',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: xsFont)),
+                                        Text(' Sign Up!',
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .accentColor)),
+                                      ],
+                                    )),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                child: RaisedButton(
+                                  padding: const EdgeInsets.all(10.0),
+                                  onPressed: () {
+                                    // TODO: If (first time signed in) {
+                                    //   register anonymously
+                                    // } else {
+                                    //   look at phone storage for anonymous user id;
+                                    // }
+                                    registerAnonymous().then((user){
+                                      print(user.uid);
+                                      //save UID to phone storage so you can sign in with same
+                                      // guest account.
+                                      Navigator.pushNamed(context, '/home');
+                                    });
+                                  },
+                                  color: Colors.grey,
+                                  child: Text('Continue As Guest',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: smallFont)),
+                                ),
+                              ),
+                            ],
+                          ))
+>>>>>>> 33aba7fac92d157d92433826824ad6d9a5b0182a
                     ],
                   ),
                 )
