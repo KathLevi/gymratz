@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/network/auth.dart';
 
 class LoginScreen extends StatefulWidget {
   // Component ID Keys
@@ -193,7 +192,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   padding: const EdgeInsets.all(10.0),
                                   onPressed: () {
                                     //TODO: navigate to home page after authenticating
-                                    handleSignIn(_emailCtrl.text, _pwdCtrl.text)
+                                    authAPI
+                                        .handleSignIn(
+                                            _emailCtrl.text, _pwdCtrl.text)
                                         .then((user) {
                                       Navigator.pushNamed(context, '/home');
                                     });
@@ -237,7 +238,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     // } else {
                                     //   look at phone storage for anonymous user id;
                                     // }
-                                    registerAnonymous().then((user){
+                                    authAPI.registerAnonymous().then((user) {
                                       print(user.uid);
                                       //save UID to phone storage so you can sign in with same
                                       // guest account.

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/theme.dart';
+import 'package:gymratz/network/auth.dart';
 
 import 'routes.dart';
 
 part "constants.dart";
+
+final Auth authAPI = new Auth();
 
 void main() => runApp(MyApp());
 
