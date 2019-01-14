@@ -18,7 +18,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:gymratz/network/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override

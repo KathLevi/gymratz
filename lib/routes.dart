@@ -6,9 +6,9 @@ import 'package:gymratz/screens/home.dart';
 import 'package:gymratz/screens/profile.dart';
 
 final routes = {
-  '/temp': (BuildContext context) => new LoginScreen(), // switch route back to /
+  '/': (BuildContext context) => new LoginScreen(), // switch route back to /
   '/register': (BuildContext context) => new RegisterScreen(),
   '/home': (BuildContext context) => new HomeScreen(),
   '/forgotPassword': (BuildContext context) => new ForgotPasswordScreen(),
-  '/': (BuildContext context) => new ProfileScreen()
+  '/profile': (BuildContext context) => new ProfileScreen()
 };
