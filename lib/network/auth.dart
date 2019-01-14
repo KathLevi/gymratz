@@ -4,7 +4,13 @@ class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   getAuthenticatedUser() {
-    return _auth.currentUser();
+    Future<FirebaseUser> user = _auth.currentUser();
+    return user;
+  }
+
+  updateProfile(profile) {
+    var user = getAuthenticatedUser();
+    return user.updateProfile(profile);
   }
 
   Future handleSignIn(String email, String password) async {
