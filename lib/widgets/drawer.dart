@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 
-Widget drawerMenu(BuildContext context) {
+Widget drawerMenu(BuildContext context, var user) {
   return Drawer(
       child: Container(
           child: ListView(
     children: <Widget>[
       DrawerHeader(
         decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('OgGymRat',
-                style: TextStyle(color: Colors.white, fontSize: largeFont)),
-            Text('email@email.com',
-                style: TextStyle(color: Colors.white, fontSize: smallFont)),
-          ],
-        ),
+        child: user == 'Guest User'
+            ? Container(
+                alignment: Alignment.centerLeft,
+                child: Text(user,
+                    style: TextStyle(color: Colors.white, fontSize: largeFont)))
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(user.displayName,
+                      style:
+                          TextStyle(color: Colors.white, fontSize: largeFont)),
+                  Text(user.email,
+                      style:
+                          TextStyle(color: Colors.white, fontSize: smallFont)),
+                ],
+              ),
+      ),
+      ListTile(
+        leading: Icon(Icons.home),
+        title: Text('Home', style: TextStyle(fontSize: smallFont)),
+        onTap: () {
+          Navigator.pushNamed(context, '/home');
+        },
       ),
       ListTile(
         leading: Icon(Icons.search),
         title: Text('Search', style: TextStyle(fontSize: smallFont)),
         onTap: () {
-          //TODO: navigate to search
+          Navigator.pushNamed(context, '/search');
         },
       ),
       ListTile(
@@ -37,14 +51,14 @@ Widget drawerMenu(BuildContext context) {
         leading: Icon(Icons.star),
         title: Text('My Gyms', style: TextStyle(fontSize: smallFont)),
         onTap: () {
-          //TODO: navigate to gyms
+          Navigator.pushNamed(context, '/myGyms');
         },
       ),
       ListTile(
         leading: Icon(Icons.settings),
         title: Text('Settings', style: TextStyle(fontSize: smallFont)),
         onTap: () {
-          //TODO: navigate to settings
+          Navigator.pushNamed(context, '/settings');
         },
       ),
       ListTile(

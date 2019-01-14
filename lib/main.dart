@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gymratz/theme.dart';
 import 'package:gymratz/network/auth.dart';
+import 'package:gymratz/theme.dart';
 
 import 'routes.dart';
 
