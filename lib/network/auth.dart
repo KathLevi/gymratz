@@ -33,4 +33,13 @@ class Auth {
     await _auth.sendPasswordResetEmail(email: email);
     return ('password sent!');
   }
+
+  Future logout() async {
+    try {
+      await _auth.signOut();
+      return ('logged out');
+    } catch (e) {
+      return ('could not log out user');
+    }
+  }
 }

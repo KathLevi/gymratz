@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 
 class LoginScreen extends StatefulWidget {
+  // Component ID Keys
+  static final Key signUpButtonKey = new Key('signUpButton');
   @override
   State<StatefulWidget> createState() {
     return LoginScreenState();
@@ -171,7 +173,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     onTap: () {
                                       Navigator.pushNamed(context, '/register');
                                     },
-                                    key: new Key('signUpButton'),
+                                    key: LoginScreen.signUpButtonKey,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

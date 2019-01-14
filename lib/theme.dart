@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 final ThemeData gymRatzdefault = new ThemeData(
-    // fontFamily: 'Avenir',
-    primaryColor: CompanyColors._teal,
-    accentColor: CompanyColors._orange,
-    scaffoldBackgroundColor: Colors.white,
-    errorColor: Colors.red,
-    buttonColor: CompanyColors._orange,
-    // textSelectionColor: Colors.yellow,
-    // splashColor: Colors.yellow
-    );
+  fontFamily: 'Lato',
+  primaryColor: CompanyColors._teal,
+  accentColor: CompanyColors._orange,
+  scaffoldBackgroundColor: Colors.white,
+  errorColor: Colors.red,
+  buttonColor: CompanyColors._orange,
+  // textSelectionColor: Colors.yellow,
+  // splashColor: Colors.yellow
+);
 
 class CompanyColors {
   CompanyColors._(); // this basically makes it so you can instantiate this class
