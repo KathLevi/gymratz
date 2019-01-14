@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gymratz/widgets/app_bar.dart';
+import 'package:gymratz/widgets/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -10,6 +12,9 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: null, body: Text("hello"));
+    return Scaffold(
+        appBar: appBar(context),
+        drawer: drawerMenu(context),
+        body: SafeArea(child: Container(child: Text('hello'))));
   }
 }
