@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/network/auth.dart';
 
 Widget drawerMenu(BuildContext context) {
   return Drawer(
@@ -31,7 +30,7 @@ Widget drawerMenu(BuildContext context) {
         leading: Icon(Icons.person),
         title: Text('Profile', style: TextStyle(fontSize: smallFont)),
         onTap: () {
-          //TODO: navigate to profile
+          Navigator.pushNamed(context, '/profile');
         },
       ),
       ListTile(
@@ -53,7 +52,7 @@ Widget drawerMenu(BuildContext context) {
         title: Text('Log Out', style: TextStyle(fontSize: smallFont)),
         onTap: () {
           //TODO: clear information and kill authentication
-          logout();
+          authAPI.logout();
           //Remove all routes in the stack so that user cannot go back to the previous routes after they have logged out.
           Navigator.of(context)
               .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
