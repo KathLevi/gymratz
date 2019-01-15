@@ -28,9 +28,19 @@ class Auth {
     return user;
   }
 
-  Future handleRegister(String email, String password) async {
+  Future handleRegister(String username, String email, String password) async {
+    //create firebase account
     FirebaseUser user = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
+    //update firebase username because default is NULL
+    UserUpdateInfo info = new UserUpdateInfo();
+    info.displayName = username;
+    user.updateProfile(info);
+
+    //reload user after updating username;
+    user.reload();
+
+    //send email verification
     user.sendEmailVerification();
     return user;
   }
