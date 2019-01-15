@@ -199,12 +199,12 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     // } else {
                                     //   look at phone storage for anonymous user id;
                                     // }
-                                    authAPI.registerAnonymous().then((user) {
-                                      print(user.uid);
+                                    // authAPI.registerAnonymous().then((user) {
+                                    //   print(user.uid);
                                       //save UID to phone storage so you can sign in with same
                                       // guest account.
                                       Navigator.pushNamed(context, '/home');
-                                    });
+                                    // });
                                   },
                                   color: Colors.grey,
                                   child: Text('Continue As Guest',

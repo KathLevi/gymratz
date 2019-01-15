@@ -210,7 +210,7 @@ class RegisterScreenState extends State<RegisterScreen>
                           padding: const EdgeInsets.all(10.0),
                           onPressed: () {
                             authAPI
-                                .handleRegister(_emailCtrl.text, _pwd1Ctrl.text)
+                                .handleRegister(_userNameCtrl.text,_emailCtrl.text, _pwd1Ctrl.text)
                                 .then((user) {
                               //succesfully registered now redirect to login screen;
                               Navigator.pushNamed(context, '/');
