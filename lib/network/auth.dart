@@ -22,11 +22,12 @@ class Auth {
     return user;
   }
 
-  Future registerAnonymous() async {
-    FirebaseUser user = await _auth.signInAnonymously();
+  // I'm not sure we really even need this. TOO MUCH WORK FOR LITTLE GAIN
 
-    return user;
-  }
+  // Future registerAnonymous() async {
+  //   FirebaseUser user = await _auth.signInAnonymously();
+  //   return user;
+  // }
 
   Future handleRegister(String username, String email, String password) async {
     //create firebase account
