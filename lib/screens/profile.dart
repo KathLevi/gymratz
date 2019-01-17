@@ -49,7 +49,7 @@ class ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserve
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context),
-        drawer: drawerMenu(context),
+        drawer: drawerMenu(context, _user),
         body: SafeArea(
             child: Row(
               children: <Widget>[
