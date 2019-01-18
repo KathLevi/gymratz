@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gymratz/theme.dart';
 import 'package:gymratz/network/auth.dart';
 import 'package:gymratz/network/firestore.dart';
+import 'package:gymratz/theme.dart';
 
 import 'routes.dart';
 

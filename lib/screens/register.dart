@@ -4,7 +4,7 @@ import 'package:gymratz/main.dart';
 class RegisterScreen extends StatefulWidget {
   // Component ID Keys
   static final Key loginButtonKey = new Key('loginButton');
-  
+
   @override
   State<StatefulWidget> createState() {
     return RegisterScreenState();
@@ -85,11 +85,11 @@ class RegisterScreenState extends State<RegisterScreen>
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
                           return val.length < 3
-                              ? "Display Name must be longer than 3 characters"
+                              ? "Username must be longer than 3 characters"
                               : null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Display Name',
+                            labelText: 'Username',
                             labelStyle: TextStyle(color: Colors.white),
                             enabledBorder: new UnderlineInputBorder(
                                 borderSide:

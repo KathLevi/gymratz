@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/widgets/account_needed.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 
-class HomeScreen extends StatefulWidget {
+class MyGymsScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return HomeScreenState();
+    return MyGymsScreenState();
   }
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class MyGymsScreenState extends State<MyGymsScreen> {
   var currentUser;
+  bool auth = false;
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
       if (user != null) {
         if (!user.isAnonymous) {
           setState(() {
+            auth = true;
             currentUser = user;
           });
         } else {
@@ -40,6 +43,9 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
-        body: SafeArea(child: Container(child: Text('home'))));
+        body: SafeArea(
+            child: auth
+                ? Container(child: Text('my gyms'))
+                : accountNeeded(context)));
   }
 }

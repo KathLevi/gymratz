@@ -27,7 +27,8 @@ Widget accountNeeded(BuildContext context) {
             width: double.infinity,
             child: RaisedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/register', (Route<dynamic> route) => false);
               },
               color: Theme.of(context).primaryColor,
               padding: const EdgeInsets.all(10.0),
@@ -39,7 +40,8 @@ Widget accountNeeded(BuildContext context) {
             width: double.infinity,
             child: RaisedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/', (Route<dynamic> route) => false);
               },
               color: Colors.grey,
               padding: const EdgeInsets.all(10.0),

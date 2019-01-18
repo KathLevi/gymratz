@@ -3,14 +3,14 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 
-class HomeScreen extends StatefulWidget {
+class SearchScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return HomeScreenState();
+    return SearchScreenState();
   }
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class SearchScreenState extends State<SearchScreen> {
   var currentUser;
 
   void checkForToken() {
@@ -40,6 +40,6 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
-        body: SafeArea(child: Container(child: Text('home'))));
+        body: SafeArea(child: Container(child: Text('search'))));
   }
 }
