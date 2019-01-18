@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 import 'package:gymratz/main.dart';
@@ -12,6 +13,23 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   // get gyms from the database
+  var currentUser;
+
+    void checkForToken() {
+    authAPI.getAuthenticatedUser().then((user) {
+      if (user != null) {
+        if (!user.isAnonymous) {
+          setState(() {
+            currentUser = user;
+          });
+        } else {
+          setState(() {
+            currentUser = 'Guest User';
+          });
+        }
+      }
+    });
+  }
 
   _buildListItem(BuildContext context, document) {
     return 
@@ -53,10 +71,17 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+      // TODO: implement initState
+      super.initState();
+      checkForToken();
+    }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context),
-        drawer: drawerMenu(context),
+        drawer: drawerMenu(context, currentUser),
         body: SafeArea(child: _makeGymColumn()));
   }
 }
