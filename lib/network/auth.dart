@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gymratz/main.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -33,6 +34,12 @@ class Auth {
     //create firebase account
     FirebaseUser user = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
+
+    //create firestore profile
+    fsAPI.addUser({
+      'id':user.uid
+    });
+
     //update firebase username because default is NULL
     UserUpdateInfo info = new UserUpdateInfo();
     info.displayName = username;
