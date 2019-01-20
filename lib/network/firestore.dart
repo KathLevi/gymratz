@@ -9,61 +9,73 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     });
  */
 
+class FirestoreAPI {
+  final Firestore _firestore = Firestore.instance;
+
 // route getters
-getAllRoutes() {
-  return Firestore.instance.collection('routes').snapshots();
-}
+  getAllRoutes() {
+    return _firestore.collection('routes').snapshots();
+  }
 
-getRouteById(id) {
-  return Firestore.instance.collection('routes').document(id).snapshots();
-}
+  getRouteById(id) {
+    return _firestore.collection('routes').document(id).snapshots();
+  }
 
-getRoutesByName(name) {
-  return Firestore.instance
-      .collection('routes')
-      .where('name', isEqualTo: name)
-      .snapshots();
-}
+  getRoutesByName(name) {
+    return _firestore
+        .collection('routes')
+        .where('name', isEqualTo: name)
+        .snapshots();
+  }
 
-getRoutesByUserId(userId) {
-  return Firestore.instance
-      .collection('routes')
-      .where('userId', isEqualTo: userId)
-      .snapshots();
-}
+  getRoutesByUserId(userId) {
+    return _firestore
+        .collection('routes')
+        .where('userId', isEqualTo: userId)
+        .snapshots();
+  }
+
+// user setters
+/**
+ * This must be done every single time a new user has been registered
+ */
+  addUser(data) {
+    return _firestore.collection('users').add(data);
+  }
 
 // user getters
-getUserById(id) {
-  return Firestore.instance.collection('users').document(id).snapshots();
-}
+  getUserById(id) {
+    return _firestore.collection('users').document(id).snapshots();
+  }
 
-getAllUsers() {
-  return Firestore.instance.collection('users').snapshots();
-}
+  getAllUsers() {
+    return _firestore.collection('users').snapshots();
+  }
 
-getUsersByUserName(username) {
-  return Firestore.instance
-      .collection('users')
-      .where('username', isEqualTo: username)
-      .snapshots();
-}
+  getUsersByUserName(username) {
+    return _firestore
+        .collection('users')
+        .where('username', isEqualTo: username)
+        .snapshots();
+  }
 
 //todo getters
 
 //favorite route getters
 
 // gym getters
-getGymById(id) {
-  return Firestore.instance.collection('gyms').document(id).snapshots();
-}
+  getGymById(id) {
+    return _firestore.collection('gyms').document(id).snapshots();
+  }
 
-getAllGyms() {
-  return Firestore.instance.collection('gyms').snapshots();
-}
+  getAllGyms() {
+    return _firestore.collection('gyms').snapshots();
+  }
 
-getGymsByName(name) {
-  return Firestore.instance
-      .collection('gyms')
-      .where('name', isEqualTo: name)
-      .snapshots();
+  getGymsByName(name) {
+    return _firestore
+        .collection('gyms')
+        .where('name', isEqualTo: name)
+        .snapshots();
+  }
 }

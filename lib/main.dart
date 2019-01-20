@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/network/auth.dart';
+import 'package:gymratz/network/firestore.dart';
 import 'package:gymratz/theme.dart';
 
 import 'routes.dart';
@@ -9,6 +10,7 @@ import 'routes.dart';
 part "constants.dart";
 
 final Auth authAPI = new Auth();
+final FirestoreAPI fsAPI = new FirestoreAPI();
 
 void main() => runApp(MyApp());
 

@@ -31,25 +31,37 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserver {
-  var _user;
+  var currentUser;
+
+      void checkForToken() {
+    authAPI.getAuthenticatedUser().then((user) {
+      if (user != null) {
+        if (!user.isAnonymous) {
+          setState(() {
+            currentUser = user;
+          });
+        } else {
+          setState(() {
+            currentUser = 'Guest User';
+          });
+        }
+      }
+    });
+  }
 
   @override
   void initState(){
     super.initState();
+    checkForToken();
     WidgetsBinding.instance.addObserver(this);
-    authAPI.getAuthenticatedUser().then((user){
-      print(user);
-      setState((){
-        _user = user;
-      });
-    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context),
-        drawer: drawerMenu(context, _user),
+        drawer: drawerMenu(context, currentUser),
         body: SafeArea(
             child: Row(
               children: <Widget>[
@@ -64,7 +76,7 @@ class ProfileScreenState extends State<ProfileScreen> with WidgetsBindingObserve
                             radius: 35.0
                           ),
                           Text(
-                            (_user != null)?_user.providerData[0].displayName:"loading...",
+                            (currentUser != null)?currentUser.displayName:"loading...",
                             style: TextStyle(color: Colors.white)),
                           Row(
 
