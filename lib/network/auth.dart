@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gymratz/main.dart';
+import 'package:flutter/services.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -15,12 +16,16 @@ class Auth {
   }
 
   Future handleSignIn(String email, String password) async {
-    FirebaseUser user = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      FirebaseUser user = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    return user;
+      return user;
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
   }
 
   // I'm not sure we really even need this. TOO MUCH WORK FOR LITTLE GAIN
@@ -32,25 +37,29 @@ class Auth {
 
   Future handleRegister(String username, String email, String password) async {
     //create firebase account
-    FirebaseUser user = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
 
-    //create firestore profile
-    fsAPI.addUser({
-      'id':user.uid
-    });
+    try {
+      FirebaseUser user = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
 
-    //update firebase username because default is NULL
-    UserUpdateInfo info = new UserUpdateInfo();
-    info.displayName = username;
-    user.updateProfile(info);
+      //create firestore profile
 
-    //reload user after updating username;
-    user.reload();
+      fsAPI.addUser({'id': user.uid});
 
-    //send email verification
-    user.sendEmailVerification();
-    return user;
+      //update firebase username because default is NULL
+      UserUpdateInfo info = new UserUpdateInfo();
+      info.displayName = username;
+      user.updateProfile(info);
+
+      //reload user after updating username;
+      user.reload();
+
+      //send email verification
+      user.sendEmailVerification();
+      return user;
+    } catch (e) {
+      return e;
+    }
   }
 
   Future sendPasResetEmail(String email) async {

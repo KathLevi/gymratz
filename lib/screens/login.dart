@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
   // Component ID Keys
@@ -153,12 +154,16 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   padding: const EdgeInsets.all(10.0),
                                   onPressed: () {
                                     //TODO: navigate to home page after authenticating
-                                    authAPI
-                                        .handleSignIn(
-                                            _emailCtrl.text, _pwdCtrl.text)
-                                        .then((user) {
-                                      Navigator.pushNamed(context, '/home');
-                                    });
+                                    try {
+                                      authAPI
+                                          .handleSignIn(
+                                              _emailCtrl.text, _pwdCtrl.text)
+                                          .then((data) {
+                                        Navigator.pushNamed(context, '/home');
+                                      });
+                                    } on PlatformException catch (e) {
+                                      print(e);
+                                    }
                                   },
                                   color: Theme.of(context).primaryColor,
                                   child: Text('Log In',
@@ -194,17 +199,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 child: RaisedButton(
                                   padding: const EdgeInsets.all(10.0),
                                   onPressed: () {
-                                    // TODO: If (first time signed in) {
-                                    //   register anonymously
-                                    // } else {
-                                    //   look at phone storage for anonymous user id;
-                                    // }
-                                    // authAPI.registerAnonymous().then((user) {
-                                    //   print(user.uid);
-                                      //save UID to phone storage so you can sign in with same
-                                      // guest account.
-                                      Navigator.pushNamed(context, '/home');
-                                    // });
+                                    Navigator.pushNamed(context, '/home');
                                   },
                                   color: Colors.grey,
                                   child: Text('Continue As Guest',
