@@ -8,10 +8,10 @@ Widget drawerMenu(BuildContext context, var user) {
     children: <Widget>[
       DrawerHeader(
         decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-        child: user == 'Guest User'
+        child: user == null
             ? Container(
                 alignment: Alignment.centerLeft,
-                child: Text(user,
+                child: Text("GUEST",
                     style: TextStyle(color: Colors.white, fontSize: largeFont)))
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
