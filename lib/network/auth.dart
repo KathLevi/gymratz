@@ -22,9 +22,9 @@ class Auth {
         password: password,
       );
 
-      return user;
+      return {'user': user};
     } on PlatformException catch (e) {
-      print(e.message);
+      return {'error': e.message};
     }
   }
 

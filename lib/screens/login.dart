@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:flutter/services.dart';
+import 'package:gymratz/widgets/error_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   // Component ID Keys
@@ -14,10 +14,20 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _pwdCtrl = TextEditingController();
+  final GlobalKey<FormState> _signInFormKey = new GlobalKey<FormState>();
+
   FocusNode _userFocusNode;
   FocusNode _passwordFocusNode;
 
   bool _pwdHidden = true;
+
+  void _showErrorDialog(errorMessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return errorDialog(context, errorMessage);
+        });
+  }
 
   @override
   void initState() {
@@ -62,47 +72,30 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        controller: _emailCtrl,
-                        keyboardType: TextInputType.emailAddress,
-                        textCapitalization: TextCapitalization.none,
-                        autocorrect: false,
-                        focusNode: _userFocusNode,
-                        onFieldSubmitted: (str) {
-                          _userFocusNode.unfocus();
-                          FocusScope.of(context)
-                              .requestFocus(_passwordFocusNode);
-                        },
-                        style: TextStyle(color: Colors.white),
-                        validator: (val) {
-                          return val.length < 10 ? "Email is not valid" : null;
-                        },
-                        decoration: InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: TextStyle(color: Colors.white),
-                            enabledBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            focusedBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white))),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      Stack(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Form(
+                      key: this._signInFormKey,
+                      child: Column(
                         children: <Widget>[
                           TextFormField(
-                            controller: _pwdCtrl,
-                            obscureText: _pwdHidden,
+                            controller: _emailCtrl,
+                            keyboardType: TextInputType.emailAddress,
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
-                            focusNode: _passwordFocusNode,
+                            focusNode: _userFocusNode,
+                            onFieldSubmitted: (str) {
+                              _userFocusNode.unfocus();
+                              FocusScope.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
                             style: TextStyle(color: Colors.white),
-                            // onFieldSubmitted: onSubmitted,
+                            validator: (val) {
+                              return val.length < 10
+                                  ? "Email is not valid"
+                                  : null;
+                            },
                             decoration: InputDecoration(
-                                labelText: 'Password',
+                                labelText: 'Email',
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -110,109 +103,143 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 focusedBorder: new UnderlineInputBorder(
                                     borderSide:
                                         new BorderSide(color: Colors.white))),
-                            textInputAction: TextInputAction.go,
+                            textInputAction: TextInputAction.next,
+                          ),
+                          Stack(
+                            children: <Widget>[
+                              TextFormField(
+                                controller: _pwdCtrl,
+                                obscureText: _pwdHidden,
+                                textCapitalization: TextCapitalization.none,
+                                autocorrect: false,
+                                focusNode: _passwordFocusNode,
+                                style: TextStyle(color: Colors.white),
+                                validator: (val) {
+                                  return val.length < 6
+                                      ? "Password is not long enough"
+                                      : null;
+                                },
+                                // onFieldSubmitted: onSubmitted,
+                                decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    enabledBorder: new UnderlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: Colors.white)),
+                                    focusedBorder: new UnderlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: Colors.white))),
+                                textInputAction: TextInputAction.go,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                alignment: FractionalOffset.bottomRight,
+                                child: IconButton(
+                                    icon: Icon(
+                                      _pwdHidden
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _pwdHidden = !_pwdHidden;
+                                      });
+                                    }),
+                              )
+                            ],
                           ),
                           Container(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            alignment: FractionalOffset.bottomRight,
-                            child: IconButton(
-                                icon: Icon(
-                                  _pwdHidden
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _pwdHidden = !_pwdHidden;
-                                  });
-                                }),
-                          )
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            alignment: Alignment.bottomRight,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/forgotPassword');
+                              },
+                              child: Text('Forgot Password?',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: xsFont)),
+                            ),
+                          ),
+                          Container(
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              margin: const EdgeInsets.only(top: 10.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    width: double.infinity,
+                                    child: RaisedButton(
+                                      padding: const EdgeInsets.all(10.0),
+                                      onPressed: () {
+                                        //TODO: navigate to home page after authenticating
+                                        if (this
+                                            ._signInFormKey
+                                            .currentState
+                                            .validate()) {
+                                          authAPI
+                                              .handleSignIn(_emailCtrl.text,
+                                                  _pwdCtrl.text)
+                                              .then((data) {
+                                            if (data['error'] != null) {
+                                              return _showErrorDialog(
+                                                  data['error']);
+                                            }
+                                            Navigator.pushNamed(
+                                                context, '/home');
+                                          });
+                                        }
+                                      },
+                                      color: Theme.of(context).primaryColor,
+                                      child: Text('Log In',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: smallFont)),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/register');
+                                        },
+                                        key: LoginScreen.signUpButtonKey,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text('Don\'t have an account? ',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: xsFont)),
+                                            Text(' Sign Up!',
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .accentColor)),
+                                          ],
+                                        )),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    child: RaisedButton(
+                                      padding: const EdgeInsets.all(10.0),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/home');
+                                      },
+                                      color: Colors.grey,
+                                      child: Text('Continue As Guest',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: smallFont)),
+                                    ),
+                                  ),
+                                ],
+                              ))
                         ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/forgotPassword');
-                          },
-                          child: Text('Forgot Password?',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: xsFont)),
-                        ),
-                      ),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.25,
-                          margin: const EdgeInsets.only(top: 10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                width: double.infinity,
-                                child: RaisedButton(
-                                  padding: const EdgeInsets.all(10.0),
-                                  onPressed: () {
-                                    //TODO: navigate to home page after authenticating
-                                    try {
-                                      authAPI
-                                          .handleSignIn(
-                                              _emailCtrl.text, _pwdCtrl.text)
-                                          .then((data) {
-                                        Navigator.pushNamed(context, '/home');
-                                      });
-                                    } on PlatformException catch (e) {
-                                      print(e);
-                                    }
-                                  },
-                                  color: Theme.of(context).primaryColor,
-                                  child: Text('Log In',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: smallFont)),
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/register');
-                                    },
-                                    key: LoginScreen.signUpButtonKey,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text('Don\'t have an account? ',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: xsFont)),
-                                        Text(' Sign Up!',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .accentColor)),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                child: RaisedButton(
-                                  padding: const EdgeInsets.all(10.0),
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, '/home');
-                                  },
-                                  color: Colors.grey,
-                                  child: Text('Continue As Guest',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: smallFont)),
-                                ),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                )
+                    ))
               ],
             ),
           ),
