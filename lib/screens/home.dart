@@ -3,6 +3,9 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   // get gyms from the database
   var currentUser;
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
     void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
@@ -53,10 +57,10 @@ class HomeScreenState extends State<HomeScreen> {
     return StreamBuilder(
         stream: fsAPI.getAllGyms(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const Text('Loading...');
+          if (!snapshot.hasData) return Text(GymratzLocalizations.of(context).text('Loading...'));
           return Column(children: [
             Text(
-              snapshot.data.documents.length.toString() + " results",
+              snapshot.data.documents.length.toString() + ' ' + GymratzLocalizations.of(context).text('Results'),
               textAlign: TextAlign.left,
             ),
             Expanded(
@@ -74,6 +78,8 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
       // TODO: implement initState
       super.initState();
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+      application.onLocaleChanged = onLocaleChange;
       checkForToken();
     }
 
@@ -83,5 +89,10 @@ class HomeScreenState extends State<HomeScreen> {
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(child: _makeGymColumn()));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }

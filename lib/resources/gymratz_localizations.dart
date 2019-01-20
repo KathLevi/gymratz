@@ -1,27 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
 
-// define localizations here
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class GymratzLocalizations {
-  GymratzLocalizations(this.locale);
+  Locale locale;
+  static Map<dynamic, dynamic> _localizedValues;
 
-  final Locale locale;
+  GymratzLocalizations(Locale locale) {
+    this.locale = locale;
+    _localizedValues = null;
+  }
 
   static GymratzLocalizations of(BuildContext context) {
     return Localizations.of<GymratzLocalizations>(context, GymratzLocalizations);
   }
 
-  static Map<String, Map<String, String>> _localizedValues = {
-    'en': {
-      'gymratz': 'Gymratz',
-    },
-    'fr': {
-      'gymratz': 'Rats de Gymnastique',
-    },
-  };
+  static Future<GymratzLocalizations> load(Locale locale) async {
+    GymratzLocalizations appTranslations = GymratzLocalizations(locale);
+    String jsonContent =
+    await rootBundle.loadString("assets/locale/localization_${locale.languageCode}.json");
+    _localizedValues = json.decode(jsonContent);
+    return appTranslations;
+  }
 
-  String translate(String key) {
-    return _localizedValues[locale.languageCode][key];
+  get currentLanguage => locale.languageCode;
+
+  String text(String key) {
+    return _localizedValues[key] ?? "$key key not found";
   }
 }

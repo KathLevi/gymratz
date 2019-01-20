@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class LoginScreen extends StatefulWidget {
   // Component ID Keys
@@ -17,10 +20,13 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   FocusNode _passwordFocusNode;
 
   bool _pwdHidden = true;
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   @override
   void initState() {
     super.initState();
+    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
@@ -53,7 +59,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 100.0),
                   child: Text(
-                    'GYMRATZ',
+                    GymratzLocalizations.of(context).text('gymratz'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 50.0,
@@ -77,10 +83,10 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                         },
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
-                          return val.length < 10 ? "Email is not valid" : null;
+                          return val.length < 10 ? GymratzLocalizations.of(context).text('InvalidEmail') : null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: GymratzLocalizations.of(context).text('Email'),
                             labelStyle: TextStyle(color: Colors.white),
                             enabledBorder: new UnderlineInputBorder(
                                 borderSide:
@@ -101,7 +107,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             style: TextStyle(color: Colors.white),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
-                                labelText: 'Password',
+                                labelText: GymratzLocalizations.of(context).text('Password'),
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -136,7 +142,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                           onTap: () {
                             Navigator.pushNamed(context, '/forgotPassword');
                           },
-                          child: Text('Forgot Password?',
+                          child: Text(GymratzLocalizations.of(context).text('ForgotPassword?'),
                               style: TextStyle(
                                   color: Colors.white, fontSize: xsFont)),
                         ),
@@ -161,7 +167,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     });
                                   },
                                   color: Theme.of(context).primaryColor,
-                                  child: Text('Log In',
+                                  child: Text(GymratzLocalizations.of(context).text('LogIn'),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: smallFont)),
@@ -178,11 +184,11 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Text('Don\'t have an account? ',
+                                        Text(GymratzLocalizations.of(context).text('DontHaveAnAccount?'),
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: xsFont)),
-                                        Text(' Sign Up!',
+                                        Text(' ' + GymratzLocalizations.of(context).text('SignUp!'),
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .accentColor)),
@@ -207,7 +213,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     // });
                                   },
                                   color: Colors.grey,
-                                  child: Text('Continue As Guest',
+                                  child: Text(GymratzLocalizations.of(context).text('ContinueAsGuest'),
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: smallFont)),
@@ -222,5 +228,10 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
             ),
           ),
         ));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }

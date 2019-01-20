@@ -3,7 +3,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/network/auth.dart';
 import 'package:gymratz/network/firestore.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/theme.dart';
+import 'application.dart';
 
 import 'routes.dart';
 
@@ -22,13 +24,11 @@ class MyApp extends StatelessWidget {
       theme: gymRatzdefault,
       routes: routes,
       localizationsDelegates: [
+        const GymratzLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en', 'US'), // American English
-        const Locale('fr', 'FR'), // French French
-      ],
+      supportedLocales: application.supportedLocales(),
     );
   }
 }

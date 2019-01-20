@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class SearchScreen extends StatefulWidget {
 
 class SearchScreenState extends State<SearchScreen> {
   var currentUser;
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
@@ -32,6 +36,8 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
+    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    application.onLocaleChanged = onLocaleChange;
     checkForToken();
   }
 
@@ -40,6 +46,11 @@ class SearchScreenState extends State<SearchScreen> {
     return Scaffold(
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
-        body: SafeArea(child: Container(child: Text('search'))));
+        body: SafeArea(child: Container(child: Text(GymratzLocalizations.of(context).text('Search')))));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }

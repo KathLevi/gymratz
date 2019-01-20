@@ -21,6 +21,9 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -32,6 +35,7 @@ class ProfileScreen extends StatefulWidget {
 class ProfileScreenState extends State<ProfileScreen>
     with WidgetsBindingObserver {
   var currentUser;
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
@@ -52,6 +56,8 @@ class ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
+    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    application.onLocaleChanged = onLocaleChange;
     checkForToken();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -76,25 +82,25 @@ class ProfileScreenState extends State<ProfileScreen>
                       Text(
                           (currentUser != null)
                               ? currentUser.displayName
-                              : "loading...",
+                              : GymratzLocalizations.of(context).text('Loading...'),
                           style: TextStyle(color: Colors.white)),
                       Row(
                         children: <Widget>[
                           Expanded(
                               child: Text(
-                            'My Profile',
+                            GymratzLocalizations.of(context).text('MyProfile'),
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
                           )),
                           Expanded(
                               child: Text(
-                            'Friends',
+                            GymratzLocalizations.of(context).text('Friends'),
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
                           )),
                           Expanded(
                               child: Text(
-                            'Comments',
+                            GymratzLocalizations.of(context).text('Comments'),
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.center,
                           ))
@@ -103,6 +109,11 @@ class ProfileScreenState extends State<ProfileScreen>
                     ],
                   ))))
         ])));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }
 
