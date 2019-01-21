@@ -37,7 +37,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-      application.onLocaleChanged = onLocaleChange;
+    application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
@@ -70,7 +70,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 100.0),
                   child: Text(
-                    GymratzLocalizations.of(context).text('gymratz'),
+                    GymratzLocalizations.of(context).text('Gymratz'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 50.0,
@@ -97,7 +97,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             style: TextStyle(color: Colors.white),
                             validator: (val) {
                               return val.length < 10
-                                  ? GymratzLocalizations.of(context).text('InvalidEmail')
+                                  ? GymratzLocalizations.of(context)
+                                      .text('InvalidEmail')
                                   : null;
                             },
                             decoration: InputDecoration(
@@ -122,7 +123,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 style: TextStyle(color: Colors.white),
                                 validator: (val) {
                                   return val.length < 6
-                                      ? GymratzLocalizations.of(context).text('PasswordIsNotLongEnough')
+                                      ? GymratzLocalizations.of(context)
+                                          .text('PasswordIsNotLongEnough')
                                       : null;
                                 },
                                 // onFieldSubmitted: onSubmitted,
@@ -162,7 +164,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               onTap: () {
                                 Navigator.pushNamed(context, '/forgotPassword');
                               },
-                              child: Text(GymratzLocalizations.of(context).text('ForgotPassword?'),
+                              child: Text(
+                                  GymratzLocalizations.of(context)
+                                      .text('ForgotPassword?'),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: xsFont)),
                             ),
@@ -198,7 +202,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                         }
                                       },
                                       color: Theme.of(context).primaryColor,
-                                      child: Text(GymratzLocalizations.of(context).text('LogIn'),
+                                      child: Text(
+                                          GymratzLocalizations.of(context)
+                                              .text('LogIn'),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: smallFont)),
@@ -216,11 +222,17 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: <Widget>[
-                                            Text(GymratzLocalizations.of(context).text('DontHaveAnAccount?'),
+                                            Text(
+                                                GymratzLocalizations.of(context)
+                                                    .text('DontHaveAnAccount?'),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: xsFont)),
-                                            Text(' ' + GymratzLocalizations.of(context).text('SignUp!'),
+                                            Text(
+                                                ' ' +
+                                                    GymratzLocalizations.of(
+                                                            context)
+                                                        .text('SignUp!'),
                                                 style: TextStyle(
                                                     color: Theme.of(context)
                                                         .accentColor)),
@@ -235,7 +247,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                         Navigator.pushNamed(context, '/home');
                                       },
                                       color: Colors.grey,
-                                      child: Text(GymratzLocalizations.of(context).text('ContinueAsGuest'),
+                                      child: Text(
+                                          GymratzLocalizations.of(context)
+                                              .text('ContinueAsGuest'),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: smallFont)),
@@ -251,6 +265,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
           ),
         ));
   }
+
   void onLocaleChange(Locale locale) {
     setState(() {
       _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
