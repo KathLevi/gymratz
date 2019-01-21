@@ -1,6 +1,7 @@
 {
     "gymratz": "Gymratz",
     "Email": "Email",
+    "Username": "Username",
     "Password": "Password",
     "ForgotPassword?": "Forgot Password?",
     "LogIn": "Log In",
@@ -10,6 +11,7 @@
     "ContinueAsGuest": "Continue As Guest",
     "UsernameMustBeLongerThan3Characters": "Username must be longer than 3 characters",
     "InvalidEmail": "Invalid Email",
+    "PasswordIsNotLongEnough": "Password is not long enough",
     "ConfirmPassword": "Confirm Password",
     "AlreadyHaveAnAccount?": "Already have an account?",
     "EnterEmailToRecoverPassword": "Enter your email below and we will send you an email to recover your password",

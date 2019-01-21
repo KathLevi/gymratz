@@ -1,6 +1,7 @@
 {
     "gymratz": "Rats de Gymnastique",
     "Email": "Email-fr",
+    "Username": "Username-fr",
     "Password": "Password-fr",
     "ForgotPassword?": "Forgot Password?-fr",
     "LogIn": "Log In-fr",
@@ -10,6 +11,7 @@
     "ContinueAsGuest": "Continue As Guest-fr",
     "UsernameMustBeLongerThan3Characters": "Username must be longer than 3 characters-fr",
     "InvalidEmail": "Invalid Email-fr",
+    "PasswordIsNotLongEnough": "Password is not long enough-fr",
     "ConfirmPassword": "Confirm Password-fr",
     "AlreadyHaveAnAccount?": "Already have an account?-fr",
     "EnterEmailToRecoverPassword": "Enter your email below and we will send you an email to recover your password-fr",

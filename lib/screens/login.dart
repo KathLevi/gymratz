@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/widgets/error_dialog.dart';
 import 'package:gymratz/application.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
@@ -16,17 +17,27 @@ class LoginScreen extends StatefulWidget {
 class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final TextEditingController _emailCtrl = TextEditingController();
   final TextEditingController _pwdCtrl = TextEditingController();
+  final GlobalKey<FormState> _signInFormKey = new GlobalKey<FormState>();
+
   FocusNode _userFocusNode;
   FocusNode _passwordFocusNode;
 
   bool _pwdHidden = true;
   GymratzLocalizationsDelegate _newLocaleDelegate;
 
+  void _showErrorDialog(errorMessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return errorDialog(context, errorMessage);
+        });
+  }
+
   @override
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
+      application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _passwordFocusNode = FocusNode();
@@ -67,47 +78,30 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        controller: _emailCtrl,
-                        keyboardType: TextInputType.emailAddress,
-                        textCapitalization: TextCapitalization.none,
-                        autocorrect: false,
-                        focusNode: _userFocusNode,
-                        onFieldSubmitted: (str) {
-                          _userFocusNode.unfocus();
-                          FocusScope.of(context)
-                              .requestFocus(_passwordFocusNode);
-                        },
-                        style: TextStyle(color: Colors.white),
-                        validator: (val) {
-                          return val.length < 10 ? GymratzLocalizations.of(context).text('InvalidEmail') : null;
-                        },
-                        decoration: InputDecoration(
-                            labelText: GymratzLocalizations.of(context).text('Email'),
-                            labelStyle: TextStyle(color: Colors.white),
-                            enabledBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white)),
-                            focusedBorder: new UnderlineInputBorder(
-                                borderSide:
-                                    new BorderSide(color: Colors.white))),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      Stack(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Form(
+                      key: this._signInFormKey,
+                      child: Column(
                         children: <Widget>[
                           TextFormField(
-                            controller: _pwdCtrl,
-                            obscureText: _pwdHidden,
+                            controller: _emailCtrl,
+                            keyboardType: TextInputType.emailAddress,
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
-                            focusNode: _passwordFocusNode,
+                            focusNode: _userFocusNode,
+                            onFieldSubmitted: (str) {
+                              _userFocusNode.unfocus();
+                              FocusScope.of(context)
+                                  .requestFocus(_passwordFocusNode);
+                            },
                             style: TextStyle(color: Colors.white),
-                            // onFieldSubmitted: onSubmitted,
+                            validator: (val) {
+                              return val.length < 10
+                                  ? GymratzLocalizations.of(context).text('InvalidEmail')
+                                  : null;
+                            },
                             decoration: InputDecoration(
-                                labelText: GymratzLocalizations.of(context).text('Password'),
+                                labelText: 'Email',
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -115,115 +109,143 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 focusedBorder: new UnderlineInputBorder(
                                     borderSide:
                                         new BorderSide(color: Colors.white))),
-                            textInputAction: TextInputAction.go,
+                            textInputAction: TextInputAction.next,
+                          ),
+                          Stack(
+                            children: <Widget>[
+                              TextFormField(
+                                controller: _pwdCtrl,
+                                obscureText: _pwdHidden,
+                                textCapitalization: TextCapitalization.none,
+                                autocorrect: false,
+                                focusNode: _passwordFocusNode,
+                                style: TextStyle(color: Colors.white),
+                                validator: (val) {
+                                  return val.length < 6
+                                      ? GymratzLocalizations.of(context).text('PasswordIsNotLongEnough')
+                                      : null;
+                                },
+                                // onFieldSubmitted: onSubmitted,
+                                decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    enabledBorder: new UnderlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: Colors.white)),
+                                    focusedBorder: new UnderlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: Colors.white))),
+                                textInputAction: TextInputAction.go,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                alignment: FractionalOffset.bottomRight,
+                                child: IconButton(
+                                    icon: Icon(
+                                      _pwdHidden
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _pwdHidden = !_pwdHidden;
+                                      });
+                                    }),
+                              )
+                            ],
                           ),
                           Container(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            alignment: FractionalOffset.bottomRight,
-                            child: IconButton(
-                                icon: Icon(
-                                  _pwdHidden
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _pwdHidden = !_pwdHidden;
-                                  });
-                                }),
-                          )
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            alignment: Alignment.bottomRight,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/forgotPassword');
+                              },
+                              child: Text(GymratzLocalizations.of(context).text('ForgotPassword?'),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: xsFont)),
+                            ),
+                          ),
+                          Container(
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              margin: const EdgeInsets.only(top: 10.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    width: double.infinity,
+                                    child: RaisedButton(
+                                      padding: const EdgeInsets.all(10.0),
+                                      onPressed: () {
+                                        //TODO: navigate to home page after authenticating
+                                        if (this
+                                            ._signInFormKey
+                                            .currentState
+                                            .validate()) {
+                                          authAPI
+                                              .handleSignIn(_emailCtrl.text,
+                                                  _pwdCtrl.text)
+                                              .then((data) {
+                                            if (data['error'] != null) {
+                                              return _showErrorDialog(
+                                                  data['error']);
+                                            }
+                                            Navigator.pushNamed(
+                                                context, '/home');
+                                          });
+                                        }
+                                      },
+                                      color: Theme.of(context).primaryColor,
+                                      child: Text(GymratzLocalizations.of(context).text('LogIn'),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: smallFont)),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, '/register');
+                                        },
+                                        key: LoginScreen.signUpButtonKey,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(GymratzLocalizations.of(context).text('DontHaveAnAccount?'),
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: xsFont)),
+                                            Text(' ' + GymratzLocalizations.of(context).text('SignUp!'),
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .accentColor)),
+                                          ],
+                                        )),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    child: RaisedButton(
+                                      padding: const EdgeInsets.all(10.0),
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/home');
+                                      },
+                                      color: Colors.grey,
+                                      child: Text(GymratzLocalizations.of(context).text('ContinueAsGuest'),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: smallFont)),
+                                    ),
+                                  ),
+                                ],
+                              ))
                         ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, '/forgotPassword');
-                          },
-                          child: Text(GymratzLocalizations.of(context).text('ForgotPassword?'),
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: xsFont)),
-                        ),
-                      ),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.25,
-                          margin: const EdgeInsets.only(top: 10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                width: double.infinity,
-                                child: RaisedButton(
-                                  padding: const EdgeInsets.all(10.0),
-                                  onPressed: () {
-                                    //TODO: navigate to home page after authenticating
-                                    authAPI
-                                        .handleSignIn(
-                                            _emailCtrl.text, _pwdCtrl.text)
-                                        .then((user) {
-                                      Navigator.pushNamed(context, '/home');
-                                    });
-                                  },
-                                  color: Theme.of(context).primaryColor,
-                                  child: Text(GymratzLocalizations.of(context).text('LogIn'),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: smallFont)),
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, '/register');
-                                    },
-                                    key: LoginScreen.signUpButtonKey,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(GymratzLocalizations.of(context).text('DontHaveAnAccount?'),
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: xsFont)),
-                                        Text(' ' + GymratzLocalizations.of(context).text('SignUp!'),
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .accentColor)),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                child: RaisedButton(
-                                  padding: const EdgeInsets.all(10.0),
-                                  onPressed: () {
-                                    // TODO: If (first time signed in) {
-                                    //   register anonymously
-                                    // } else {
-                                    //   look at phone storage for anonymous user id;
-                                    // }
-                                    // authAPI.registerAnonymous().then((user) {
-                                    //   print(user.uid);
-                                      //save UID to phone storage so you can sign in with same
-                                      // guest account.
-                                      Navigator.pushNamed(context, '/home');
-                                    // });
-                                  },
-                                  color: Colors.grey,
-                                  child: Text(GymratzLocalizations.of(context).text('ContinueAsGuest'),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: smallFont)),
-                                ),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
-                )
+                    ))
               ],
             ),
           ),
