@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -11,10 +14,13 @@ class ForgotPasswordScreen extends StatefulWidget {
 class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
     with WidgetsBindingObserver {
   final TextEditingController _emailCtrl = TextEditingController();
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   @override
   void initState() {
     super.initState();
+    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -44,7 +50,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 100.0),
                   child: Text(
-                    'Forgot Password?',
+                    GymratzLocalizations.of(context).text('ForgotPassword?'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: mediumFont,
@@ -56,7 +62,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 10.0),
                   child: Text(
-                    'Enter your email below and we will send you an email to recover your password.',
+                    GymratzLocalizations.of(context).text('EnterEmailToRecoverPassword'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: smallFont,
@@ -79,7 +85,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                         },
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
-                          return val.length < 10 ? "Email is not valid" : null;
+                          return val.length < 10 ? GymratzLocalizations.of(context).text('InvalidEmail') : null;
                         },
                         decoration: InputDecoration(
                             labelText: 'Email',
@@ -108,7 +114,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             Navigator.pushNamed(context, '/');
                           },
                           color: Theme.of(context).primaryColor,
-                          child: Text('Send',
+                          child: Text(GymratzLocalizations.of(context).text('Send'),
                               style: TextStyle(
                                   color: Colors.white, fontSize: smallFont)),
                         ),
@@ -122,7 +128,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             Navigator.pushNamed(context, '/');
                           },
                           color: Colors.grey,
-                          child: Text('Never Mind',
+                          child: Text(GymratzLocalizations.of(context).text('NeverMind'),
                               style: TextStyle(
                                   color: Colors.white, fontSize: smallFont)),
                         ),
@@ -134,5 +140,10 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
             ),
           ),
         ));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }

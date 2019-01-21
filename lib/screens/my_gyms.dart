@@ -3,6 +3,9 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/account_needed.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class MyGymsScreen extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class MyGymsScreen extends StatefulWidget {
 class MyGymsScreenState extends State<MyGymsScreen> {
   var currentUser;
   bool auth = false;
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
@@ -35,6 +39,8 @@ class MyGymsScreenState extends State<MyGymsScreen> {
   @override
   void initState() {
     super.initState();
+    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    application.onLocaleChanged = onLocaleChange;
     checkForToken();
   }
 
@@ -45,7 +51,12 @@ class MyGymsScreenState extends State<MyGymsScreen> {
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(
             child: auth
-                ? Container(child: Text('my gyms'))
+                ? Container(child: Text(GymratzLocalizations.of(context).text('MyGyms')))
                 : accountNeeded(context)));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }

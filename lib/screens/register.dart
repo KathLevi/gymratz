@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
+
 
 class RegisterScreen extends StatefulWidget {
   // Component ID Keys
@@ -24,10 +28,13 @@ class RegisterScreenState extends State<RegisterScreen>
   FocusNode _password2FocusNode;
 
   bool _pwdHidden = true;
+  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   @override
   void initState() {
     super.initState();
+    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _password1FocusNode = FocusNode();
@@ -62,7 +69,7 @@ class RegisterScreenState extends State<RegisterScreen>
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 100.0),
                   child: Text(
-                    'GYMRATZ',
+                    GymratzLocalizations.of(context).text('gymratz'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 50.0,
@@ -85,11 +92,11 @@ class RegisterScreenState extends State<RegisterScreen>
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
                           return val.length < 3
-                              ? "Username must be longer than 3 characters"
+                              ? GymratzLocalizations.of(context).text('UsernameMustBeLongerThan3Characters')
                               : null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Username',
+                            labelText: GymratzLocalizations.of(context).text('Username'),
                             labelStyle: TextStyle(color: Colors.white),
                             enabledBorder: new UnderlineInputBorder(
                                 borderSide:
@@ -112,10 +119,10 @@ class RegisterScreenState extends State<RegisterScreen>
                         },
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
-                          return val.length < 10 ? "Invalid Email" : null;
+                          return val.length < 10 ? GymratzLocalizations.of(context).text('InvalidEmail') : null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: GymratzLocalizations.of(context).text('Email'),
                             labelStyle: TextStyle(color: Colors.white),
                             enabledBorder: new UnderlineInputBorder(
                                 borderSide:
@@ -136,7 +143,7 @@ class RegisterScreenState extends State<RegisterScreen>
                             style: TextStyle(color: Colors.white),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
-                                labelText: 'Password',
+                                labelText: GymratzLocalizations.of(context).text('Password'),
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -175,7 +182,7 @@ class RegisterScreenState extends State<RegisterScreen>
                             style: TextStyle(color: Colors.white),
                             // onFieldSubmitted: onSubmitted,
                             decoration: InputDecoration(
-                                labelText: 'Confirm Password',
+                                labelText: GymratzLocalizations.of(context).text('ConfirmPassword'),
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -217,7 +224,7 @@ class RegisterScreenState extends State<RegisterScreen>
                             });
                           },
                           color: Theme.of(context).primaryColor,
-                          child: Text('Register',
+                          child: Text(GymratzLocalizations.of(context).text('Register'),
                               style: TextStyle(
                                   color: Colors.white, fontSize: smallFont)),
                         ),
@@ -233,10 +240,10 @@ class RegisterScreenState extends State<RegisterScreen>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text('Already have an account? ',
+                                Text(GymratzLocalizations.of(context).text('AlreadyHaveAnAccount?'),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: xsFont)),
-                                Text('Log In!',
+                                Text(' '+ GymratzLocalizations.of(context).text('LogIn') + '!',
                                     style: TextStyle(
                                         color: Theme.of(context).accentColor)),
                               ],
@@ -249,5 +256,10 @@ class RegisterScreenState extends State<RegisterScreen>
             ),
           ),
         ));
+  }
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }
