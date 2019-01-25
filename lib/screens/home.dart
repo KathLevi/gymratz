@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/main.dart';
 import 'package:gymratz/application.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
+import 'package:gymratz/screens/gym.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -50,7 +50,12 @@ class HomeScreenState extends State<HomeScreen> {
                   children: <Widget>[
                   Icon(Icons.favorite),
                   Icon(Icons.location_on)
-                ],),));
+                ],),
+                onTap:(){
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => GymScreen(gym: document.data)
+                  ));
+                },));
   }
 
   _makeGymColumn() {
