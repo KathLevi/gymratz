@@ -26,6 +26,8 @@ class GymScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var boxSize = (MediaQuery.of(context).size.width / 2) - 2.0;
+
     // Use the Todo to create our UI
     checkForToken();
     return Scaffold(
@@ -36,55 +38,121 @@ class GymScreen extends StatelessWidget {
                 image: new DecorationImage(
                     image: new NetworkImage(gym['backgroundImage']),
                     fit: BoxFit.cover)),
-            child: Column(
-              children: <Widget>[
-                Container(
-                    alignment: Alignment.center,
-                    padding:
-                        const EdgeInsets.fromLTRB(60.0, 100.0, 60.0, 100.0),
-                    child: Column(children: <Widget>[
-                      Text(gym['name'],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 35.0,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(color: Colors.black, blurRadius: 3.0)
-                              ])),
-                              // maybe some short of address - short for these?
-                      Text(gym['address'],
-                          style: TextStyle(
+            child: Column(children: <Widget>[
+              Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.fromLTRB(60.0, 50.0, 60.0, 50.0),
+                  child: Column(children: <Widget>[
+                    Text(gym['name'],
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35.0,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(color: Colors.black, blurRadius: 3.0)
+                            ])),
+                    // maybe some short of address - short for these?
+                    Text(gym['address'],
+                        style: TextStyle(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 20.0
-                          )),
-                    ])),
-                Expanded(child: Container(
+                            fontSize: 20.0)),
+                  ])),
+              Expanded(
                   child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Row(
                     children: <Widget>[
-                       Expanded(child: Container(
-                      child: Row(children: <Widget>[
-                      Expanded(child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: new BoxDecoration(color: Theme.of(context).primaryColor),
-                        child: null)),
-                      Expanded( child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: new BoxDecoration(color: Theme.of(context).primaryColor),
-                        child: null))
-                    ]))),
-                    Expanded(child: Container(child: 
-                    Row(children: <Widget>[
-                      Expanded(child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: new BoxDecoration(color: Theme.of(context).primaryColor),
-                        child:null)),
-                      Expanded(child: Container(
-                        margin: EdgeInsets.all(2.0),
-                        decoration: new BoxDecoration(color: Theme.of(context).primaryColor),
-                        child: null))
-                    ]))) ]))
-            )])
-                )
-            );
+                      Container(
+                          width: boxSize,
+                          height: boxSize,
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 2.0, 4.0),
+                          child: FlatButton(
+                              onPressed: () {
+                                //go to current set
+                              },
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.code, size: 100.0),
+                                  Text('Current Set',
+                                      style: TextStyle(fontSize: 24.0)),
+                                ],
+                              ))),
+                      Container(
+                          width: boxSize,
+                          height: boxSize,
+                          margin: EdgeInsets.fromLTRB(2.0, 0.0, 0.0, 4.0),
+                          decoration: new BoxDecoration(
+                              color: Theme.of(context).primaryColor),
+                          child: FlatButton(
+                              onPressed: () {
+                                //go to gym info
+                              },
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.info_outline, size: 100.0),
+                                  Text('Gym Info',
+                                      style: TextStyle(fontSize: 24.0)),
+                                ],
+                              )))
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                          width: boxSize,
+                          height: boxSize,
+                          margin: EdgeInsets.fromLTRB(0.0, 0.0, 2.0, 0.0),
+                          decoration: new BoxDecoration(
+                              color: Theme.of(context).primaryColor),
+                          child: FlatButton(
+                              onPressed: () {
+                                //go to boulder climbs
+                              },
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.code, size: 100.0),
+                                  Text('Boulder',
+                                      style: TextStyle(fontSize: 24.0)),
+                                ],
+                              ))),
+                      Container(
+                          width: boxSize,
+                          height: boxSize,
+                          margin: EdgeInsets.fromLTRB(2.0, 0.0, 0.0, 0.0),
+                          decoration: new BoxDecoration(
+                              color: Theme.of(context).primaryColor),
+                          child: FlatButton(
+                              onPressed: () {
+                                //go to top rope
+                              },
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(Icons.code, size: 100.0),
+                                  Text('Top Rope',
+                                      style: TextStyle(fontSize: 24.0)),
+                                ],
+                              )))
+                    ],
+                  )
+                ],
+              ))
+            ])));
   }
 }
