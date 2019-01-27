@@ -259,7 +259,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   IconButton(
                                     icon: new Image.asset("icons/flags/png/us.png", package: 'country_icons'),
                                     onPressed: () {
-                                      // TODO onLocaleChanged
+                                      // TODO pull up locale selector menu
+                                      // onLocaleChanged or something like that
+                                      // probably pull locale selector out into its own file
                                     },
                                   ),
                                 ],
