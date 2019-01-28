@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gymratz/main.dart';
-import 'package:gymratz/widgets/error_dialog.dart';
 import 'package:gymratz/application.dart';
+import 'package:gymratz/main.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
-import 'package:country_icons/country_icons.dart';
+import 'package:gymratz/widgets/error_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
   // Component ID Keys
@@ -103,7 +102,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   : null;
                             },
                             decoration: InputDecoration(
-                                labelText: GymratzLocalizations.of(context).text('Email'),
+                                labelText: GymratzLocalizations.of(context)
+                                    .text('Email'),
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -130,7 +130,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 },
                                 // onFieldSubmitted: onSubmitted,
                                 decoration: InputDecoration(
-                                    labelText: GymratzLocalizations.of(context).text('Password'),
+                                    labelText: GymratzLocalizations.of(context)
+                                        .text('Password'),
                                     labelStyle: TextStyle(color: Colors.white),
                                     enabledBorder: new UnderlineInputBorder(
                                         borderSide: new BorderSide(
@@ -257,7 +258,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     ),
                                   ),
                                   IconButton(
-                                    icon: new Image.asset("icons/flags/png/us.png", package: 'country_icons'),
+                                    icon: new Image.asset(
+                                        "icons/flags/png/us.png",
+                                        package: 'country_icons'),
                                     onPressed: () {
                                       // TODO pull up locale selector menu
                                       // onLocaleChanged or something like that
