@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gymratz/network/data_types.dart';
 
 /**
  * EXAMPLE for inside a widget or something:
@@ -12,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreAPI {
   final Firestore _firestore = Firestore.instance;
 
+  /// Routes
 // route getters
   getAllRoutes() {
     return _firestore.collection('routes').snapshots();
@@ -35,6 +37,7 @@ class FirestoreAPI {
         .snapshots();
   }
 
+  /// Users
 // user setters
 /**
  * This must be done every single time a new user has been registered
@@ -64,12 +67,32 @@ class FirestoreAPI {
 //favorite route getters
 
 // gym getters
-  getGymById(id) {
-    return _firestore.collection('gyms').document(id).snapshots();
+  //TODO: figure out if there is a way to make this a future? Needed?
+  /// Gyms
+  Stream<Gym> loadGymById(id) {
+    return _firestore.collection('gyms').document(id).get().then((snapshot) {
+      try {
+        return Gym.fromSnapshot(snapshot);
+      } catch (e) {
+        print(e);
+        return null;
+      }
+    }).asStream();
   }
 
-  getAllGyms() {
-    return _firestore.collection('gyms').snapshots();
+  Stream<List<Gym>> loadAllGyms() {
+    return _firestore.collection('gyms').getDocuments().then((snapshot) {
+      List<Gym> gyms = [];
+      try {
+        snapshot.documents.forEach((item) {
+          gyms.add(Gym.fromSnapshot(item));
+        });
+        return gyms;
+      } catch (e) {
+        print(e);
+        return null;
+      }
+    }).asStream();
   }
 
   getGymsByName(name) {
