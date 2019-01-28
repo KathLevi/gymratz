@@ -29,3 +29,48 @@ class Gym {
         hours = snapshot['hours'] != null ? List.from(snapshot['hours']) : null,
         rates = snapshot['rates'] != null ? List.from(snapshot['rates']) : null;
 }
+
+enum Role { admin, moderator, user }
+
+class User {
+  String id;
+  String userId;
+  int role;
+  String displayName;
+
+  User(this.id, this.userId, this.role, this.displayName);
+
+  User.fromSnapshot(DocumentSnapshot snapshot)
+      : id = snapshot.documentID,
+        userId = snapshot['userId'],
+        role = snapshot['role'],
+        displayName = snapshot['displayName'];
+}
+
+enum RouteTypes { boulder, toprope, lead }
+
+class Route {
+  String id;
+  String name;
+  String description;
+  String grade;
+  String gym;
+  String pictureUrl;
+  int rating;
+  int type;
+  User user;
+
+  Route(this.id, this.name, this.description, this.grade, this.gym,
+      this.pictureUrl, this.rating, this.type, this.user);
+
+  Route.fromSnapshot(DocumentSnapshot snapshot)
+      : id = snapshot.documentID,
+        name = snapshot['name'],
+        description = snapshot['description'],
+        grade = snapshot['grade'],
+        gym = snapshot['gymId'],
+        pictureUrl = snapshot['pictureUrl'],
+        rating = snapshot['rating'],
+        type = snapshot['type'],
+        user = snapshot['userId'];
+}

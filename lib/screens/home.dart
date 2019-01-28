@@ -4,7 +4,7 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
-import 'package:gymratz/screens/gym_info.dart';
+import 'package:gymratz/screens/gym.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 
@@ -55,8 +55,8 @@ class HomeScreenState extends State<HomeScreen> {
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => GymInfoScreen(
-                      gymId: gym.id,
+                builder: (BuildContext context) => GymScreen(
+                      gym: gym,
                     )));
           }),
     );
