@@ -15,12 +15,12 @@ class FirestoreAPI {
   final Firestore _firestore = Firestore.instance;
 
   /// Routes
-  Stream<List<Route>> getAllRoutes() {
+  Stream<List<ClimbingRoute>> getAllRoutes() {
     return _firestore.collection('routes').getDocuments().then((snapshot) {
-      List<Route> routes = [];
+      List<ClimbingRoute> routes = [];
       try {
         snapshot.documents.forEach((item) {
-          routes.add(Route.fromSnapshot(item));
+          routes.add(ClimbingRoute.fromSnapshot(item));
         });
         return routes;
       } catch (e) {
@@ -30,10 +30,10 @@ class FirestoreAPI {
     }).asStream();
   }
 
-  Stream<Route> getRouteById(id) {
+  Stream<ClimbingRoute> getRouteById(id) {
     return _firestore.collection('routes').document(id).get().then((snapshot) {
       try {
-        return Route.fromSnapshot(snapshot);
+        return ClimbingRoute.fromSnapshot(snapshot);
       } catch (e) {
         print(e);
         return null;
@@ -41,16 +41,50 @@ class FirestoreAPI {
     }).asStream();
   }
 
-  Stream<List<Route>> getRoutesByName(name) {
+  Stream<List<ClimbingRoute>> getBoulderRoutesByGymId(gymId){
+    return _firestore.collection('routes')
+    .where('gymId', isEqualTo: gymId)
+    .where('type', isEqualTo: 'boulder')
+    .getDocuments().then((snapshot) {
+      List<ClimbingRoute> routes = [];
+      print(gymId);
+      try {
+        snapshot.documents.forEach((item) {
+          routes.add(ClimbingRoute.fromSnapshot(item));
+        });
+        return routes;
+      } catch (e) {
+        print(e);
+        return null;
+      }
+    }).asStream();
+  }
+
+  //   Stream<List<Gym>> loadAllGyms() {
+  //   return _firestore.collection('gyms').getDocuments().then((snapshot) {
+  //     List<Gym> gyms = [];
+  //     try {
+  //       snapshot.documents.forEach((item) {
+  //         gyms.add(Gym.fromSnapshot(item));
+  //       });
+  //       return gyms;
+  //     } catch (e) {
+  //       print(e);
+  //       return null;
+  //     }
+  //   }).asStream();
+  // }
+
+  Stream<List<ClimbingRoute>> getRoutesByName(name) {
     return _firestore
         .collection('routes')
         .where('name', isEqualTo: name)
         .getDocuments()
         .then((snapshot) {
-      List<Route> routes = [];
+      List<ClimbingRoute> routes = [];
       try {
         snapshot.documents.forEach((item) {
-          routes.add(Route.fromSnapshot(item));
+          routes.add(ClimbingRoute.fromSnapshot(item));
         });
         return routes;
       } catch (e) {
@@ -60,16 +94,16 @@ class FirestoreAPI {
     }).asStream();
   }
 
-  Stream<List<Route>> getRoutesByUserId(id) {
+  Stream<List<ClimbingRoute>> getRoutesByUserId(id) {
     return _firestore
         .collection('routes')
         .where('userId', isEqualTo: id)
         .getDocuments()
         .then((snapshot) {
-      List<Route> routes = [];
+      List<ClimbingRoute> routes = [];
       try {
         snapshot.documents.forEach((item) {
-          routes.add(Route.fromSnapshot(item));
+          routes.add(ClimbingRoute.fromSnapshot(item));
         });
         return routes;
       } catch (e) {
@@ -78,6 +112,7 @@ class FirestoreAPI {
       }
     }).asStream();
   }
+
 
   /// Users
 // This must be done every single time a new user has been registered
