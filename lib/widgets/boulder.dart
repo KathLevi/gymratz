@@ -3,6 +3,7 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
+import 'package:gymratz/screens/add_climb.dart';
 
 Widget boulder(BuildContext context, Gym gym) {
   _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
@@ -100,8 +101,11 @@ Widget boulder(BuildContext context, Gym gym) {
           bottom: 10.0,
           right: 10.0,
           child: FloatingActionButton(
-            onPressed: () => {
+            onPressed: (){
               //navigate to addRoute screen
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => AddClimbScreen(gym: gym)
+              ));
             },
             child: Icon(Icons.add),
             foregroundColor: Colors.white,
