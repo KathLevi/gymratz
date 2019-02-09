@@ -102,7 +102,6 @@ Widget boulder(BuildContext context, Gym gym) {
           right: 10.0,
           child: FloatingActionButton(
             onPressed: (){
-              //navigate to addRoute screen
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => AddClimbScreen(gym: gym)
               ));

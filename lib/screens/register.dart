@@ -56,7 +56,7 @@ class RegisterScreenState extends State<RegisterScreen>
         appBar: null,
         body: SafeArea(
           child: Container(
-            width: double.infinity,
+            width: double.infinity, // double infinity?????? such power.... it's like 2 inifinity gauntlets
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/mainImage.jpg'),
