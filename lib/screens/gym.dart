@@ -35,7 +35,7 @@ class GymScreen extends StatelessWidget {
     return Scaffold(
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
-        body: new Container(
+        body: SafeArea(child: new Container(
             decoration: new BoxDecoration(
                 image: new DecorationImage(
                     image: new NetworkImage(gym.bgImage), fit: BoxFit.cover)),
@@ -178,6 +178,6 @@ class GymScreen extends StatelessWidget {
                   )
                 ],
               ))
-            ])));
+            ]))));
   }
 }
