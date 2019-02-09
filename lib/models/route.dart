@@ -2,7 +2,7 @@ import 'package:gymratz/enums/route_types.dart';
 import 'package:gymratz/models/gym.dart';
 import 'package:gymratz/models/user.dart';
 
-class Route {
+class ClimbingRoute {
   String _id;
   String _name;
   String _description;
@@ -13,9 +13,9 @@ class Route {
   RouteTypes _type;
   User _user;
 
-  Route(this._id, this._name, this._description, this._grade, this._gym, this._pictureUrl, this._rating, this._type, this._user);
+  ClimbingRoute(this._name, this._description, this._grade, this._gym, this._type, this._user);
 
-  Route.map(dynamic obj) {
+  ClimbingRoute.map(dynamic obj) {
     this._id = obj['id'];
     this._name = obj['name'];
     this._description = obj['description'];
@@ -53,7 +53,7 @@ class Route {
     return map;
   }
 
-  Route.fromMap(Map<String, dynamic> map) {
+  ClimbingRoute.fromMap(Map<String, dynamic> map) {
     this._id = map['id'] ?? '';
     this._name = map['name'] ?? '';
     this._description = map['description'] ?? '';

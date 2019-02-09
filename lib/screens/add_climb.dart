@@ -107,9 +107,9 @@ class AddClimbScreenState extends State<AddClimbScreen>
             value: value, child: new Text(value));
       }).toList();
     } else {
-      return  [ new DropdownMenuItem<String>(
-        value: null, child: new Text("Select a route type first.") 
-      )
+      return [
+        new DropdownMenuItem<String>(
+            value: null, child: new Text("Select a route type first."))
       ];
     }
   }
@@ -193,24 +193,43 @@ class AddClimbScreenState extends State<AddClimbScreen>
                                 }),
                             //route grade
                             DropdownButtonFormField(
-                              items: getGradeItems(),
-                              onChanged: (val){
-                                setState((){
-                                  routeGrade = val;
-                                });
-                              }),
+                                items: getGradeItems(),
+                                onChanged: (val) {
+                                  setState(() {
+                                    routeGrade = val;
+                                  });
+                                }),
                             // description
                             TextFormField(
-                              controller: _routeDescriptionCtrl,
-                              autocorrect: true,
-                              focusNode: _routeDescriptionFocusNode,
-                              onFieldSubmitted: (str){
-                                _routeDescriptionFocusNode.unfocus();
+                                controller: _routeDescriptionCtrl,
+                                autocorrect: true,
+                                focusNode: _routeDescriptionFocusNode,
+                                onFieldSubmitted: (str) {
+                                  _routeDescriptionFocusNode.unfocus();
+                                },
+                                decoration: InputDecoration(
+                                    labelText: 'Description (optional)'),
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null),
+
+                            RaisedButton(
+                              padding: const EdgeInsets.all(10.0),
+                              color: Theme.of(context).primaryColor,
+                              child: Text("Submit",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: smallFont)),
+                              onPressed: () {
+                                ClimbingRoute climbingRoute = new ClimbingRoute(
+                                    _routeNameCtrl.text,
+                                    _routeDescriptionCtrl.text,
+                                    routeGrade,
+                                    widget.gym.id,
+                                    routeType,
+                                    "some random user id");
+                                fsAPI.addRoute(climbingRoute);
                               },
-                              decoration: InputDecoration(labelText: 'Description (optional)'),
-                              textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null
                             )
                           ],
                         ))

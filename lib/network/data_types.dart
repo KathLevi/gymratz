@@ -52,6 +52,7 @@ enum RouteTypes { boulder, toprope, lead }
 class ClimbingRoute {
   String id;
   String name;
+  String color;
   String description;
   String grade;
   String gym;
@@ -60,12 +61,12 @@ class ClimbingRoute {
   int rating;
   String userId;
 
-  ClimbingRoute(this.id, this.name, this.description, this.grade, this.gym,
-      this.pictureUrl, this.rating, this.type, this.userId);
+  ClimbingRoute(this.name, this.description, this.grade, this.gym, this.type, this.userId);
 
   ClimbingRoute.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
         name = snapshot['name'],
+        color = snapshot['color'],
         description = snapshot['description'],
         grade = snapshot['grade'],
         gym = snapshot['gymId'],
