@@ -5,14 +5,13 @@ import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 Widget boulder(BuildContext context, Gym gym) {
-    _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
+  _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
     return Card(
       child: InkWell(
           child: ListTile(
             leading: Image.network(climbingRoute.pictureUrl,
                 width: 50.0, height: 50.0, fit: BoxFit.contain),
             title: Text(climbingRoute.name),
-            subtitle: Text(climbingRoute.description),
             //TODO: add in number of climbers
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,15 +22,14 @@ Widget boulder(BuildContext context, Gym gym) {
             ),
           ),
           onTap: () {
-            // Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (BuildContext context) => GymScreen(
-            //           gym: gym,
-            //         )));
+            /* TO DO 
+            * Add navigation to singular route. Should a single route be a screen or a separate widget like this?
+            */
           }),
     );
   }
-  
-      _makeRouteColumn() {
+
+  _makeRouteColumn() {
     return StreamBuilder<List<ClimbingRoute>>(
         stream: fsAPI.getBoulderRoutesByGymId(gym.id),
         builder: (context, AsyncSnapshot<List<ClimbingRoute>> snapshot) {
@@ -72,35 +70,44 @@ Widget boulder(BuildContext context, Gym gym) {
             ]),
           );
         });
-      }
+  }
 
-  
   return Container(
     margin: const EdgeInsets.all(10.0),
-    child: Column(
+    child: Stack(
       children: <Widget>[
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text('Boulder Routes',
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: mediumFont)),
-              Image.network(gym.logo,
-                  width: 30.0, height: 30.0, fit: BoxFit.contain),
-            ],
-          ),
+        Column(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text('Boulder Routes',
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: mediumFont)),
+                  Image.network(gym.logo,
+                      width: 30.0, height: 30.0, fit: BoxFit.contain),
+                ],
+              ),
+            ),
+            Expanded(child: _makeRouteColumn())
+            // Image.network(gym.bgImage, width: double.infinity),
+          ],
         ),
-        Expanded(
-          child: _makeRouteColumn()
+        Positioned(
+          bottom: 10.0,
+          right: 10.0,
+          child: FloatingActionButton(
+            onPressed: () => {
+              //navigate to addRoute screen
+            },
+            child: Icon(Icons.add),
+            foregroundColor: Colors.white,
+          )
         )
-        // Image.network(gym.bgImage, width: double.infinity),
       ],
     ),
   );
-
-
-
 }
