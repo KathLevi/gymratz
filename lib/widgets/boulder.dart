@@ -74,7 +74,7 @@ Widget boulder(BuildContext context, Gym gym) {
   }
 
   return Container(
-    margin: const EdgeInsets.all(10.0),
+    margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
     child: Stack(
       children: <Widget>[
         Column(
