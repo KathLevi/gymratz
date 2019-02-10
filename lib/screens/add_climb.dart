@@ -147,89 +147,211 @@ class AddClimbScreenState extends State<AddClimbScreen>
                 padding: EdgeInsets.all(8.0),
                 child: ListView(
                   children: <Widget>[
-                    Container(child: Text("Add route to: " + widget.gym.name)),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                              child: Text("Add route",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: largeFont))),
+                          Container(
+                            width: 40.0,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(widget.gym.logo))),
+                          )
+                        ],
+                      ),
+                    ),
                     Container(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: <Widget>[
                             //route name
-                            TextFormField(
-                              controller: _routeNameCtrl,
-                              autocorrect: false,
-                              focusNode: _routeNameFocusNode,
-                              onFieldSubmitted: (str) {
-                                _routeNameFocusNode.unfocus();
-                                FocusScope.of(context)
-                                    .requestFocus(_routeColorFocusNode);
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Route Name (optional)',
-                              ),
-                              textInputAction: TextInputAction.next,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Name:",
+                                  style: TextStyle(
+                                      fontSize: smallFont,
+                                      color: Theme.of(context).accentColor),
+                                ),
+                                Container(
+                                    width: 200.0,
+                                    child: TextFormField(
+                                      controller: _routeNameCtrl,
+                                      autocorrect: false,
+                                      focusNode: _routeNameFocusNode,
+                                      onFieldSubmitted: (str) {
+                                        _routeNameFocusNode.unfocus();
+                                        FocusScope.of(context)
+                                            .requestFocus(_routeColorFocusNode);
+                                      },
+                                      textInputAction: TextInputAction.next,
+                                    ))
+                              ],
                             ),
                             //route color
-                            TextFormField(
-                              controller: _routeColorCtrl,
-                              autocorrect: true,
-                              focusNode: _routeColorFocusNode,
-                              onFieldSubmitted: (str) {
-                                _routeColorFocusNode.unfocus();
-                                FocusScope.of(context)
-                                    .requestFocus(_routeTypeFocusNode);
-                              },
-                              decoration: InputDecoration(labelText: 'Color*'),
-                              textInputAction: TextInputAction.next,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text("Color:",
+                                    style: TextStyle(
+                                        fontSize: smallFont,
+                                        color: Theme.of(context).accentColor)),
+                                Container(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller: _routeColorCtrl,
+                                    autocorrect: true,
+                                    focusNode: _routeColorFocusNode,
+                                    onFieldSubmitted: (str) {
+                                      _routeColorFocusNode.unfocus();
+                                      FocusScope.of(context)
+                                          .requestFocus(_routeTypeFocusNode);
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                  ),
+                                )
+                              ],
                             ),
                             //route type
-                            DropdownButtonFormField(
-                                items: routeTypes.map((String value) {
-                                  return new DropdownMenuItem<String>(
-                                      value: value, child: new Text(value));
-                                }).toList(),
-                                onChanged: (val) {
-                                  setState(() {
-                                    routeType = val;
-                                  });
-                                }),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text("Type:",
+                                    style: TextStyle(
+                                        fontSize: smallFont,
+                                        color: Theme.of(context).accentColor)),
+                                Container(
+                                  width: 200.0,
+                                  child: DropdownButtonFormField(
+                                      hint: Text("select a route type"),
+                                      value: routeType,
+                                      items: routeTypes.map((String value) {
+                                        return new DropdownMenuItem<String>(
+                                            value: value,
+                                            child: new Text(value));
+                                      }).toList(),
+                                      onChanged: (val) {
+                                        if (val != routeType) {
+                                          setState(() {
+                                            routeType = val;
+                                            routeGrade = null;
+                                          });
+                                        }
+                                      }),
+                                )
+                              ],
+                            ),
                             //route grade
-                            DropdownButtonFormField(
-                                items: getGradeItems(),
-                                onChanged: (val) {
-                                  setState(() {
-                                    routeGrade = val;
-                                  });
-                                }),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text("Grade:",
+                                    style: TextStyle(
+                                        fontSize: smallFont,
+                                        color: Theme.of(context).accentColor)),
+                                Container(
+                                  width: 200.0,
+                                  child: DropdownButtonFormField(
+                                      hint: Text("select a grade"),
+                                      value: routeGrade,
+                                      items: getGradeItems(),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          routeGrade = val;
+                                        });
+                                      }),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.all(10.0),
+                                  height: 140.0,
+                                  width: 112.0,
+                                  alignment: Alignment(0.0, 0.0),
+                                  color: Colors.grey,
+                                  child: Text(
+                                    "NO PHOTO AVAILABLE",
+                                  ),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.all(10.0),
+                                    height: 140.0,
+                                    width: 112.0,
+                                    alignment: Alignment(0.0, 0.0),
+                                    child: Text("Click to add photo",
+                                        style: TextStyle(color: Colors.grey)),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.grey, width: 1.0),
+                                      top: BorderSide(
+                                          color: Colors.grey, width: 1.0),
+                                      left: BorderSide(
+                                          color: Colors.grey, width: 1.0),
+                                      right: BorderSide(
+                                          color: Colors.grey, width: 1.0),
+                                    )))
+                              ],
+                            ),
                             // description
-                            TextFormField(
-                                controller: _routeDescriptionCtrl,
-                                autocorrect: true,
-                                focusNode: _routeDescriptionFocusNode,
-                                onFieldSubmitted: (str) {
-                                  _routeDescriptionFocusNode.unfocus();
-                                },
-                                decoration: InputDecoration(
-                                    labelText: 'Description (optional)'),
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.multiline,
-                                maxLines: null),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        0.0, 10.0, 0.0, 0.0)),
+                                Text("Description:",
+                                    style: TextStyle(
+                                        color: Theme.of(context).accentColor,
+                                        fontSize: smallFont)),
+                                TextFormField(
+                                    controller: _routeDescriptionCtrl,
+                                    autocorrect: true,
+                                    focusNode: _routeDescriptionFocusNode,
+                                    onFieldSubmitted: (str) {
+                                      _routeDescriptionFocusNode.unfocus();
+                                    },
+                                    decoration: InputDecoration(
+                                        labelText: '(optional)'),
+                                    textInputAction: TextInputAction.next,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null),
+                              ],
+                            ),
 
-                            RaisedButton(
-                              padding: const EdgeInsets.all(10.0),
-                              color: Theme.of(context).primaryColor,
-                              child: Text("Submit",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: smallFont)),
-                              onPressed: () {
-                                ClimbingRoute climbingRoute = new ClimbingRoute(
-                                    _routeNameCtrl.text,
-                                    _routeDescriptionCtrl.text,
-                                    routeGrade,
-                                    widget.gym.id,
-                                    routeType,
-                                    "some random user id");
-                                fsAPI.addRoute(climbingRoute);
-                              },
+                            Container(
+                              margin:
+                                  EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                              child: RaisedButton(
+                                padding: const EdgeInsets.all(10.0),
+                                color: Theme.of(context).primaryColor,
+                                child: Text("Submit",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: smallFont)),
+                                onPressed: () {
+                                  ClimbingRoute climbingRoute =
+                                      new ClimbingRoute(
+                                          _routeNameCtrl.text,
+                                          _routeDescriptionCtrl.text,
+                                          routeGrade,
+                                          widget.gym.id,
+                                          routeType,
+                                          "some random user id");
+                                  fsAPI.addRoute(climbingRoute);
+                                },
+                              ),
                             )
                           ],
                         ))
