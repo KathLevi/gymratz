@@ -38,7 +38,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
   var routeType;
   var routeGrade;
 
-  final List<String> routeTypes = ['Boulder', 'Rope'];
+  final List<String> routeTypes = ['boulder', 'rope'];
   final boulderGrades = <String>[
     'VB',
     'V0',
@@ -96,12 +96,12 @@ class AddClimbScreenState extends State<AddClimbScreen>
   FocusNode _routeDescriptionFocusNode;
 
   getGradeItems() {
-    if (routeType == "Boulder") {
+    if (routeType == "boulder") {
       return boulderGrades.map((String value) {
         return new DropdownMenuItem<String>(
             value: value, child: new Text(value));
       }).toList();
-    } else if (routeType == "Rope") {
+    } else if (routeType == "rope") {
       return ropeGrades.map((String value) {
         return new DropdownMenuItem<String>(
             value: value, child: new Text(value));
@@ -344,6 +344,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                                   ClimbingRoute climbingRoute =
                                       new ClimbingRoute(
                                           _routeNameCtrl.text,
+                                          _routeColorCtrl.text,
                                           _routeDescriptionCtrl.text,
                                           routeGrade,
                                           widget.gym.id,

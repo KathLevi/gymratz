@@ -55,13 +55,13 @@ class ClimbingRoute {
   String color;
   String description;
   String grade;
-  String gym;
+  String gymId;
   String pictureUrl;
   String type;
   int rating;
   String userId;
 
-  ClimbingRoute(this.name, this.description, this.grade, this.gym, this.type, this.userId);
+  ClimbingRoute(this.name, this.color, this.description, this.grade, this.gymId, this.type, this.userId);
 
   ClimbingRoute.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
@@ -69,7 +69,7 @@ class ClimbingRoute {
         color = snapshot['color'],
         description = snapshot['description'],
         grade = snapshot['grade'],
-        gym = snapshot['gymId'],
+        gymId = snapshot['gymId'],
         pictureUrl = snapshot['pictureUrl'],
         rating = snapshot['rating'],
         type = snapshot['string'],

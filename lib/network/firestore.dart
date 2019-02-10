@@ -38,6 +38,7 @@ class FirestoreAPI {
         dataMap['color'] = route.color;
         dataMap['type'] = route.type;
         dataMap['grade'] = route.grade;
+        dataMap['gymId'] = route.gymId;
         dataMap['description'] = route.description;
         await tx.set(ds.reference, dataMap);
 
