@@ -29,6 +29,23 @@ class FirestoreAPI {
       }
     }).asStream();
   }
+  // I'm not too familiar with streams. Can we us a stream for this?
+  Future addRoute(ClimbingRoute route) async{
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds = await tx.get(Firestore.instance.collection('routes').document());
+        var dataMap = new Map<String, dynamic>();
+        dataMap['name'] = route.name;
+        dataMap['color'] = route.color;
+        dataMap['type'] = route.type;
+        dataMap['grade'] = route.grade;
+        dataMap['description'] = route.description;
+        await tx.set(ds.reference, dataMap);
+
+        return dataMap;
+    };
+
+    return Firestore.instance.runTransaction(createTransaction);
+  }
 
   Stream<ClimbingRoute> getRouteById(id) {
     return _firestore.collection('routes').document(id).get().then((snapshot) {
