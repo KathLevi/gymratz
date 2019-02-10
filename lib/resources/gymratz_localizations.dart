@@ -28,6 +28,7 @@ class GymratzLocalizations {
   }
 
   get currentLanguage => locale.languageCode;
+  get currentCountryCode => locale.countryCode;
 
   String text(String key) {
     if (_localizedValues == null) {

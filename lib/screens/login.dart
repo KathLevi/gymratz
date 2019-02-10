@@ -4,6 +4,7 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/widgets/error_dialog.dart';
+import 'package:gymratz/widgets/locale_selector.dart';
 
 class LoginScreen extends StatefulWidget {
   // Component ID Keys
@@ -265,6 +266,10 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                       // TODO pull up locale selector menu
                                       // onLocaleChanged or something like that
                                       // probably pull locale selector out into its own file
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                LocaleSelector()));
                                     },
                                   ),
                                 ],
