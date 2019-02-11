@@ -3,7 +3,8 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/widgets/camera.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:async/async.dart';
 
 class AddClimbScreen extends StatefulWidget {
   final Gym
@@ -115,6 +116,14 @@ class AddClimbScreenState extends State<AddClimbScreen>
             value: null, child: new Text("Select a route type first."))
       ];
     }
+  }
+
+  openCamera() async{
+    var picture = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+    );
+
+    return picture;
   }
 
   formWidget() {
@@ -265,9 +274,8 @@ class AddClimbScreenState extends State<AddClimbScreen>
                             alignment: Alignment(0.0, 0.0),
                             child: InkWell(
                               onTap: () {
-                                setState(() {
-                                  showCamera = true;
-                                });
+                                print('show camera');
+                                openCamera();
                               },
                               child: Text("Click to add photo",
                                   style: TextStyle(color: Colors.grey)),
@@ -363,6 +371,6 @@ class AddClimbScreenState extends State<AddClimbScreen>
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(
-            child: (showCamera) ? futureCamera() : formWidget()));
+            child:formWidget()));
   }
 }
