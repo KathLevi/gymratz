@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gymratz/network/data_types.dart';
+import 'package:gymratz/main.dart';
+import 'dart:io';
 
 //TODO: figure out if there is a way to make this a future? Needed?
 
@@ -30,8 +32,9 @@ class FirestoreAPI {
     }).asStream();
   }
   // I'm not too familiar with streams. Can we us a stream for this?
-  Future addRoute(ClimbingRoute route) async{
-    final TransactionHandler createTransaction = (Transaction tx) async {
+  Future addRoute(ClimbingRoute route, File image) async{
+    storageAPI.uploadImage(image).then((String urlString){
+      final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(Firestore.instance.collection('routes').document());
         var dataMap = new Map<String, dynamic>();
         dataMap['name'] = route.name;
@@ -40,12 +43,13 @@ class FirestoreAPI {
         dataMap['grade'] = route.grade;
         dataMap['gymId'] = route.gymId;
         dataMap['description'] = route.description;
+        dataMap['pictureUrl'] = urlString;
         await tx.set(ds.reference, dataMap);
 
         return dataMap;
     };
-
-    return Firestore.instance.runTransaction(createTransaction);
+      return Firestore.instance.runTransaction(createTransaction);
+    });
   }
 
   Stream<ClimbingRoute> getRouteById(id) {
