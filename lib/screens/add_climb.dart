@@ -4,7 +4,7 @@ import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:async/async.dart';
+import 'dart:io';
 
 class AddClimbScreen extends StatefulWidget {
   final Gym
@@ -41,6 +41,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
   final TextEditingController _routeDescriptionCtrl = TextEditingController();
   var routeType;
   var routeGrade;
+  File _image;
 
   final List<String> routeTypes = ['boulder', 'rope'];
   final boulderGrades = <String>[
@@ -118,12 +119,35 @@ class AddClimbScreenState extends State<AddClimbScreen>
     }
   }
 
-  openCamera() async{
-    var picture = await ImagePicker.pickImage(
-      source: ImageSource.camera,
-    );
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
 
-    return picture;
+    setState(() {
+      _image = image;
+    });
+  }
+
+  getPreview() {
+    if (_image != null) {
+      return Container(
+        height: 140.0,
+        width: 116.0,
+        margin: EdgeInsets.all(10.0),
+        decoration:
+            BoxDecoration(image: DecorationImage(image: FileImage(_image))),
+      );
+    } else {
+      return Container(
+        margin: EdgeInsets.all(10.0),
+        height: 140.0,
+        width: 112.0,
+        alignment: Alignment(0.0, 0.0),
+        color: Colors.grey,
+        child: Text(
+          "NO PHOTO AVAILABLE",
+        ),
+      );
+    }
   }
 
   formWidget() {
@@ -257,16 +281,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(10.0),
-                          height: 140.0,
-                          width: 112.0,
-                          alignment: Alignment(0.0, 0.0),
-                          color: Colors.grey,
-                          child: Text(
-                            "NO PHOTO AVAILABLE",
-                          ),
-                        ),
+                        getPreview(),
                         Container(
                             margin: EdgeInsets.all(10.0),
                             height: 140.0,
@@ -275,7 +290,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                             child: InkWell(
                               onTap: () {
                                 print('show camera');
-                                openCamera();
+                                getImage();
                               },
                               child: Text("Click to add photo",
                                   style: TextStyle(color: Colors.grey)),
@@ -370,7 +385,6 @@ class AddClimbScreenState extends State<AddClimbScreen>
         resizeToAvoidBottomPadding: false,
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
-        body: SafeArea(
-            child:formWidget()));
+        body: SafeArea(child: formWidget()));
   }
 }
