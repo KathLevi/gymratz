@@ -33,7 +33,7 @@ class FirestoreAPI {
   }
   // I'm not too familiar with streams. Can we us a stream for this?
   Future addRoute(ClimbingRoute route, File image) async{
-    storageAPI.uploadImage(image).then((String urlString){
+    storageAPI.uploadImage(image, route.gymId, route.name).then((String urlString){
       final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot ds = await tx.get(Firestore.instance.collection('routes').document());
         var dataMap = new Map<String, dynamic>();
