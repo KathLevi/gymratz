@@ -346,7 +346,9 @@ class AddClimbScreenState extends State<AddClimbScreen>
                               widget.gym.id,
                               routeType,
                               "some random user id");
-                          fsAPI.addRoute(climbingRoute, _image);
+                          fsAPI.addRoute(climbingRoute, _image).then((res){
+                            Navigator.pop(context);
+                          });
                         },
                       ),
                     )
