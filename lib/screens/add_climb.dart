@@ -48,7 +48,6 @@ class AddClimbScreenState extends State<AddClimbScreen>
     'VB',
     'V0',
     'V1',
-    'V1',
     'V2',
     'V3',
     'V4',
