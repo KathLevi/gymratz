@@ -119,7 +119,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 720.0, maxHeight: 1280.0);
 
     setState(() {
       _image = image;
