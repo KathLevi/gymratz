@@ -119,7 +119,8 @@ class AddClimbScreenState extends State<AddClimbScreen>
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera, maxWidth: 720.0, maxHeight: 1280.0);
+    var image = await ImagePicker.pickImage(
+        source: ImageSource.camera, maxWidth: 720.0, maxHeight: 1280.0);
 
     setState(() {
       _image = image;
@@ -137,15 +138,29 @@ class AddClimbScreenState extends State<AddClimbScreen>
       );
     } else {
       return Container(
-        margin: EdgeInsets.all(10.0),
-        height: 140.0,
-        width: 112.0,
-        alignment: Alignment(0.0, 0.0),
-        color: Colors.grey,
-        child: Text(
-          "NO PHOTO AVAILABLE",
-        ),
-      );
+          margin: EdgeInsets.all(10.0),
+          height: 140.0,
+          width: 112.0,
+          alignment: Alignment(0.0, 0.0),
+          child: Column(
+            children: <Widget>[
+              Icon(Icons.not_interested, size: 60.0),
+              Text(
+                'PHOTO NOT ADDED',
+                textAlign: TextAlign.center,
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          // decoration: BoxDecoration(
+          //     border: Border(
+          //   bottom: BorderSide(color: Colors.grey, width: 1.0),
+          //   top: BorderSide(color: Colors.grey, width: 1.0),
+          //   left: BorderSide(color: Colors.grey, width: 1.0),
+          //   right: BorderSide(color: Colors.grey, width: 1.0),
+          // )
+          // )
+          );
     }
   }
 
@@ -282,26 +297,25 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       children: <Widget>[
                         getPreview(),
                         Container(
-                            margin: EdgeInsets.all(10.0),
-                            height: 140.0,
-                            width: 112.0,
-                            alignment: Alignment(0.0, 0.0),
-                            child: InkWell(
-                              onTap: () {
-                                print('show camera');
-                                getImage();
-                              },
-                              child: Text("Click to add photo",
-                                  style: TextStyle(color: Colors.grey)),
-                            ),
-                            decoration: BoxDecoration(
-                                border: Border(
-                              bottom:
-                                  BorderSide(color: Colors.grey, width: 1.0),
-                              top: BorderSide(color: Colors.grey, width: 1.0),
-                              left: BorderSide(color: Colors.grey, width: 1.0),
-                              right: BorderSide(color: Colors.grey, width: 1.0),
-                            )))
+                          margin: EdgeInsets.all(10.0),
+                          height: 140.0,
+                          width: 112.0,
+                          alignment: Alignment(0.0, 0.0),
+                          child: SizedBox.expand(
+                            child:RaisedButton(
+                            color: Colors.white,
+                            onPressed: () {
+                              print('show camera');
+                              getImage();
+                            },
+                            child: Column(children: <Widget>[
+                              Icon(Icons.add_a_photo, size: 40.0),
+                              Text('ADD PHOTO', textAlign: TextAlign.center,)
+                            ], mainAxisAlignment: MainAxisAlignment.center,),
+                              
+                            
+                          ),
+                        ))
                       ],
                     ),
                     // description
@@ -346,7 +360,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                               widget.gym.id,
                               routeType,
                               "some random user id");
-                          fsAPI.addRoute(climbingRoute, _image).then((res){
+                          fsAPI.addRoute(climbingRoute, _image).then((res) {
                             Navigator.pop(context);
                           });
                         },
