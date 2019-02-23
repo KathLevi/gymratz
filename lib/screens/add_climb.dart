@@ -134,9 +134,9 @@ class AddClimbScreenState extends State<AddClimbScreen>
         width: 112.0,
         margin: EdgeInsets.all(10.0),
         alignment: Alignment(0.0, 0.0),
-        
-        decoration:
-            BoxDecoration(image: DecorationImage(image: FileImage(_image), fit: BoxFit.fitWidth)),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: FileImage(_image), fit: BoxFit.fitWidth)),
       );
     } else {
       return Container(
@@ -343,12 +343,19 @@ class AddClimbScreenState extends State<AddClimbScreen>
 
                     Container(
                       margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                      width: 150.0,
                       child: RaisedButton(
                         padding: const EdgeInsets.all(10.0),
                         color: Theme.of(context).primaryColor,
-                        child: Text("Submit",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: smallFont)),
+                        child: Row(children: <Widget>[
+                          Text("Submit",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: smallFont)),
+                          Icon(
+                            Icons.send,
+                            color: Colors.white,
+                          )
+                        ], mainAxisAlignment: MainAxisAlignment.spaceEvenly,),
                         onPressed: () {
                           ClimbingRoute climbingRoute = new ClimbingRoute(
                               _routeNameCtrl.text,
@@ -359,13 +366,12 @@ class AddClimbScreenState extends State<AddClimbScreen>
                               routeType,
                               "some random user id");
                           fsAPI.addRoute(climbingRoute, _image).then((res) {
-                            Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                GymInfoScreen(
-                                                  gym: widget.gym,
-                                                  index: 2,
-                                                )));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    GymInfoScreen(
+                                      gym: widget.gym,
+                                      index: 2,
+                                    )));
                           });
                         },
                       ),
