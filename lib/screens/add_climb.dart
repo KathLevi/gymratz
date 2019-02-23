@@ -4,6 +4,7 @@ import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:gymratz/screens/gym_info.dart';
 import 'dart:io';
 
 class AddClimbScreen extends StatefulWidget {
@@ -121,7 +122,6 @@ class AddClimbScreenState extends State<AddClimbScreen>
   Future getImage() async {
     var image = await ImagePicker.pickImage(
         source: ImageSource.camera, maxWidth: 720.0, maxHeight: 1280.0);
-
     setState(() {
       _image = image;
     });
@@ -131,36 +131,30 @@ class AddClimbScreenState extends State<AddClimbScreen>
     if (_image != null) {
       return Container(
         height: 140.0,
-        width: 116.0,
+        width: 112.0,
         margin: EdgeInsets.all(10.0),
+        alignment: Alignment(0.0, 0.0),
+        
         decoration:
-            BoxDecoration(image: DecorationImage(image: FileImage(_image))),
+            BoxDecoration(image: DecorationImage(image: FileImage(_image), fit: BoxFit.fitWidth)),
       );
     } else {
       return Container(
-          margin: EdgeInsets.all(10.0),
-          height: 140.0,
-          width: 112.0,
-          alignment: Alignment(0.0, 0.0),
-          child: Column(
-            children: <Widget>[
-              Icon(Icons.not_interested, size: 60.0),
-              Text(
-                'PHOTO NOT ADDED',
-                textAlign: TextAlign.center,
-              )
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-          // decoration: BoxDecoration(
-          //     border: Border(
-          //   bottom: BorderSide(color: Colors.grey, width: 1.0),
-          //   top: BorderSide(color: Colors.grey, width: 1.0),
-          //   left: BorderSide(color: Colors.grey, width: 1.0),
-          //   right: BorderSide(color: Colors.grey, width: 1.0),
-          // )
-          // )
-          );
+        margin: EdgeInsets.all(10.0),
+        height: 140.0,
+        width: 112.0,
+        alignment: Alignment(0.0, 0.0),
+        child: Column(
+          children: <Widget>[
+            Icon(Icons.not_interested, size: 60.0),
+            Text(
+              'PHOTO NOT ADDED',
+              textAlign: TextAlign.center,
+            )
+          ],
+          mainAxisAlignment: MainAxisAlignment.center,
+        ),
+      );
     }
   }
 
@@ -297,25 +291,29 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       children: <Widget>[
                         getPreview(),
                         Container(
-                          margin: EdgeInsets.all(10.0),
-                          height: 140.0,
-                          width: 112.0,
-                          alignment: Alignment(0.0, 0.0),
-                          child: SizedBox.expand(
-                            child:RaisedButton(
-                            color: Colors.white,
-                            onPressed: () {
-                              print('show camera');
-                              getImage();
-                            },
-                            child: Column(children: <Widget>[
-                              Icon(Icons.add_a_photo, size: 40.0),
-                              Text('ADD PHOTO', textAlign: TextAlign.center,)
-                            ], mainAxisAlignment: MainAxisAlignment.center,),
-                              
-                            
-                          ),
-                        ))
+                            margin: EdgeInsets.all(10.0),
+                            height: 140.0,
+                            width: 112.0,
+                            alignment: Alignment(0.0, 0.0),
+                            child: SizedBox.expand(
+                              child: RaisedButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  print('show camera');
+                                  getImage();
+                                },
+                                child: Column(
+                                  children: <Widget>[
+                                    Icon(Icons.add_a_photo, size: 40.0),
+                                    Text(
+                                      'ADD PHOTO',
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ],
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                ),
+                              ),
+                            ))
                       ],
                     ),
                     // description
@@ -361,7 +359,13 @@ class AddClimbScreenState extends State<AddClimbScreen>
                               routeType,
                               "some random user id");
                           fsAPI.addRoute(climbingRoute, _image).then((res) {
-                            Navigator.pop(context);
+                            Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                GymInfoScreen(
+                                                  gym: widget.gym,
+                                                  index: 2,
+                                                )));
                           });
                         },
                       ),
