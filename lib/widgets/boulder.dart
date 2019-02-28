@@ -7,11 +7,19 @@ import 'package:gymratz/screens/add_climb.dart';
 
 Widget boulder(BuildContext context, Gym gym) {
   _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
+
+    theImage(){
+      if(climbingRoute.pictureUrl!=null){
+        return Image.network(climbingRoute.pictureUrl, width: 50.0, height: 50.0, fit: BoxFit.contain);
+      } else{
+        return Text ("No Image");
+      }
+    }
+
     return Card(
       child: InkWell(
           child: ListTile(
-            leading: Image.network(climbingRoute.pictureUrl,
-                width: 50.0, height: 50.0, fit: BoxFit.contain),
+            leading: theImage(),
             title: Text(climbingRoute.name),
             //TODO: add in number of climbers
             trailing: Column(

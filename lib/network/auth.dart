@@ -16,7 +16,7 @@ class Auth {
   }
 
   Future handleSignIn(String email, String password) async {
-    try {
+    try {      
       FirebaseUser user = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
