@@ -54,7 +54,7 @@ class GymInfoScreenState extends State<GymInfoScreen> {
     List<Widget> _children = [
       currentSet(context, currentGym),
       info(context, currentGym),
-      boulder(context, currentGym),
+      new Boulder(gym: currentGym),
       topRope(context, currentGym)
     ];
 

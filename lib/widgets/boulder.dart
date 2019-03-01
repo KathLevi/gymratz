@@ -5,7 +5,22 @@ import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/screens/add_climb.dart';
 
-Widget boulder(BuildContext context, Gym gym) {
+
+
+class Boulder extends StatefulWidget {
+  final Gym gym;
+  Boulder({Key key, @required this.gym}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState(){
+    return BoulderState();
+  }
+
+}
+
+
+class BoulderState extends State<Boulder> with WidgetsBindingObserver {
+  var _counter = 0;
   _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
 
     theImage(){
@@ -40,7 +55,7 @@ Widget boulder(BuildContext context, Gym gym) {
 
   _makeRouteColumn() {
     return StreamBuilder<List<ClimbingRoute>>(
-        stream: fsAPI.getBoulderRoutesByGymId(gym.id),
+        stream: fsAPI.getBoulderRoutesByGymId(widget.gym.id),
         builder: (context, AsyncSnapshot<List<ClimbingRoute>> snapshot) {
           //TODO: fix progress indicator to be center
           print(snapshot.hasData);
@@ -81,6 +96,8 @@ Widget boulder(BuildContext context, Gym gym) {
         });
   }
 
+  @override
+  Widget build(BuildContext context){
   return Container(
     margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
     child: Stack(
@@ -96,7 +113,7 @@ Widget boulder(BuildContext context, Gym gym) {
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: mediumFont)),
-                  Image.network(gym.logo,
+                  Image.network(widget.gym.logo,
                       width: 30.0, height: 30.0, fit: BoxFit.contain),
                 ],
               ),
@@ -111,8 +128,14 @@ Widget boulder(BuildContext context, Gym gym) {
           child: FloatingActionButton(
             onPressed: (){
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => AddClimbScreen(gym: gym)
-              ));
+                builder: (BuildContext context) => AddClimbScreen(gym: widget.gym)
+              )).then((Object obj){
+                print('attempting to rebuild!!!');
+                this.setState((){
+                  _counter++;
+                  print('attempting to rebuild');
+                });
+              });
             },
             child: Icon(Icons.add),
             foregroundColor: Colors.white,
@@ -121,4 +144,5 @@ Widget boulder(BuildContext context, Gym gym) {
       ],
     ),
   );
+  }
 }
