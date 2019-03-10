@@ -45,12 +45,33 @@ class RouteScreenState extends State<RouteScreen> {
     currentRoute = widget.climbingRoute;
   }
 
+  theImage() {
+    if (currentRoute.pictureUrl != null) {
+      return Image.network(currentRoute.pictureUrl, fit: BoxFit.contain);
+    } else {
+      return Text("No Image");
+    }
+  }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context),
-      drawer: drawerMenu(context, currentUser),
-      body: SafeArea(child: Text('Route Screen Works'))
-    );
+        appBar: appBar(context),
+        drawer: drawerMenu(context, currentUser),
+        body: SafeArea(
+            child: ListView(
+          children: <Widget>[
+            Text(
+              currentRoute.name,
+              style: TextStyle(
+                fontSize: largeFont,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            theImage(),
+            Text('Description:'),
+            Text(currentRoute.description)
+          ],
+        )));
   }
 }
