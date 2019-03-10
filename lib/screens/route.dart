@@ -62,7 +62,7 @@ class RouteScreenState extends State<RouteScreen> {
             child: ListView(
           children: <Widget>[
             Text(
-              currentRoute.name,
+              currentRoute.name + "    " + currentRoute.grade,
               style: TextStyle(
                 fontSize: largeFont,
               ),
