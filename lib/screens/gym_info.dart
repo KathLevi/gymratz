@@ -55,7 +55,7 @@ class GymInfoScreenState extends State<GymInfoScreen> {
       currentSet(context, currentGym),
       info(context, currentGym),
       new Boulder(gym: currentGym),
-      topRope(context, currentGym)
+      new TopRope(gym: currentGym)
     ];
 
     return Scaffold(
