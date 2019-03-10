@@ -16,5 +16,5 @@ final routes = {
   '/profile': (BuildContext context) => new ProfileScreen(),
   '/myGyms': (BuildContext context) => new MyGymsScreen(),
   '/search': (BuildContext context) => new SearchScreen(),
-  '/settings': (BuildContext context) => new SettingsScreen()
+  '/settings': (BuildContext context) => new SettingsScreen(),
 };

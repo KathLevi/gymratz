@@ -4,30 +4,27 @@ import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/screens/add_climb.dart';
-
-
+import 'package:gymratz/screens/route.dart';
 
 class Boulder extends StatefulWidget {
   final Gym gym;
   Boulder({Key key, @required this.gym}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState(){
+  State<StatefulWidget> createState() {
     return BoulderState();
   }
-
 }
-
 
 class BoulderState extends State<Boulder> with WidgetsBindingObserver {
   var _counter = 0;
   _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
-
-    theImage(){
-      if(climbingRoute.pictureUrl!=null){
-        return Image.network(climbingRoute.pictureUrl, width: 50.0, height: 50.0, fit: BoxFit.contain);
-      } else{
-        return Text ("No Image");
+    theImage() {
+      if (climbingRoute.pictureUrl != null) {
+        return Image.network(climbingRoute.pictureUrl,
+            width: 50.0, height: 50.0, fit: BoxFit.contain);
+      } else {
+        return Text("No Image");
       }
     }
 
@@ -49,6 +46,10 @@ class BoulderState extends State<Boulder> with WidgetsBindingObserver {
             /* TO DO 
             * Add navigation to singular route. Should a single route be a screen or a separate widget like this?
             */
+            print('inkwell clicked!');
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    RouteScreen(climbingRoute: climbingRoute)));
           }),
     );
   }
@@ -97,52 +98,53 @@ class BoulderState extends State<Boulder> with WidgetsBindingObserver {
   }
 
   @override
-  Widget build(BuildContext context){
-  return Container(
-    margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-    child: Stack(
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Boulder Routes',
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: mediumFont)),
-                  Image.network(widget.gym.logo,
-                      width: 30.0, height: 30.0, fit: BoxFit.contain),
-                ],
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+      child: Stack(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Boulder Routes',
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: mediumFont)),
+                    Image.network(widget.gym.logo,
+                        width: 30.0, height: 30.0, fit: BoxFit.contain),
+                  ],
+                ),
               ),
-            ),
-            Expanded(child: _makeRouteColumn())
-            // Image.network(gym.bgImage, width: double.infinity),
-          ],
-        ),
-        Positioned(
-          bottom: 10.0,
-          right: 10.0,
-          child: FloatingActionButton(
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => AddClimbScreen(gym: widget.gym)
-              )).then((Object obj){
-                print('attempting to rebuild!!!');
-                this.setState((){
-                  _counter++;
-                  print('attempting to rebuild');
-                });
-              });
-            },
-            child: Icon(Icons.add),
-            foregroundColor: Colors.white,
-          )
-        )
-      ],
-    ),
-  );
+              Expanded(child: _makeRouteColumn())
+              // Image.network(gym.bgImage, width: double.infinity),
+            ],
+          ),
+          Positioned(
+              bottom: 10.0,
+              right: 10.0,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              AddClimbScreen(gym: widget.gym)))
+                      .then((Object obj) {
+                    print('attempting to rebuild!!!');
+                    this.setState(() {
+                      _counter++;
+                      print('attempting to rebuild');
+                    });
+                  });
+                },
+                child: Icon(Icons.add),
+                foregroundColor: Colors.white,
+              ))
+        ],
+      ),
+    );
   }
 }
