@@ -20,6 +20,11 @@ class Application {
     "fr",
   ];
 
+  final List<String> supportedCountryCodes = [
+    "us",
+    "fr",
+  ];
+
   //returns the list of supported Locales
   Iterable<Locale> supportedLocales() =>
       supportedLanguagesCodes.map<Locale>((language) => Locale(language));

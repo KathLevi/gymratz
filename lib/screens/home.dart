@@ -108,7 +108,6 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     checkForToken();
   }
 
@@ -119,11 +118,5 @@ class HomeScreenState extends State<HomeScreen> {
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(child: _makeGymColumn()));
-  }
-
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }

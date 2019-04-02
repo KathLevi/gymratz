@@ -57,7 +57,6 @@ class ProfileScreenState extends State<ProfileScreen>
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     checkForToken();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -109,11 +108,6 @@ class ProfileScreenState extends State<ProfileScreen>
                     ],
                   ))))
         ])));
-  }
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }
 
