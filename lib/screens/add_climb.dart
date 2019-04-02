@@ -121,7 +121,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxWidth: 720.0, maxHeight: 1280.0);
+        source: ImageSource.camera, maxWidth: 1080.0, maxHeight: 1920.0);
     setState(() {
       _image = image;
     });
@@ -366,12 +366,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                               routeType,
                               "some random user id");
                           fsAPI.addRoute(climbingRoute, _image).then((res) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    GymInfoScreen(
-                                      gym: widget.gym,
-                                      index: 2,
-                                    )));
+                            Navigator.pop(context);
                           });
                         },
                       ),

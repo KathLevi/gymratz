@@ -31,11 +31,15 @@ class FirestoreAPI {
       }
     }).asStream();
   }
+
   // I'm not too familiar with streams. Can we us a stream for this?
-  Future addRoute(ClimbingRoute route, File image) async{
-    storageAPI.uploadImage(image, route.gymId, route.name).then((String urlString){
+  Future addRoute(ClimbingRoute route, File image) async {
+    storageAPI
+        .uploadImage(image, route.gymId, route.name)
+        .then((String urlString) {
       final TransactionHandler createTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds = await tx.get(Firestore.instance.collection('routes').document());
+        final DocumentSnapshot ds =
+            await tx.get(Firestore.instance.collection('routes').document());
         var dataMap = new Map<String, dynamic>();
         dataMap['name'] = route.name;
         dataMap['color'] = route.color;
@@ -47,7 +51,7 @@ class FirestoreAPI {
         await tx.set(ds.reference, dataMap);
 
         return dataMap;
-    };
+      };
       return Firestore.instance.runTransaction(createTransaction);
     });
   }
@@ -63,11 +67,34 @@ class FirestoreAPI {
     }).asStream();
   }
 
-  Stream<List<ClimbingRoute>> getBoulderRoutesByGymId(gymId){
-    return _firestore.collection('routes')
-    .where('gymId', isEqualTo: gymId)
-    .where('type', isEqualTo: 'boulder')
-    .getDocuments().then((snapshot) {
+  Stream<List<ClimbingRoute>> getBoulderRoutesByGymId(gymId) {
+    return _firestore
+        .collection('routes')
+        .where('gymId', isEqualTo: gymId)
+        .where('type', isEqualTo: 'boulder')
+        .getDocuments()
+        .then((snapshot) {
+      List<ClimbingRoute> routes = [];
+      print(gymId);
+      try {
+        snapshot.documents.forEach((item) {
+          routes.add(ClimbingRoute.fromSnapshot(item));
+        });
+        return routes;
+      } catch (e) {
+        print(e);
+        return null;
+      }
+    }).asStream();
+  }
+
+  Stream<List<ClimbingRoute>> getTopRopeRoutesByGymId(gymId) {
+    return _firestore
+        .collection('routes')
+        .where('gymId', isEqualTo: gymId)
+        .where('type', isEqualTo: 'rope')
+        .getDocuments()
+        .then((snapshot) {
       List<ClimbingRoute> routes = [];
       print(gymId);
       try {
@@ -134,7 +161,6 @@ class FirestoreAPI {
       }
     }).asStream();
   }
-
 
   /// Users
 // This must be done every single time a new user has been registered
