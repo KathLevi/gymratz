@@ -1,4 +1,6 @@
 {
+  "CountryCode": "fr",
+  "LanguageCode": "fr",
   "Gymratz": "Rats de Gymnastique",
   "Email": "Email-fr",
   "Username": "Username-fr",
@@ -24,5 +26,9 @@
   "Friends": "Friends-fr",
   "Comments": "Comments-fr",
   "Search": "Search-fr",
-  "Settings": "Settings-fr"
+  "Settings": "Settings-fr",
+  "Guest": "Guest-fr",
+  "Home": "Home-fr",
+  "Profile": "Profile-fr",
+  "LogOut": "Log Out-fr"
 }

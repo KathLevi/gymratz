@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/application.dart';
 import 'package:gymratz/main.dart';
+import 'package:flutter/services.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/widgets/error_dialog.dart';
@@ -25,6 +26,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
 
   bool _pwdHidden = true;
   GymratzLocalizationsDelegate _newLocaleDelegate;
+  GymratzLocalizations _currentLocalizations;
 
   void _showErrorDialog(errorMessage) {
     showDialog(
@@ -44,6 +46,14 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     _passwordFocusNode = FocusNode();
   }
 
+  @override 
+  void setState(fn) {
+    if (!mounted) {
+      Navigator.pushNamed(context, '/');
+    }
+    super.setState(fn);
+  }
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -54,6 +64,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    _currentLocalizations = GymratzLocalizations.of(context);
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: null,
@@ -71,7 +82,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 100.0),
                   child: Text(
-                    GymratzLocalizations.of(context).text('Gymratz'),
+                    _currentLocalizations.text('Gymratz'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 50.0,
@@ -89,7 +100,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             keyboardType: TextInputType.emailAddress,
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
-                            focusNode: _userFocusNode,
+                            focusNode: _userFocusNode, // can we make this not reload the localizations on focus/unfocus?
                             onFieldSubmitted: (str) {
                               _userFocusNode.unfocus();
                               FocusScope.of(context)
@@ -98,12 +109,12 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             style: TextStyle(color: Colors.white),
                             validator: (val) {
                               return val.length < 10
-                                  ? GymratzLocalizations.of(context)
+                                  ? _currentLocalizations
                                       .text('InvalidEmail')
                                   : null;
                             },
                             decoration: InputDecoration(
-                                labelText: GymratzLocalizations.of(context)
+                                labelText: _currentLocalizations
                                     .text('Email'),
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
@@ -125,13 +136,13 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 style: TextStyle(color: Colors.white),
                                 validator: (val) {
                                   return val.length < 6
-                                      ? GymratzLocalizations.of(context)
+                                      ? _currentLocalizations
                                           .text('PasswordIsNotLongEnough')
                                       : null;
                                 },
                                 // onFieldSubmitted: onSubmitted,
                                 decoration: InputDecoration(
-                                    labelText: GymratzLocalizations.of(context)
+                                    labelText: _currentLocalizations
                                         .text('Password'),
                                     labelStyle: TextStyle(color: Colors.white),
                                     enabledBorder: new UnderlineInputBorder(
@@ -168,7 +179,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 Navigator.pushNamed(context, '/forgotPassword');
                               },
                               child: Text(
-                                  GymratzLocalizations.of(context)
+                                  _currentLocalizations
                                       .text('ForgotPassword?'),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: xsFont)),
@@ -206,7 +217,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                       },
                                       color: Theme.of(context).primaryColor,
                                       child: Text(
-                                          GymratzLocalizations.of(context)
+                                          _currentLocalizations
                                               .text('LogIn'),
                                           style: TextStyle(
                                               color: Colors.white,
@@ -226,15 +237,14 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                               MainAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
-                                                GymratzLocalizations.of(context)
+                                                _currentLocalizations
                                                     .text('DontHaveAnAccount?'),
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: xsFont)),
                                             Text(
                                                 ' ' +
-                                                    GymratzLocalizations.of(
-                                                            context)
+                                                    _currentLocalizations
                                                         .text('SignUp!'),
                                                 style: TextStyle(
                                                     color: Theme.of(context)
@@ -251,7 +261,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                       },
                                       color: Colors.grey,
                                       child: Text(
-                                          GymratzLocalizations.of(context)
+                                          _currentLocalizations
                                               .text('ContinueAsGuest'),
                                           style: TextStyle(
                                               color: Colors.white,
@@ -260,12 +270,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                   ),
                                   IconButton(
                                     icon: new Image.asset(
-                                        "icons/flags/png/us.png",
+                                        "icons/flags/png/${getCountryCode(_currentLocalizations.locale)}.png",
                                         package: 'country_icons'),
                                     onPressed: () {
-                                      // TODO pull up locale selector menu
-                                      // onLocaleChanged or something like that
-                                      // probably pull locale selector out into its own file
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
@@ -285,7 +292,21 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
 
   void onLocaleChange(Locale locale) {
     setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+      if (_newLocaleDelegate.isSupported(locale)) {
+        _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+        _newLocaleDelegate.load(locale).then((localizations) => _currentLocalizations = localizations);
+      }
+      else {
+        // unexpected locale
+        print('unexpected locale');
+      }
     });
+  }
+
+  String getCountryCode(Locale locale) {
+    var languageCode = locale.languageCode;
+    var index = application.supportedLanguagesCodes.indexWhere((code) => code == languageCode) ?? 0;
+    var countryCode = application.supportedCountryCodes.elementAt(index);
+    return countryCode;
   }
 }

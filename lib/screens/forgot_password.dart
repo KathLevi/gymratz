@@ -20,7 +20,6 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -140,10 +139,5 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
             ),
           ),
         ));
-  }
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }

@@ -1,4 +1,6 @@
 {
+  "CountryCode": "us",
+  "LanguageCode": "en",
   "Gymratz": "Gymratz",
   "Email": "Email",
   "Username": "Username",
@@ -24,5 +26,9 @@
   "Friends": "Friends",
   "Comments": "Comments",
   "Search": "Search",
-  "Settings": "Settings"
+  "Settings": "Settings",
+  "Guest": "Guest",
+  "Home": "Home",
+  "Profile": "Profile",
+  "LogOut": "Log Out"
 }

@@ -40,7 +40,6 @@ class MyGymsScreenState extends State<MyGymsScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     checkForToken();
   }
 
@@ -53,10 +52,5 @@ class MyGymsScreenState extends State<MyGymsScreen> {
             child: auth
                 ? Container(child: Text(GymratzLocalizations.of(context).text('MyGyms')))
                 : accountNeeded(context)));
-  }
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }
