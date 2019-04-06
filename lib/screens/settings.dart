@@ -37,7 +37,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
+    // application.onLocaleChanged = onLocaleChange; // to be implemented
     checkForToken();
   }
 

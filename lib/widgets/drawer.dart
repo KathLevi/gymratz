@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
 
 Widget drawerMenu(BuildContext context, var user) {
   return Drawer(
@@ -11,7 +12,7 @@ Widget drawerMenu(BuildContext context, var user) {
         child: user == null
             ? Container(
                 alignment: Alignment.centerLeft,
-                child: Text("GUEST",
+                child: Text(GymratzLocalizations.of(context).text('Guest'),
                     style: TextStyle(color: Colors.white, fontSize: largeFont)))
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -28,42 +29,42 @@ Widget drawerMenu(BuildContext context, var user) {
       ),
       ListTile(
         leading: Icon(Icons.home),
-        title: Text('Home', style: TextStyle(fontSize: smallFont)),
+        title: Text(GymratzLocalizations.of(context).text('Home'), style: TextStyle(fontSize: smallFont)),
         onTap: () {
           Navigator.pushNamed(context, '/home');
         },
       ),
       ListTile(
         leading: Icon(Icons.search),
-        title: Text('Search', style: TextStyle(fontSize: smallFont)),
+        title: Text(GymratzLocalizations.of(context).text('Search'), style: TextStyle(fontSize: smallFont)),
         onTap: () {
           Navigator.pushNamed(context, '/search');
         },
       ),
       ListTile(
         leading: Icon(Icons.person),
-        title: Text('Profile', style: TextStyle(fontSize: smallFont)),
+        title: Text(GymratzLocalizations.of(context).text('Profile'), style: TextStyle(fontSize: smallFont)),
         onTap: () {
           Navigator.pushNamed(context, '/profile');
         },
       ),
       ListTile(
         leading: Icon(Icons.star),
-        title: Text('My Gyms', style: TextStyle(fontSize: smallFont)),
+        title: Text(GymratzLocalizations.of(context).text('MyGyms'), style: TextStyle(fontSize: smallFont)),
         onTap: () {
           Navigator.pushNamed(context, '/myGyms');
         },
       ),
       ListTile(
         leading: Icon(Icons.settings),
-        title: Text('Settings', style: TextStyle(fontSize: smallFont)),
+        title: Text(GymratzLocalizations.of(context).text('Settings'), style: TextStyle(fontSize: smallFont)),
         onTap: () {
           Navigator.pushNamed(context, '/settings');
         },
       ),
       ListTile(
         leading: Icon(Icons.exit_to_app),
-        title: Text('Log Out', style: TextStyle(fontSize: smallFont)),
+        title: Text(GymratzLocalizations.of(context).text('LogOut'), style: TextStyle(fontSize: smallFont)),
         onTap: () {
           //TODO: clear information and kill authentication
           authAPI.logout();

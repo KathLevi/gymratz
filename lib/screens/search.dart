@@ -37,7 +37,6 @@ class SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     checkForToken();
   }
 
@@ -47,10 +46,5 @@ class SearchScreenState extends State<SearchScreen> {
         appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(child: Container(child: Text(GymratzLocalizations.of(context).text('Search')))));
-  }
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }
