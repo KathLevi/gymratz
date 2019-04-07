@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gymratz/application.dart';
 import 'package:gymratz/main.dart';
-import 'package:flutter/services.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/widgets/error_dialog.dart';
@@ -46,7 +46,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     _passwordFocusNode = FocusNode();
   }
 
-  @override 
+  @override
   void setState(fn) {
     if (!mounted) {
       Navigator.pushNamed(context, '/');
@@ -100,7 +100,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             keyboardType: TextInputType.emailAddress,
                             textCapitalization: TextCapitalization.none,
                             autocorrect: false,
-                            focusNode: _userFocusNode, // can we make this not reload the localizations on focus/unfocus?
+                            focusNode:
+                                _userFocusNode, // can we make this not reload the localizations on focus/unfocus?
                             onFieldSubmitted: (str) {
                               _userFocusNode.unfocus();
                               FocusScope.of(context)
@@ -109,13 +110,11 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                             style: TextStyle(color: Colors.white),
                             validator: (val) {
                               return val.length < 10
-                                  ? _currentLocalizations
-                                      .text('InvalidEmail')
+                                  ? _currentLocalizations.text('InvalidEmail')
                                   : null;
                             },
                             decoration: InputDecoration(
-                                labelText: _currentLocalizations
-                                    .text('Email'),
+                                labelText: _currentLocalizations.text('Email'),
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: new UnderlineInputBorder(
                                     borderSide:
@@ -142,8 +141,8 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 },
                                 // onFieldSubmitted: onSubmitted,
                                 decoration: InputDecoration(
-                                    labelText: _currentLocalizations
-                                        .text('Password'),
+                                    labelText:
+                                        _currentLocalizations.text('Password'),
                                     labelStyle: TextStyle(color: Colors.white),
                                     enabledBorder: new UnderlineInputBorder(
                                         borderSide: new BorderSide(
@@ -179,8 +178,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                 Navigator.pushNamed(context, '/forgotPassword');
                               },
                               child: Text(
-                                  _currentLocalizations
-                                      .text('ForgotPassword?'),
+                                  _currentLocalizations.text('ForgotPassword?'),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: xsFont)),
                             ),
@@ -217,8 +215,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                       },
                                       color: Theme.of(context).primaryColor,
                                       child: Text(
-                                          _currentLocalizations
-                                              .text('LogIn'),
+                                          _currentLocalizations.text('LogIn'),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: smallFont)),
@@ -274,9 +271,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                         package: 'country_icons'),
                                     onPressed: () {
                                       Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                LocaleSelector()));
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  LocaleSelector()));
                                     },
                                   ),
                                 ],
@@ -294,9 +291,10 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     setState(() {
       if (_newLocaleDelegate.isSupported(locale)) {
         _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-        _newLocaleDelegate.load(locale).then((localizations) => _currentLocalizations = localizations);
-      }
-      else {
+        _newLocaleDelegate
+            .load(locale)
+            .then((localizations) => _currentLocalizations = localizations);
+      } else {
         // unexpected locale
         print('unexpected locale');
       }
@@ -305,7 +303,9 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
 
   String getCountryCode(Locale locale) {
     var languageCode = locale.languageCode;
-    var index = application.supportedLanguagesCodes.indexWhere((code) => code == languageCode) ?? 0;
+    var index = application.supportedLanguagesCodes
+            .indexWhere((code) => code == languageCode) ??
+        0;
     var countryCode = application.supportedCountryCodes.elementAt(index);
     return countryCode;
   }
