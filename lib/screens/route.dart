@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/boulder.dart';
-import 'package:gymratz/widgets/current_set.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/widgets/info.dart';
-import 'package:gymratz/widgets/top_rope.dart';
 
 class RouteScreen extends StatefulWidget {
   RouteScreen({Key key, this.climbingRoute});
@@ -56,7 +52,7 @@ class RouteScreenState extends State<RouteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context),
+        appBar: appBar(context, null, null, null, null),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(
             child: ListView(

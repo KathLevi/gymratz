@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/widgets/account_needed.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/application.dart';
-import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class MyGymsScreen extends StatefulWidget {
   @override
@@ -46,11 +45,13 @@ class MyGymsScreenState extends State<MyGymsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context),
+        appBar: appBar(context, null, null, null, null),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(
             child: auth
-                ? Container(child: Text(GymratzLocalizations.of(context).text('MyGyms')))
+                ? Container(
+                    child:
+                        Text(GymratzLocalizations.of(context).text('MyGyms')))
                 : accountNeeded(context)));
   }
 }
