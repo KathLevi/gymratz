@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/application.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
+import 'package:gymratz/widgets/drawer.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -43,8 +41,10 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context),
+//        appBar: appBar(context),
         drawer: drawerMenu(context, currentUser),
-        body: SafeArea(child: Container(child: Text(GymratzLocalizations.of(context).text('Search')))));
+        body: SafeArea(
+            child: Container(
+                child: Text(GymratzLocalizations.of(context).text('Search')))));
   }
 }

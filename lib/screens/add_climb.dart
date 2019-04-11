@@ -1,11 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:gymratz/screens/gym_info.dart';
-import 'dart:io';
 
 class AddClimbScreen extends StatefulWidget {
   final Gym
@@ -347,15 +347,18 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       child: RaisedButton(
                         padding: const EdgeInsets.all(10.0),
                         color: Theme.of(context).primaryColor,
-                        child: Row(children: <Widget>[
-                          Text("Submit",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: smallFont)),
-                          Icon(
-                            Icons.send,
-                            color: Colors.white,
-                          )
-                        ], mainAxisAlignment: MainAxisAlignment.spaceEvenly,),
+                        child: Row(
+                          children: <Widget>[
+                            Text("Submit",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: smallFont)),
+                            Icon(
+                              Icons.send,
+                              color: Colors.white,
+                            )
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        ),
                         onPressed: () {
                           ClimbingRoute climbingRoute = new ClimbingRoute(
                               _routeNameCtrl.text,
@@ -403,7 +406,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: appBar(context),
+        appBar: appBar(context, null, null, null, null),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(child: formWidget()));
   }

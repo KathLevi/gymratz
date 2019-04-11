@@ -6,7 +6,7 @@ final ThemeData gymRatzdefault = new ThemeData(
   accentColor: CompanyColors._orange,
   scaffoldBackgroundColor: Colors.white,
   errorColor: Colors.red,
-  buttonColor: CompanyColors._orange,
+  buttonColor: CompanyColors._teal,
   // textSelectionColor: Colors.yellow,
   // splashColor: Colors.yellow
 );
