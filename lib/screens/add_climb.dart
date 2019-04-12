@@ -407,7 +407,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: appBar(context, null, null, null, null),
-        drawer: drawerMenu(context, currentUser),
+        drawer: DrawerMenu(context: context),
         body: SafeArea(child: formWidget()));
   }
 }

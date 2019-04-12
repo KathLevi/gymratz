@@ -117,7 +117,7 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         //TODO: edit app bar so that it can handle bottom navigation/ tab bar view?
         appBar: appBar(context, null, null, null, null),
-        drawer: drawerMenu(context, currentUser),
+        drawer: DrawerMenu(context: context),
         body: SafeArea(child: _makeGymColumn()));
   }
 }

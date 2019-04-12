@@ -29,6 +29,8 @@ class Auth {
         password: password,
       );
 
+      this.user = user;
+
       return {'user': user};
     } on PlatformException catch (e) {
       return {'error': e.message};
@@ -77,6 +79,7 @@ class Auth {
   Future logout() async {
     try {
       await _auth.signOut();
+      this.user = await _auth.currentUser();
       return ('logged out');
     } catch (e) {
       return ('could not log out user');

@@ -67,7 +67,7 @@ class GymInfoScreenState extends State<GymInfoScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context, _controller, myTabs, null, null),
-      drawer: drawerMenu(context, currentUser),
+      drawer: DrawerMenu(context: context),
       body: SafeArea(
           child: TabBarView(controller: _controller, children: <Widget>[
         currentSet(context, currentGym),
