@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gymratz/application.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
@@ -7,6 +6,9 @@ import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/screens/gym_info.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -16,7 +18,6 @@ class SearchScreen extends StatefulWidget {
 }
 
 class SearchScreenState extends State<SearchScreen> {
-  // get gyms from the database
   var currentUser;
   GymratzLocalizationsDelegate _newLocaleDelegate;
 
@@ -118,11 +119,5 @@ class SearchScreenState extends State<SearchScreen> {
         appBar: appBar(context, null, null, null, null),
         drawer: DrawerMenu(context: context),
         body: SafeArea(child: _makeGymColumn()));
-  }
-
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }
