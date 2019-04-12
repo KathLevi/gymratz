@@ -26,7 +26,7 @@ Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
     ),
     bottom: controller == null
         ? null
-        : image == null
+        : authAPI.user.photoUrl == null
             ? TabBar(
                 controller: controller,
                 tabs: myTabs,
@@ -37,7 +37,12 @@ Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
                 child: Column(
                   children: <Widget>[
                     //todo: add image not text
-                    Text(image, style: TextStyle(color: Colors.white)),
+                    CircleAvatar(
+                      minRadius: 30.0,
+                      maxRadius: 30.0,
+                      backgroundColor: Colors.white,
+                      backgroundImage: NetworkImage(authAPI.user.photoUrl),
+                    ),
                     Text(user == null ? 'Guest User' : user,
                         style: TextStyle(color: teal, fontSize: smallFont)),
                     TabBar(
