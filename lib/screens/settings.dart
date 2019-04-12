@@ -44,7 +44,7 @@ class SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context, null, null, null, null),
-        drawer: drawerMenu(context, currentUser),
+        drawer: DrawerMenu(context: context),
         body: SafeArea(
             child: Container(
                 child:

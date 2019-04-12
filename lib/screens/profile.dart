@@ -68,7 +68,7 @@ class ProfileScreenState extends State<ProfileScreen>
     return Scaffold(
       //todo: add image not text for image
       appBar: appBar(context, _controller, myTabs, 'image', currentUser),
-      drawer: drawerMenu(context, currentUser),
+      drawer: DrawerMenu(context: context),
       body: SafeArea(
         child: TabBarView(
           controller: _controller,

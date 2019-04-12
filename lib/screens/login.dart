@@ -208,8 +208,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                               return _showErrorDialog(
                                                   data['error']);
                                             }
-                                            Navigator.pushNamed(
-                                                context, '/home');
+                                            Navigator.pushNamed(context, '/');
                                           });
                                         }
                                       },
@@ -254,7 +253,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     child: RaisedButton(
                                       padding: const EdgeInsets.all(10.0),
                                       onPressed: () {
-                                        Navigator.pushNamed(context, '/home');
+                                        Navigator.pushNamed(context, '/');
                                       },
                                       color: Colors.grey,
                                       child: Text(
