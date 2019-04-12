@@ -41,7 +41,7 @@ Widget accountNeeded(BuildContext context) {
             child: RaisedButton(
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/', (Route<dynamic> route) => false);
+                    '/login', (Route<dynamic> route) => false);
               },
               color: Colors.grey,
               padding: const EdgeInsets.all(10.0),
