@@ -37,6 +37,12 @@ class Auth {
     }
   }
 
+  Future updateFirebaseAuthProfile(UserUpdateInfo user) async {
+    await this.user.updateProfile(user);
+    this.user = await _auth.currentUser();
+    return this.user;
+  }
+
   // I'm not sure we really even need this. TOO MUCH WORK FOR LITTLE GAIN
 
   // Future registerAnonymous() async {
