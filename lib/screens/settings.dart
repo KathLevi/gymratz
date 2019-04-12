@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/application.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
+import 'package:gymratz/widgets/app_bar.dart';
+import 'package:gymratz/widgets/drawer.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -37,17 +36,21 @@ class SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
+    // application.onLocaleChanged = onLocaleChange; // to be implemented
     checkForToken();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context),
+        appBar: appBar(context, null, null, null, null),
         drawer: drawerMenu(context, currentUser),
-        body: SafeArea(child: Container(child: Text(GymratzLocalizations.of(context).text('Settings')))));
+        body: SafeArea(
+            child: Container(
+                child:
+                    Text(GymratzLocalizations.of(context).text('Settings')))));
   }
+
   void onLocaleChange(Locale locale) {
     setState(() {
       _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);

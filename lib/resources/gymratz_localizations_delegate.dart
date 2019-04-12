@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'gymratz_localizations.dart';
 import 'package:gymratz/application.dart';
 
-class GymratzLocalizationsDelegate extends LocalizationsDelegate<GymratzLocalizations> {
+import 'gymratz_localizations.dart';
+
+class GymratzLocalizationsDelegate
+    extends LocalizationsDelegate<GymratzLocalizations> {
   final Locale newLocale;
 
   const GymratzLocalizationsDelegate({this.newLocale});
@@ -21,6 +23,6 @@ class GymratzLocalizationsDelegate extends LocalizationsDelegate<GymratzLocaliza
 
   @override
   bool shouldReload(LocalizationsDelegate<GymratzLocalizations> old) {
-    return true;
+    return false;
   }
 }

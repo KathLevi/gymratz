@@ -33,7 +33,6 @@ class RegisterScreenState extends State<RegisterScreen>
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     WidgetsBinding.instance.addObserver(this);
     _userFocusNode = FocusNode();
     _password1FocusNode = FocusNode();
@@ -271,11 +270,5 @@ class RegisterScreenState extends State<RegisterScreen>
             ),
           ),
         ));
-  }
-
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
   }
 }

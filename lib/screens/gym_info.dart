@@ -9,9 +9,8 @@ import 'package:gymratz/widgets/info.dart';
 import 'package:gymratz/widgets/top_rope.dart';
 
 class GymInfoScreen extends StatefulWidget {
-  GymInfoScreen({Key key, this.gym, this.index});
+  GymInfoScreen({Key key, this.gym});
   final Gym gym;
-  final int index;
 
   @override
   State<StatefulWidget> createState() {
@@ -19,11 +18,19 @@ class GymInfoScreen extends StatefulWidget {
   }
 }
 
-class GymInfoScreenState extends State<GymInfoScreen> {
+class GymInfoScreenState extends State<GymInfoScreen>
+    with SingleTickerProviderStateMixin {
   // get gyms from the database
   var currentUser;
   Gym currentGym;
-  int _currentIndex;
+
+  TabController _controller;
+  final List<Tab> myTabs = <Tab>[
+    Tab(text: 'Current Set'),
+    Tab(text: 'Gym Info'),
+    Tab(text: 'Boulder'),
+    Tab(text: 'Top Rope'),
+  ];
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
@@ -46,47 +53,28 @@ class GymInfoScreenState extends State<GymInfoScreen> {
     super.initState();
     checkForToken();
     currentGym = widget.gym;
-    _currentIndex = widget.index;
+
+    _controller = TabController(vsync: this, length: myTabs.length);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _children = [
-      currentSet(context, currentGym),
-      info(context, currentGym),
-      new Boulder(gym: currentGym),
-      new TopRope(gym: currentGym)
-    ];
-
     return Scaffold(
-      appBar: appBar(context),
+      appBar: appBar(context, _controller, myTabs, null, null),
       drawer: drawerMenu(context, currentUser),
-      body: SafeArea(child: _children[_currentIndex]),
-      bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          currentIndex: _currentIndex,
-          items: [
-            BottomNavigationBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(Icons.home),
-                title: Text('Current Set')),
-            BottomNavigationBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(Icons.info),
-                title: Text('Gym Info')),
-            BottomNavigationBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(Icons.home),
-                title: Text('Boulder')),
-            BottomNavigationBarItem(
-                backgroundColor: Theme.of(context).primaryColor,
-                icon: Icon(Icons.home),
-                title: Text('Top Rope')),
-          ]),
+      body: SafeArea(
+          child: TabBarView(controller: _controller, children: <Widget>[
+        currentSet(context, currentGym),
+        info(context, currentGym),
+        Boulder(gym: currentGym),
+        TopRope(gym: currentGym)
+      ])),
     );
   }
 }

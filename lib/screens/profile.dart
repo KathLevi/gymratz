@@ -6,25 +6,21 @@
  *  - Has user's comments
  *  - Has user's completed routes
  *  - Has user's to-do routes
- * 
- * 
+ *
+ *
  * Has 3 sub pages
  *  - Profile
  *  - Friends
  *  - Comments
- * 
+ *
  * User must be authenticated. Else they are prompted to sign in.
- * 
+ *
  */
 
 import 'package:flutter/material.dart';
+import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/main.dart';
-import 'package:gymratz/application.dart';
-import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
-import 'package:gymratz/widgets/account_needed.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -34,20 +30,22 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen>
-    with WidgetsBindingObserver {
+    with SingleTickerProviderStateMixin {
   var currentUser;
-  GymratzLocalizationsDelegate _newLocaleDelegate;
+
+  TabController _controller;
+  final List<Tab> myTabs = <Tab>[
+    Tab(text: 'My Profile'),
+    Tab(text: 'Friends'),
+    Tab(text: 'Comments'),
+  ];
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
-      if (user != null) {
-        if (!user.isAnonymous) {
-          setState(() {
-            currentUser = user;
-          });
-        } else {
-          
-        }
+      if (user != null && !user.isAnonymous) {
+        setState(() {
+          currentUser = user.displayName;
+        });
       }
     });
   }
@@ -55,40 +53,34 @@ class ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
-    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     checkForToken();
-    WidgetsBinding.instance.addObserver(this);
+    _controller = TabController(vsync: this, length: myTabs.length);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context),
-        drawer: drawerMenu(context, currentUser),
-        body: (currentUser != null)? SafeArea(
-            child: Row(children: <Widget>[
-          Expanded(
-              child: Container(
-                  child: Center(
-                      child: Column(
-                    children: <Widget>[
-                      CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://thrillseekersanonymous.com//wp-content/uploads/2011/10/Climber_Icon-600.jpg'),
-                          radius: 35.0),
-                      Text(
-                          (currentUser != null)
-                              ? currentUser.displayName
-                              : GymratzLocalizations.of(context).text('Loading...')),
-                    ],
-                  ))))
-        ])):accountNeeded(context));
-  }
-  void onLocaleChange(Locale locale) {
-    setState(() {
-      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
-    });
+      //todo: add image not text for image
+      appBar: appBar(context, _controller, myTabs, 'image', currentUser),
+      drawer: drawerMenu(context, currentUser),
+      body: SafeArea(
+        child: TabBarView(
+          controller: _controller,
+          children: myTabs.map((Tab tab) {
+            return Center(
+                child: Text(
+              tab.text,
+            ));
+          }).toList(),
+        ),
+      ),
+    );
   }
 }
 

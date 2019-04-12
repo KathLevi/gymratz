@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
-import 'package:gymratz/screens/add_climb.dart';
 import 'package:gymratz/screens/route.dart';
 
 class Boulder extends StatefulWidget {
@@ -123,26 +121,26 @@ class BoulderState extends State<Boulder> with WidgetsBindingObserver {
               // Image.network(gym.bgImage, width: double.infinity),
             ],
           ),
-          Positioned(
-              bottom: 10.0,
-              right: 10.0,
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              AddClimbScreen(gym: widget.gym)))
-                      .then((Object obj) {
-                    print('attempting to rebuild!!!');
-                    this.setState(() {
-                      _counter++;
-                      print('attempting to rebuild');
-                    });
-                  });
-                },
-                child: Icon(Icons.add),
-                foregroundColor: Colors.white,
-              ))
+//          Positioned(
+//              bottom: 10.0,
+//              right: 10.0,
+//              child: FloatingActionButton(
+//                onPressed: () {
+//                  Navigator.of(context)
+//                      .push(MaterialPageRoute(
+//                          builder: (BuildContext context) =>
+//                              AddClimbScreen(gym: widget.gym)))
+//                      .then((Object obj) {
+//                    print('attempting to rebuild!!!');
+//                    this.setState(() {
+//                      _counter++;
+//                      print('attempting to rebuild');
+//                    });
+//                  });
+//                },
+//                child: Icon(Icons.add),
+//                foregroundColor: Colors.white,
+//              ))
         ],
       ),
     );

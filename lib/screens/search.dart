@@ -108,7 +108,6 @@ class SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
-    application.onLocaleChanged = onLocaleChange;
     checkForToken();
   }
 
@@ -116,7 +115,7 @@ class SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         //TODO: edit app bar so that it can handle bottom navigation/ tab bar view?
-        appBar: appBar(context),
+        appBar: appBar(context, null, null, null, null),
         drawer: drawerMenu(context, currentUser),
         body: SafeArea(child: _makeGymColumn()));
   }
