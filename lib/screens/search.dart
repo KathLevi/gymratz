@@ -19,6 +19,7 @@ class SearchScreen extends StatefulWidget {
 
 class SearchScreenState extends State<SearchScreen> {
   var currentUser;
+  String filter;
   GymratzLocalizationsDelegate _newLocaleDelegate;
 
   void checkForToken() {
@@ -65,7 +66,7 @@ class SearchScreenState extends State<SearchScreen> {
 
   _makeGymColumn() {
     return StreamBuilder<List<Gym>>(
-        stream: fsAPI.loadAllGyms(),
+        stream: fsAPI.loadAllGyms(filter),
         builder: (context, AsyncSnapshot<List<Gym>> snapshot) {
           //TODO: fix progress indicator to be center
           if (!snapshot.hasData)
@@ -83,6 +84,16 @@ class SearchScreenState extends State<SearchScreen> {
             margin: const EdgeInsets.all(10.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              TextField(
+                  onChanged: (val) {
+                    setState(() {
+                      filter = val;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      labelText: "search",
+                      labelStyle:
+                          TextStyle(color: Theme.of(context).primaryColor))),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
@@ -97,8 +108,9 @@ class SearchScreenState extends State<SearchScreen> {
                 child: ListView.builder(
                     itemExtent: 80.0,
                     itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) =>
-                        _buildListItem(context, snapshot.data[index])),
+                    itemBuilder: (context, index) {
+                      return _buildListItem(context, snapshot.data[index]);
+                    }),
               )
             ]),
           );
@@ -109,6 +121,7 @@ class SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
+    filter = '';
     checkForToken();
   }
 

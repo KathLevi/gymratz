@@ -44,7 +44,7 @@ Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
     ),
     bottom: controller == null
         ? null
-        : authAPI.user.photoUrl == null
+        : authAPI.user == null
             ? TabBar(
                 controller: controller,
                 tabs: myTabs,

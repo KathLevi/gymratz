@@ -26,6 +26,6 @@ class HomeScreenState extends State<HomeScreen> {
         drawer: DrawerMenu(context: context),
         body: SafeArea(
             child: Container(
-                child: Text(GymratzLocalizations.of(context).text('Search')))));
+                child: Text(GymratzLocalizations.of(context).text('Home')))));
   }
 }

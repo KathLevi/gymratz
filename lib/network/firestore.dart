@@ -228,12 +228,17 @@ class FirestoreAPI {
   }
 
   //TODO: only load active gyms
-  Stream<List<Gym>> loadAllGyms() {
+  Stream<List<Gym>> loadAllGyms([String filter]) {
     return _firestore.collection('gyms').getDocuments().then((snapshot) {
       List<Gym> gyms = [];
       try {
         snapshot.documents.forEach((item) {
-          gyms.add(Gym.fromSnapshot(item));
+          if (Gym.fromSnapshot(item)
+              .name
+              .toLowerCase()
+              .contains(filter.toLowerCase())) {
+            gyms.add(Gym.fromSnapshot(item));
+          }
         });
         return gyms;
       } catch (e) {
