@@ -65,7 +65,10 @@ Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
                           backgroundColor: Colors.white,
                           backgroundImage: NetworkImage(authAPI.user.photoUrl),
                         )),
-                    Text(user == null ? 'Guest User' : user,
+                    Text(
+                        authAPI.user == null
+                            ? 'Guest User'
+                            : authAPI.user.displayName,
                         style: TextStyle(color: teal, fontSize: smallFont)),
                     TabBar(
                         controller: controller,

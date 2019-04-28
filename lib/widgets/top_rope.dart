@@ -3,6 +3,7 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/screens/route.dart';
+import 'package:gymratz/screens/add_climb.dart';
 
 class TopRope extends StatefulWidget {
   final Gym gym;
@@ -43,7 +44,6 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
             /* TO DO 
             * Add navigation to singular route. Should a single route be a screen or a separate widget like this?
             */
-            print('inkwell clicked!');
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) =>
                     RouteScreen(climbingRoute: climbingRoute)));
@@ -56,7 +56,6 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
         stream: fsAPI.getTopRopeRoutesByGymId(widget.gym.id),
         builder: (context, AsyncSnapshot<List<ClimbingRoute>> snapshot) {
           //TODO: fix progress indicator to be center
-          print(snapshot.hasData);
           if (!snapshot.hasData)
             return Center(
               child: new SizedBox(
@@ -120,25 +119,22 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
               // Image.network(gym.bgImage, width: double.infinity),
             ],
           ),
-//          Positioned(
-//              bottom: 10.0,
-//              right: 10.0,
-//              child: FloatingActionButton(
-//                onPressed: () {
-//                  Navigator.of(context)
-//                      .push(MaterialPageRoute(
-//                          builder: (BuildContext context) =>
-//                              AddClimbScreen(gym: widget.gym)))
-//                      .then((Object obj) {
-//                    print('attempting to rebuild!!!');
-//                    this.setState(() {
-//                      print('attempting to rebuild');
-//                    });
-//                  });
-//                },
-//                child: Icon(Icons.add),
-//                foregroundColor: Colors.white,
-//              ))
+          Positioned(
+              bottom: 10.0,
+              right: 10.0,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              AddClimbScreen(gym: widget.gym)))
+                      .then((Object obj) {
+                    this.setState(() {});
+                  });
+                },
+                child: Icon(Icons.add),
+                foregroundColor: Colors.white,
+              ))
         ],
       ),
     );

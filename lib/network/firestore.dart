@@ -75,7 +75,6 @@ class FirestoreAPI {
         .getDocuments()
         .then((snapshot) {
       List<ClimbingRoute> routes = [];
-      print(gymId);
       try {
         snapshot.documents.forEach((item) {
           routes.add(ClimbingRoute.fromSnapshot(item));
@@ -96,7 +95,6 @@ class FirestoreAPI {
         .getDocuments()
         .then((snapshot) {
       List<ClimbingRoute> routes = [];
-      print(gymId);
       try {
         snapshot.documents.forEach((item) {
           routes.add(ClimbingRoute.fromSnapshot(item));
