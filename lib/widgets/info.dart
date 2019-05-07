@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 
-Widget info(BuildContext context, Gym gym) {
+Widget GymInfo(BuildContext context, Gym gym) {
   return Container(
     margin: const EdgeInsets.all(10.0),
     child: ListView(

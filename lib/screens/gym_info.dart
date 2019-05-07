@@ -70,8 +70,8 @@ class GymInfoScreenState extends State<GymInfoScreen>
       drawer: DrawerMenu(context: context),
       body: SafeArea(
           child: TabBarView(controller: _controller, children: <Widget>[
-        currentSet(context, currentGym),
-        info(context, currentGym),
+        CurrentSet(context, currentGym),
+        GymInfo(context, currentGym),
         Boulder(gym: currentGym),
         TopRope(gym: currentGym)
       ])),
