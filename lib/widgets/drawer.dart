@@ -1,7 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class DrawerMenu extends StatefulWidget {
   final BuildContext context;
@@ -31,7 +31,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             child: ListView(
       children: <Widget>[
         DrawerHeader(
-          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+          decoration: BoxDecoration(color: Colors.black),
           child: user == null
               ? Container(
                   alignment: Alignment.centerLeft,
