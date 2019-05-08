@@ -53,7 +53,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.home),
           title: Text(GymratzLocalizations.of(context).text('Home'),
-              style: TextStyle(fontSize: bodyFont)),
+              style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
             Navigator.pushNamed(context, '/');
           },
@@ -61,7 +61,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.search),
           title: Text(GymratzLocalizations.of(context).text('Search'),
-              style: TextStyle(fontSize: bodyFont)),
+              style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
             Navigator.pushNamed(context, '/search');
           },
@@ -69,7 +69,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.person),
           title: Text(GymratzLocalizations.of(context).text('Profile'),
-              style: TextStyle(fontSize: bodyFont)),
+              style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
             Navigator.pushNamed(context, '/profile');
           },
@@ -77,7 +77,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.star),
           title: Text(GymratzLocalizations.of(context).text('MyGyms'),
-              style: TextStyle(fontSize: bodyFont)),
+              style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
             Navigator.pushNamed(context, '/myGyms');
           },
@@ -85,7 +85,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.settings),
           title: Text(GymratzLocalizations.of(context).text('Settings'),
-              style: TextStyle(fontSize: bodyFont)),
+              style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
             Navigator.pushNamed(context, '/settings');
           },
@@ -93,7 +93,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         (user == null)
             ? ListTile(
                 leading: Icon(Icons.account_box),
-                title: Text("Login", style: TextStyle(fontSize: bodyFont)),
+                title: Text("Login", style: TextStyle(fontSize: subheaderFont)),
                 onTap: () {
                   Navigator.of(context).pushNamed('/login');
                 },
@@ -101,7 +101,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             : ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text(GymratzLocalizations.of(context).text('LogOut'),
-                    style: TextStyle(fontSize: bodyFont)),
+                    style: TextStyle(fontSize: subheaderFont)),
                 onTap: () {
                   //TODO: clear information and kill authentication
                   authAPI.logout();

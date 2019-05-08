@@ -234,7 +234,8 @@ class RegisterScreenState extends State<RegisterScreen>
                           child: Text(
                               GymratzLocalizations.of(context).text('Register'),
                               style: TextStyle(
-                                  color: Colors.white, fontSize: bodyFont)),
+                                  color: Colors.white,
+                                  fontSize: subheaderFont)),
                         ),
                       ),
                       Container(
@@ -242,7 +243,7 @@ class RegisterScreenState extends State<RegisterScreen>
                         width: double.infinity,
                         child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(context, '/');
+                              Navigator.pushNamed(context, '/login');
                             },
                             key: RegisterScreen.loginButtonKey,
                             child: Row(

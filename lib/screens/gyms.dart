@@ -71,7 +71,7 @@ class GymInfoScreenState extends State<GymInfoScreen>
       body: SafeArea(
           child: TabBarView(controller: _controller, children: <Widget>[
         GymInfo(gym: currentGym),
-        CurrentSet(context, currentGym),
+        CurrentSet(gym: currentGym),
         Boulder(gym: currentGym),
         TopRope(gym: currentGym)
       ])),

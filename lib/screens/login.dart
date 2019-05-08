@@ -217,7 +217,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                           _currentLocalizations.text('LogIn'),
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: bodyFont)),
+                                              fontSize: subheaderFont)),
                                     ),
                                   ),
                                   Container(
@@ -261,7 +261,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                               .text('ContinueAsGuest'),
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: bodyFont)),
+                                              fontSize: subheaderFont)),
                                     ),
                                   ),
                                   IconButton(

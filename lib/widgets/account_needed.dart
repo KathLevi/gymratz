@@ -19,7 +19,7 @@ Widget accountNeeded(BuildContext context) {
           Container(
             child: Text(
               'PLEASE SIGN IN TO CONTINUE',
-              style: TextStyle(fontSize: subheaderFont),
+              style: TextStyle(fontSize: titleFont),
               textAlign: TextAlign.center,
             ),
           ),
@@ -33,7 +33,8 @@ Widget accountNeeded(BuildContext context) {
               color: Theme.of(context).primaryColor,
               padding: const EdgeInsets.all(10.0),
               child: Text('Register',
-                  style: TextStyle(color: Colors.white, fontSize: bodyFont)),
+                  style:
+                      TextStyle(color: Colors.white, fontSize: subheaderFont)),
             ),
           ),
           Container(
@@ -46,7 +47,8 @@ Widget accountNeeded(BuildContext context) {
               color: Colors.grey,
               padding: const EdgeInsets.all(10.0),
               child: Text('Log In',
-                  style: TextStyle(color: Colors.white, fontSize: bodyFont)),
+                  style:
+                      TextStyle(color: Colors.white, fontSize: subheaderFont)),
             ),
           ),
         ],

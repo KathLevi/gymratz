@@ -39,18 +39,13 @@ class SearchScreenState extends State<SearchScreen> {
     return Card(
       child: InkWell(
           child: ListTile(
+            isThreeLine: true,
             leading: Image.network(gym.logo,
-                width: 50.0, height: 50.0, fit: BoxFit.contain),
+                width: 45.0, height: 45.0, fit: BoxFit.contain),
             title: Text(gym.name),
             subtitle: Text(gym.address),
             //TODO: add in number of climbers
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Icon(Icons.favorite_border),
-                Icon(Icons.location_on)
-              ],
-            ),
+            trailing: Icon(Icons.favorite_border),
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
