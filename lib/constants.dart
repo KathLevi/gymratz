@@ -27,3 +27,6 @@ const IconData website_icon = FontAwesomeIcons.globeAmericas;
 const IconData feature_icon = FontAwesomeIcons.bug;
 const IconData rates_icon = FontAwesomeIcons.dollarSign;
 const IconData clock_icon = FontAwesomeIcons.solidClock;
+const IconData todo_icon = FontAwesomeIcons.clipboard;
+const IconData check_icon = FontAwesomeIcons.check;
+const IconData star_icon = FontAwesomeIcons.star;

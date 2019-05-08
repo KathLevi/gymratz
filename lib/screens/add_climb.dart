@@ -169,17 +169,8 @@ class AddClimbScreenState extends State<AddClimbScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                      child: Text("Add route",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: headerFont))),
-                  Container(
-                    width: 40.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(widget.gym.logo))),
-                  )
+                      child: Text("Add a new route",
+                          style: TextStyle(fontSize: headerFont))),
                 ],
               ),
             ),
