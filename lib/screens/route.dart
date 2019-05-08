@@ -62,7 +62,7 @@ class RouteScreenState extends State<RouteScreen> {
             Text(
               currentRoute.name + "    " + currentRoute.grade,
               style: TextStyle(
-                fontSize: largeFont,
+                fontSize: headerFont,
               ),
               textAlign: TextAlign.center,
             ),

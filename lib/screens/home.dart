@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gymratz/main.dart';
-import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
-import 'package:gymratz/screens/gym_info.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/application.dart';
-import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

@@ -180,7 +180,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                               child: Text(
                                   _currentLocalizations.text('ForgotPassword?'),
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: xsFont)),
+                                      color: Colors.white, fontSize: bodyFont)),
                             ),
                           ),
                           Container(
@@ -217,7 +217,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                           _currentLocalizations.text('LogIn'),
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: smallFont)),
+                                              fontSize: bodyFont)),
                                     ),
                                   ),
                                   Container(
@@ -237,7 +237,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                                     .text('DontHaveAnAccount?'),
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: xsFont)),
+                                                    fontSize: bodyFont)),
                                             Text(
                                                 ' ' +
                                                     _currentLocalizations
@@ -261,7 +261,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                               .text('ContinueAsGuest'),
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: smallFont)),
+                                              fontSize: bodyFont)),
                                     ),
                                   ),
                                   IconButton(

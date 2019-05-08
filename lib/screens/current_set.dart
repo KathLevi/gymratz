@@ -15,7 +15,7 @@ Widget CurrentSet(BuildContext context, Gym gym) {
               Text('Current Set',
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
-                      fontSize: mediumFont)),
+                      fontSize: subheaderFont)),
               Image.network(gym.logo,
                   width: 30.0, height: 30.0, fit: BoxFit.contain),
             ],
