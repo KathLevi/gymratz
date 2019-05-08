@@ -3,12 +3,9 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
-import 'package:gymratz/screens/gym_info.dart';
+import 'package:gymratz/screens/gyms.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/application.dart';
-import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -42,18 +39,13 @@ class SearchScreenState extends State<SearchScreen> {
     return Card(
       child: InkWell(
           child: ListTile(
+            isThreeLine: true,
             leading: Image.network(gym.logo,
-                width: 50.0, height: 50.0, fit: BoxFit.contain),
+                width: 45.0, height: 45.0, fit: BoxFit.contain),
             title: Text(gym.name),
             subtitle: Text(gym.address),
             //TODO: add in number of climbers
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Icon(Icons.favorite_border),
-                Icon(Icons.location_on)
-              ],
-            ),
+            trailing: Icon(Icons.favorite_border),
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

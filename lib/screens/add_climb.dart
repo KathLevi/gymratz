@@ -169,17 +169,8 @@ class AddClimbScreenState extends State<AddClimbScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                      child: Text("Add route",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: largeFont))),
-                  Container(
-                    width: 40.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(widget.gym.logo))),
-                  )
+                      child: Text("Add a new route",
+                          style: TextStyle(fontSize: headerFont))),
                 ],
               ),
             ),
@@ -194,7 +185,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                         Text(
                           "Name:",
                           style: TextStyle(
-                              fontSize: smallFont,
+                              fontSize: bodyFont,
                               color: Theme.of(context).accentColor),
                         ),
                         Container(
@@ -218,7 +209,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       children: <Widget>[
                         Text("Color:",
                             style: TextStyle(
-                                fontSize: smallFont,
+                                fontSize: bodyFont,
                                 color: Theme.of(context).accentColor)),
                         Container(
                           width: 200.0,
@@ -242,7 +233,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       children: <Widget>[
                         Text("Type:",
                             style: TextStyle(
-                                fontSize: smallFont,
+                                fontSize: bodyFont,
                                 color: Theme.of(context).accentColor)),
                         Container(
                           width: 200.0,
@@ -270,7 +261,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       children: <Widget>[
                         Text("Grade:",
                             style: TextStyle(
-                                fontSize: smallFont,
+                                fontSize: bodyFont,
                                 color: Theme.of(context).accentColor)),
                         Container(
                           width: 200.0,
@@ -325,7 +316,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                         Text("Description:",
                             style: TextStyle(
                                 color: Theme.of(context).accentColor,
-                                fontSize: smallFont)),
+                                fontSize: bodyFont)),
                         TextFormField(
                             controller: _routeDescriptionCtrl,
                             autocorrect: true,
@@ -351,7 +342,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                           children: <Widget>[
                             Text("Submit",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: smallFont)),
+                                    color: Colors.white, fontSize: bodyFont)),
                             Icon(
                               Icons.send,
                               color: Colors.white,

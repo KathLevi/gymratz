@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/screens/add_climb.dart';
 import 'package:gymratz/screens/route.dart';
 
 class TopRope extends StatefulWidget {
@@ -35,7 +36,6 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Icon(Icons.favorite_border),
-                Icon(Icons.location_on)
               ],
             ),
           ),
@@ -102,43 +102,29 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
         children: <Widget>[
           Column(
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text('Top Rope Routes',
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: mediumFont)),
-                    Image.network(widget.gym.logo,
-                        width: 30.0, height: 30.0, fit: BoxFit.contain),
-                  ],
-                ),
-              ),
               Expanded(child: _makeRouteColumn())
               // Image.network(gym.bgImage, width: double.infinity),
             ],
           ),
-//          Positioned(
-//              bottom: 10.0,
-//              right: 10.0,
-//              child: FloatingActionButton(
-//                onPressed: () {
-//                  Navigator.of(context)
-//                      .push(MaterialPageRoute(
-//                          builder: (BuildContext context) =>
-//                              AddClimbScreen(gym: widget.gym)))
-//                      .then((Object obj) {
-//                    print('attempting to rebuild!!!');
-//                    this.setState(() {
-//                      print('attempting to rebuild');
-//                    });
-//                  });
-//                },
-//                child: Icon(Icons.add),
-//                foregroundColor: Colors.white,
-//              ))
+          Positioned(
+              bottom: 10.0,
+              right: 10.0,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              AddClimbScreen(gym: widget.gym)))
+                      .then((Object obj) {
+                    print('attempting to rebuild!!!');
+                    this.setState(() {
+                      print('attempting to rebuild');
+                    });
+                  });
+                },
+                child: Icon(Icons.add),
+                foregroundColor: Colors.white,
+              ))
         ],
       ),
     );
