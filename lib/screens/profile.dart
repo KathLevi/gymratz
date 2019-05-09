@@ -64,18 +64,6 @@ class ProfileScreenState extends State<ProfileScreen>
     });
   }
 
-  // Future getImage() async {
-  //   var _image = await ImagePicker.pickImage(
-  //       source: ImageSource.camera, maxWidth: 1080.0, maxHeight: 1920.0);
-  //   storageAPI.uploadProfileImage(_image, currentUser.uid).then((imageURL) {
-  //     UserUpdateInfo updateUser = new UserUpdateInfo();
-  //     updateUser.photoUrl = imageURL;
-  //     authAPI.updateFirebaseAuthProfile(updateUser).then((updatedUser) {
-  //       currentUser = updatedUser;
-  //     });
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
