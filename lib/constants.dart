@@ -31,3 +31,4 @@ const IconData clock_icon = FontAwesomeIcons.clock;
 const IconData todo_icon = FontAwesomeIcons.clipboard;
 const IconData check_icon = FontAwesomeIcons.check;
 const IconData star_icon = FontAwesomeIcons.star;
+const IconData user_icon = FontAwesomeIcons.userAlt;

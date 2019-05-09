@@ -45,7 +45,7 @@ class MyGymsScreenState extends State<MyGymsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, null, null, null, null),
+        appBar: appBar(context: context, profile: false),
         drawer: DrawerMenu(context: context),
         body: SafeArea(
             child: auth

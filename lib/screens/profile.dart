@@ -1,34 +1,11 @@
-/**
- * Profile Page
- *  - Has currently authenticated user profile
- *  - Has user's gyms
- *  - Has user's friends
- *  - Has user's comments
- *  - Has user's completed routes
- *  - Has user's to-do routes
- *
- *
- * Has 3 sub pages
- *  - Profile
- *  - Friends
- *  - Comments
- *
- * User must be authenticated. Else they are prompted to sign in.
- *
- */
-import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/drawer.dart';
-import 'package:gymratz/main.dart';
-import 'package:gymratz/application.dart';
-import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/network/storage.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/widgets/account_needed.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gymratz/network/storage.dart';
-import 'dart:io';
+import 'package:gymratz/widgets/app_bar.dart';
+import 'package:gymratz/widgets/drawer.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -40,7 +17,6 @@ class ProfileScreen extends StatefulWidget {
 class ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   UserInfo currentUser;
-  File _image;
   StorageAPI storageAPI = new StorageAPI();
   TabController _controller;
   final List<Tab> myTabs = <Tab>[
@@ -80,9 +56,20 @@ class ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, _controller, myTabs, null, null),
+        appBar: appBar(
+            context: context,
+            controller: authAPI.user == null ? null : _controller,
+            myTabs: myTabs,
+            profile: authAPI.user != null),
         drawer: DrawerMenu(context: context),
-        body: null);
+        body: SafeArea(
+            child: authAPI.user != null
+                ? TabBarView(controller: _controller, children: <Widget>[
+                    Text('profile'),
+                    Text('friends'),
+                    Text('comments'),
+                  ])
+                : accountNeeded(context)));
   }
 
   void onLocaleChange(Locale locale) {

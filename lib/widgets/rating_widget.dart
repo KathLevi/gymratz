@@ -62,25 +62,27 @@ Widget lines() {
           )
         ],
       ),
-      Column(
-        children: <Widget>[
-          Expanded(
-              child:
-                  Container(width: double.infinity, height: 50.0, color: teal)),
-          Expanded(
-              child:
-                  Container(width: double.infinity, height: 50.0, color: teal)),
-          Expanded(
-              child:
-                  Container(width: double.infinity, height: 50.0, color: teal)),
-          Expanded(
-              child:
-                  Container(width: double.infinity, height: 50.0, color: teal)),
-          Expanded(
-              child:
-                  Container(width: double.infinity, height: 50.0, color: teal))
-        ],
-      )
+
+      /// some sort of sizing issue, probably with expanded
+//      Column(
+//        children: <Widget>[
+//          Expanded(
+//              child:
+//                  Container(width: double.infinity, height: 50.0, color: teal)),
+//          Expanded(
+//              child:
+//                  Container(width: double.infinity, height: 50.0, color: teal)),
+//          Expanded(
+//              child:
+//                  Container(width: double.infinity, height: 50.0, color: teal)),
+//          Expanded(
+//              child:
+//                  Container(width: double.infinity, height: 50.0, color: teal)),
+//          Expanded(
+//              child:
+//                  Container(width: double.infinity, height: 50.0, color: teal))
+//        ],
+//      )
     ],
   );
 }
