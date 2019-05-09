@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
+import 'package:gymratz/widgets/rating_widget.dart';
 
 class CurrentSet extends StatefulWidget {
   final Gym gym;
@@ -14,11 +15,15 @@ class CurrentSet extends StatefulWidget {
 
 class CurrentSetState extends State<CurrentSet> {
   Gym gym;
+  ClimbingRoute topRopeRoute;
+  ClimbingRoute boulderRoute;
 
   @override
   void initState() {
-    super.initState();
     gym = widget.gym;
+
+    //todo: find highest rated top rope and boulder routes and set them for the widgets
+    super.initState();
   }
 
   @override
@@ -39,7 +44,9 @@ class CurrentSetState extends State<CurrentSet> {
                       Container(
                         width: 200.0,
                         child: Text('Boulder',
-                            style: TextStyle(fontSize: subheaderFont)),
+                            style: TextStyle(
+                                fontSize: subheaderFont,
+                                fontWeight: FontWeight.w300)),
                       ),
                       Text('12', style: TextStyle(fontSize: subheaderFont)),
                     ],
@@ -52,7 +59,9 @@ class CurrentSetState extends State<CurrentSet> {
                       Container(
                         width: 200.0,
                         child: Text('Top Rope',
-                            style: TextStyle(fontSize: subheaderFont)),
+                            style: TextStyle(
+                                fontSize: subheaderFont,
+                                fontWeight: FontWeight.w300)),
                       ),
                       Text('12', style: TextStyle(fontSize: subheaderFont)),
                     ],
@@ -60,6 +69,7 @@ class CurrentSetState extends State<CurrentSet> {
                 ),
               ],
             )),
+        //todo: add last recent information as well as boulder and top rope icons (self made)
         Container(
             padding: const EdgeInsets.all(20.0),
             width: double.infinity,
@@ -68,8 +78,10 @@ class CurrentSetState extends State<CurrentSet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text('Last Reset',
-                    style:
-                        TextStyle(fontSize: headerFont, color: Colors.white)),
+                    style: TextStyle(
+                        fontSize: headerFont,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Row(
@@ -88,7 +100,9 @@ class CurrentSetState extends State<CurrentSet> {
                           Text(
                             'December 12',
                             style: TextStyle(
-                                color: Colors.white, fontSize: bodyFont),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: bodyFont),
                           ),
                         ],
                       ),
@@ -105,13 +119,40 @@ class CurrentSetState extends State<CurrentSet> {
                           Text(
                             'December 12',
                             style: TextStyle(
-                                color: Colors.white, fontSize: bodyFont),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: bodyFont),
                           ),
                         ],
                       )
                     ],
                   ),
                 ),
+              ],
+            )),
+        Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Highest Rated',
+                    style: TextStyle(
+                      fontSize: headerFont,
+                    )),
+                Container(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //todo: add route routing
+                        ratingWidget(
+                            function: () => print('top rope'),
+                            route: topRopeRoute),
+                        ratingWidget(
+                            function: () => print('bounder'),
+                            route: boulderRoute)
+                      ],
+                    ))
               ],
             ))
       ],

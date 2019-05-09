@@ -62,7 +62,9 @@ class GymInfoState extends State<GymInfo> {
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text('$climbers climbers',
                             style: TextStyle(
-                                fontSize: subheaderFont, color: grey)),
+                                fontSize: subheaderFont,
+                                fontWeight: FontWeight.w300,
+                                color: grey)),
                       )
                     ],
                   )
@@ -103,7 +105,9 @@ class GymInfoState extends State<GymInfo> {
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(gym.description,
                           style: TextStyle(
-                              color: Colors.white, fontSize: subheaderFont)),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                              fontSize: subheaderFont)),
                     ),
                   ],
                 ),
@@ -115,7 +119,7 @@ class GymInfoState extends State<GymInfo> {
                 icon: feature_icon,
                 content: Text(
                   gym.features.join('\n'),
-                  style: TextStyle(fontSize: bodyFont),
+                  style: TextStyle(fontSize: subheaderFont),
                 ),
               ),
         gym.hours == null
@@ -125,7 +129,7 @@ class GymInfoState extends State<GymInfo> {
                 icon: rates_icon,
                 content: Text(
                   gym.rates.join('\n'),
-                  style: TextStyle(fontSize: bodyFont),
+                  style: TextStyle(fontSize: subheaderFont),
                 ),
               ),
         gym.features == null
@@ -135,7 +139,7 @@ class GymInfoState extends State<GymInfo> {
                 icon: clock_icon,
                 content: Text(
                   gym.hours.join('\n'),
-                  style: TextStyle(fontSize: bodyFont),
+                  style: TextStyle(fontSize: subheaderFont),
                 ),
               )
       ],

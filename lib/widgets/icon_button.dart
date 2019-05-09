@@ -20,7 +20,10 @@ Widget iconButton(IconData icon, String title, Function function) {
           ),
           Text(
             title,
-            style: TextStyle(fontSize: subheaderFont, color: teal),
+            style: TextStyle(
+                fontSize: subheaderFont,
+                fontWeight: FontWeight.w300,
+                color: teal),
           )
         ],
       ));
