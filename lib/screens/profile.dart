@@ -16,11 +16,19 @@
  * User must be authenticated. Else they are prompted to sign in.
  *
  */
-
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/main.dart';
+import 'package:gymratz/application.dart';
+import 'package:gymratz/resources/gymratz_localizations.dart';
+import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
+import 'package:gymratz/widgets/account_needed.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gymratz/network/storage.dart';
+import 'dart:io';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -31,8 +39,9 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
-  var currentUser;
-
+  UserInfo currentUser;
+  File _image;
+  StorageAPI storageAPI = new StorageAPI();
   TabController _controller;
   final List<Tab> myTabs = <Tab>[
     Tab(text: 'My Profile'),
@@ -40,12 +49,17 @@ class ProfileScreenState extends State<ProfileScreen>
     Tab(text: 'Comments'),
   ];
 
+  GymratzLocalizationsDelegate _newLocaleDelegate;
+
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
-      if (user != null && !user.isAnonymous) {
-        setState(() {
-          currentUser = user.displayName;
-        });
+      print(user);
+      if (user != null) {
+        if (!user.isAnonymous) {
+          setState(() {
+            currentUser = user;
+          });
+        }
       }
     });
   }
@@ -66,21 +80,15 @@ class ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //todo: add image not text for image
-      appBar: appBar(context, _controller, myTabs, 'image', currentUser),
-      drawer: DrawerMenu(context: context),
-      body: SafeArea(
-        child: TabBarView(
-          controller: _controller,
-          children: myTabs.map((Tab tab) {
-            return Center(
-                child: Text(
-              tab.text,
-            ));
-          }).toList(),
-        ),
-      ),
-    );
+        appBar: appBar(context, _controller, myTabs, null, null),
+        drawer: DrawerMenu(context: context),
+        body: null);
+  }
+
+  void onLocaleChange(Locale locale) {
+    setState(() {
+      _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: locale);
+    });
   }
 }
 

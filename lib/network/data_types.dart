@@ -37,6 +37,10 @@ class User {
   String userId;
   int role;
   String displayName;
+  List<dynamic> completed;
+  List<dynamic> gyms;
+  dynamic homeGym;
+  List<dynamic> todo;
 
   User(this.id, this.userId, this.role, this.displayName);
 
@@ -44,7 +48,11 @@ class User {
       : id = snapshot.documentID,
         userId = snapshot['userId'],
         role = snapshot['role'],
-        displayName = snapshot['displayName'];
+        displayName = snapshot['displayName'],
+        completed = snapshot['completed'],
+        homeGym = snapshot['homeGym'],
+        gyms = snapshot['gyms'],
+        todo = snapshot['todo'];
 }
 
 enum RouteTypes { boulder, toprope, lead }
@@ -61,7 +69,8 @@ class ClimbingRoute {
   int rating;
   String userId;
 
-  ClimbingRoute(this.name, this.color, this.description, this.grade, this.gymId, this.type, this.userId);
+  ClimbingRoute(this.name, this.color, this.description, this.grade, this.gymId,
+      this.type, this.userId);
 
   ClimbingRoute.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,

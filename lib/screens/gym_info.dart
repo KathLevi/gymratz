@@ -80,10 +80,12 @@ class GymInfoState extends State<GymInfo> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              iconButton(website_icon, 'Website', () => print('Website')),
-              iconButton(favorite_icon, 'Favorite', () => print('Favorite')),
               iconButton(
-                  directions_icon, 'Directions', () => print(gym.address))
+                  website_icon, 'Website', () => print('Website'), false),
+              iconButton(
+                  favorite_icon, 'Favorite', () => print('Favorite'), false),
+              iconButton(directions_icon, 'Directions',
+                  () => print(gym.address), false)
             ],
           ),
         ),
