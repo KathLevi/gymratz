@@ -4,6 +4,7 @@ import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/screens/add_climb.dart';
 import 'package:gymratz/screens/route.dart';
+import 'package:gymratz/screens/add_climb.dart';
 
 class Boulder extends StatefulWidget {
   final Gym gym;
