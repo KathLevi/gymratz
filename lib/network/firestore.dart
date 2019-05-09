@@ -167,6 +167,14 @@ class FirestoreAPI {
     return _firestore.collection('users').add(data);
   }
 
+  markClimbAsToDo(ClimbingRoute climb) {
+    String id = authAPI.user.uid;
+    DocumentReference ref = _firestore.collection('routes').document(climb.id);
+    _firestore.collection('users').document(id).updateData({
+      "todo": FieldValue.arrayUnion([ref])
+    });
+  }
+
   Stream<User> getUserById(id) {
     return _firestore.collection('users').document(id).get().then((snapshot) {
       try {

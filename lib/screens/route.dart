@@ -84,9 +84,11 @@ class RouteScreenState extends State<RouteScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  iconButton(todo_icon, 'To Do', () => print('todo')),
-                  iconButton(check_icon, 'Completed', () => print('complete')),
-                  iconButton(star_icon, 'Rate', () => print('rate')),
+                  iconButton(todo_icon, 'To Do',
+                      () => fsAPI.markClimbAsToDo(widget.climbingRoute), false),
+                  iconButton(
+                      check_icon, 'Completed', () => print('complete'), false),
+                  iconButton(star_icon, 'Rate', () => print('rate'), false),
                 ],
               ),
             ),
