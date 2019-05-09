@@ -9,6 +9,7 @@ class Auth {
   Auth() {
     this._auth.currentUser().then((user) {
       this.user = user;
+      fsAPI.updateGlobalUser();
     });
   }
 
@@ -30,6 +31,7 @@ class Auth {
       );
 
       this.user = user;
+      fsAPI.updateGlobalUser();
 
       return {'user': user};
     } on PlatformException catch (e) {
@@ -40,6 +42,7 @@ class Auth {
   Future updateFirebaseAuthProfile(UserUpdateInfo user) async {
     await this.user.updateProfile(user);
     this.user = await _auth.currentUser();
+    fsAPI.updateGlobalUser();
     return this.user;
   }
 
@@ -86,6 +89,7 @@ class Auth {
     try {
       await _auth.signOut();
       this.user = await _auth.currentUser();
+      fsAPI.updateGlobalUser();
       return ('logged out');
     } catch (e) {
       return ('could not log out user');

@@ -17,12 +17,14 @@ class RouteScreen extends StatefulWidget {
 
 class RouteScreenState extends State<RouteScreen> {
   var currentUser;
+  bool istodo = false;
   ClimbingRoute currentRoute;
 
   @override
   void initState() {
     super.initState();
     currentRoute = widget.climbingRoute;
+    istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
   }
 
   theImage() {
@@ -84,8 +86,28 @@ class RouteScreenState extends State<RouteScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  iconButton(todo_icon, 'To Do',
-                      () => fsAPI.markClimbAsToDo(widget.climbingRoute), false),
+                  iconButton(
+                    todo_icon,
+                    'To Do',
+                    istodo
+                        ? () {
+                            if (authAPI.user != null) {
+                              fsAPI.unmarkClimbAsToDo(widget.climbingRoute);
+                              setState(() {
+                                istodo = false;
+                              });
+                            }
+                          }
+                        : () {
+                            if (authAPI.user != null) {
+                              fsAPI.markClimbAsToDo(widget.climbingRoute);
+                              setState(() {
+                                istodo = true;
+                              });
+                            }
+                          },
+                    istodo,
+                  ),
                   iconButton(
                       check_icon, 'Completed', () => print('complete'), false),
                   iconButton(star_icon, 'Rate', () => print('rate'), false),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:gymratz/models/user.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/main.dart';
 import 'dart:io';
@@ -15,6 +16,9 @@ import 'dart:io';
 
 class FirestoreAPI {
   final Firestore _firestore = Firestore.instance;
+  User user;
+
+  FirestoreAPI() {}
 
   /// Routes
   Stream<List<ClimbingRoute>> getAllRoutes() {
@@ -167,11 +171,30 @@ class FirestoreAPI {
     return _firestore.collection('users').add(data);
   }
 
-  markClimbAsToDo(ClimbingRoute climb) {
+  bool isClimbToDo(String id) {
+    DocumentReference ref = _firestore.collection('routes').document(id);
+    return !(user.todo.indexOf(ref) == -1);
+  }
+
+  void markClimbAsToDo(ClimbingRoute climb) {
+    print('adding climb');
     String id = authAPI.user.uid;
     DocumentReference ref = _firestore.collection('routes').document(climb.id);
     _firestore.collection('users').document(id).updateData({
       "todo": FieldValue.arrayUnion([ref])
+    }).then((n) {
+      this.updateGlobalUser();
+    });
+  }
+
+  void unmarkClimbAsToDo(ClimbingRoute climb) {
+    print('removing climb');
+    String id = authAPI.user.uid;
+    DocumentReference ref = _firestore.collection('routes').document(climb.id);
+    _firestore.collection('users').document(id).updateData({
+      "todo": FieldValue.arrayRemove([ref])
+    }).then((n) {
+      this.updateGlobalUser();
     });
   }
 
@@ -184,6 +207,13 @@ class FirestoreAPI {
         return null;
       }
     }).asStream();
+  }
+
+  updateGlobalUser() {
+    String id = authAPI.user.uid;
+    _firestore.collection('users').document(id).get().then((snapshot) {
+      user = User.fromSnapshot(snapshot);
+    });
   }
 
   Stream<List<User>> getAllUsers() {
