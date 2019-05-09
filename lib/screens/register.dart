@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/application.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
@@ -55,7 +54,8 @@ class RegisterScreenState extends State<RegisterScreen>
         appBar: null,
         body: SafeArea(
           child: Container(
-            width: double.infinity, // double infinity?????? such power.... it's like 2 inifinity gauntlets
+            width: double
+                .infinity, // double infinity?????? such power.... it's like 2 inifinity gauntlets
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/mainImage.jpg'),
@@ -234,7 +234,8 @@ class RegisterScreenState extends State<RegisterScreen>
                           child: Text(
                               GymratzLocalizations.of(context).text('Register'),
                               style: TextStyle(
-                                  color: Colors.white, fontSize: smallFont)),
+                                  color: Colors.white,
+                                  fontSize: subheaderFont)),
                         ),
                       ),
                       Container(
@@ -242,7 +243,7 @@ class RegisterScreenState extends State<RegisterScreen>
                         width: double.infinity,
                         child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(context, '/');
+                              Navigator.pushNamed(context, '/login');
                             },
                             key: RegisterScreen.loginButtonKey,
                             child: Row(
@@ -252,7 +253,8 @@ class RegisterScreenState extends State<RegisterScreen>
                                     GymratzLocalizations.of(context)
                                         .text('AlreadyHaveAnAccount?'),
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: xsFont)),
+                                        color: Colors.white,
+                                        fontSize: bodyFont)),
                                 Text(
                                     ' ' +
                                         GymratzLocalizations.of(context)

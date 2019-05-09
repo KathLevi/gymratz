@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
-import 'package:gymratz/application.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 
@@ -52,7 +51,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                     GymratzLocalizations.of(context).text('ForgotPassword?'),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: mediumFont,
+                      fontSize: subheaderFont,
                     ),
                   ),
                 ),
@@ -61,10 +60,11 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 10.0),
                   child: Text(
-                    GymratzLocalizations.of(context).text('EnterEmailToRecoverPassword'),
+                    GymratzLocalizations.of(context)
+                        .text('EnterEmailToRecoverPassword'),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: smallFont,
+                      fontSize: bodyFont,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -84,7 +84,10 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                         },
                         style: TextStyle(color: Colors.white),
                         validator: (val) {
-                          return val.length < 10 ? GymratzLocalizations.of(context).text('InvalidEmail') : null;
+                          return val.length < 10
+                              ? GymratzLocalizations.of(context)
+                                  .text('InvalidEmail')
+                              : null;
                         },
                         decoration: InputDecoration(
                             labelText: 'Email',
@@ -113,9 +116,10 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             Navigator.pushNamed(context, '/');
                           },
                           color: Theme.of(context).primaryColor,
-                          child: Text(GymratzLocalizations.of(context).text('Send'),
+                          child: Text(
+                              GymratzLocalizations.of(context).text('Send'),
                               style: TextStyle(
-                                  color: Colors.white, fontSize: smallFont)),
+                                  color: Colors.white, fontSize: bodyFont)),
                         ),
                       ),
                       Container(
@@ -127,9 +131,11 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             Navigator.pushNamed(context, '/');
                           },
                           color: Colors.grey,
-                          child: Text(GymratzLocalizations.of(context).text('NeverMind'),
+                          child: Text(
+                              GymratzLocalizations.of(context)
+                                  .text('NeverMind'),
                               style: TextStyle(
-                                  color: Colors.white, fontSize: smallFont)),
+                                  color: Colors.white, fontSize: bodyFont)),
                         ),
                       ),
                     ],

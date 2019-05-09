@@ -3,6 +3,7 @@ import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/widgets/icon_button.dart';
 
 class RouteScreen extends StatefulWidget {
   RouteScreen({Key key, this.climbingRoute});
@@ -18,26 +19,9 @@ class RouteScreenState extends State<RouteScreen> {
   var currentUser;
   ClimbingRoute currentRoute;
 
-  void checkForToken() {
-    authAPI.getAuthenticatedUser().then((user) {
-      if (user != null) {
-        if (!user.isAnonymous) {
-          setState(() {
-            currentUser = user;
-          });
-        } else {
-          setState(() {
-            currentUser = 'Guest User';
-          });
-        }
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    checkForToken();
     currentRoute = widget.climbingRoute;
   }
 
@@ -59,16 +43,74 @@ class RouteScreenState extends State<RouteScreen> {
         body: SafeArea(
             child: ListView(
           children: <Widget>[
-            Text(
-              currentRoute.name + "    " + currentRoute.grade,
-              style: TextStyle(
-                fontSize: largeFont,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        currentRoute.name,
+                        style: TextStyle(
+                          fontSize: headerFont,
+                        ),
+                      ),
+                      Text(
+                        'favorites',
+                        style: TextStyle(
+                          fontSize: bodyFont,
+                        ),
+                      )
+                    ],
+                  ),
+                  Container(
+                      width: 60.0,
+                      height: 60.0,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: teal,
+                          borderRadius: BorderRadius.circular(1000.0)),
+                      child: Text(currentRoute.grade,
+                          style: TextStyle(
+                              color: Colors.white, fontSize: subheaderFont)))
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
             theImage(),
-            Text('Description:'),
-            Text(currentRoute.description)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  iconButton(todo_icon, 'To Do', () => print('todo')),
+                  iconButton(check_icon, 'Completed', () => print('complete')),
+                  iconButton(star_icon, 'Rate', () => print('rate')),
+                ],
+              ),
+            ),
+            Container(
+                padding: const EdgeInsets.all(20.0),
+                color: darkTeal,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Description',
+                      style: TextStyle(
+                          color: Colors.white, fontSize: subheaderFont),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Text(
+                        currentRoute.description,
+                        style:
+                            TextStyle(color: Colors.white, fontSize: bodyFont),
+                      ),
+                    )
+                  ],
+                ))
           ],
         )));
   }

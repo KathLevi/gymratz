@@ -1,12 +1,13 @@
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gymratz/network/auth.dart';
 import 'package:gymratz/network/firestore.dart';
 import 'package:gymratz/network/storage.dart';
 import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/theme.dart';
-import 'application.dart';
 
+import 'application.dart';
 import 'routes.dart';
 
 part "constants.dart";
@@ -30,12 +31,14 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: application.supportedLocales(),
-      localeResolutionCallback: (Locale locale, Iterable<Locale> supportedLocales) {  
-        for (Locale supportedLocale in supportedLocales) {  
-          if (supportedLocale.languageCode == locale.languageCode || supportedLocale.countryCode == locale.countryCode) {  
-            return supportedLocale;  
-          }  
-        }  
+      localeResolutionCallback:
+          (Locale locale, Iterable<Locale> supportedLocales) {
+        for (Locale supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale.languageCode ||
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
         return supportedLocales.first;
       },
     );
