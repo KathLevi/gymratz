@@ -24,7 +24,9 @@ class RouteScreenState extends State<RouteScreen> {
   void initState() {
     super.initState();
     currentRoute = widget.climbingRoute;
-    istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
+
+    /// you cannot assume that a use is logged in, when a user is not logged in it throws an error
+//    istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
   }
 
   theImage() {
@@ -38,7 +40,7 @@ class RouteScreenState extends State<RouteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context, null, null, null, null),
+        appBar: appBar(context: context, profile: false),
         drawer: DrawerMenu(
           context: context,
         ),
@@ -87,30 +89,33 @@ class RouteScreenState extends State<RouteScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   iconButton(
-                    todo_icon,
-                    'To Do',
-                    istodo
-                        ? () {
-                            if (authAPI.user != null) {
-                              fsAPI.unmarkClimbAsToDo(widget.climbingRoute);
-                              setState(() {
-                                istodo = false;
-                              });
+                      todo_icon,
+                      'To Do',
+                      istodo
+                          ? () {
+                              /// there should be a way to make a function call that sets or unsets the climb such as
+                              /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
+                              if (authAPI.user != null) {
+                                fsAPI.unmarkClimbAsToDo(widget.climbingRoute);
+                                setState(() {
+                                  istodo = false;
+                                });
+                              }
                             }
-                          }
-                        : () {
-                            if (authAPI.user != null) {
-                              fsAPI.markClimbAsToDo(widget.climbingRoute);
-                              setState(() {
-                                istodo = true;
-                              });
-                            }
-                          },
-                    istodo,
-                  ),
-                  iconButton(
-                      check_icon, 'Completed', () => print('complete'), false),
-                  iconButton(star_icon, 'Rate', () => print('rate'), false),
+                          : () {
+                              if (authAPI.user != null) {
+                                fsAPI.markClimbAsToDo(widget.climbingRoute);
+                                setState(() {
+                                  istodo = true;
+                                });
+                              }
+                            },
+                      istodo,
+                      authAPI.user == null),
+                  iconButton(check_icon, 'Completed', () => print('complete'),
+                      false, authAPI.user == null),
+                  iconButton(star_icon, 'Rate', () => print('rate'), false,
+                      authAPI.user == null),
                 ],
               ),
             ),

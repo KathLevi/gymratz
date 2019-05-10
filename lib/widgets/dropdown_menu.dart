@@ -55,7 +55,8 @@ class DropdownMenuState extends State<DropdownMenu> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
                       title,
-                      style: TextStyle(fontSize: subheaderFont),
+                      style: TextStyle(
+                          fontSize: subheaderFont, fontWeight: FontWeight.w300),
                     ),
                   )
                 ],

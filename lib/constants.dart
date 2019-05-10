@@ -11,6 +11,7 @@ const bodyFont = 15.0;
 const subheaderFont = 20.0;
 const headerFont = 25.0;
 const titleFont = 30.0;
+const xlFont = 50.0;
 
 /// icon sizes
 const xxsIcon = 20.0;
@@ -26,7 +27,8 @@ const IconData favorite_icon = FontAwesomeIcons.heart;
 const IconData website_icon = FontAwesomeIcons.globeAmericas;
 const IconData feature_icon = FontAwesomeIcons.bug;
 const IconData rates_icon = FontAwesomeIcons.dollarSign;
-const IconData clock_icon = FontAwesomeIcons.solidClock;
+const IconData clock_icon = FontAwesomeIcons.clock;
 const IconData todo_icon = FontAwesomeIcons.clipboard;
 const IconData check_icon = FontAwesomeIcons.check;
 const IconData star_icon = FontAwesomeIcons.star;
+const IconData user_icon = FontAwesomeIcons.userAlt;

@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 /// example without tabs::  appBar(context, null, null);
 /// example with tabs::   appBar(context, TabController, List<Tab>);
 
-Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
-    String image, String user) {
+Widget appBar(
+    {@required BuildContext context,
+    TabController controller,
+    List<Tab> myTabs,
+    @required bool profile}) {
   Future getImage() async {
     var _image = await ImagePicker.pickImage(
         source: ImageSource.camera, maxWidth: 1080.0, maxHeight: 1920.0);
@@ -43,7 +46,7 @@ Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
     ),
     bottom: controller == null
         ? null
-        : authAPI.user == null
+        : !profile
             ? TabBar(
                 controller: controller,
                 tabs: myTabs,
@@ -53,21 +56,29 @@ Widget appBar(BuildContext context, TabController controller, List<Tab> myTabs,
                 preferredSize: Size.fromHeight(150.0),
                 child: Column(
                   children: <Widget>[
-                    //todo: add image not text
                     InkWell(
                         onTap: () {
                           getImage();
                         },
-                        child: CircleAvatar(
-                          minRadius: 30.0,
-                          maxRadius: 30.0,
-                          backgroundColor: Colors.white,
-                          backgroundImage: NetworkImage(authAPI.user.photoUrl),
-                        )),
-                    Text(
-                        authAPI.user == null
-                            ? 'Guest User'
-                            : authAPI.user.displayName,
+                        child: authAPI.user?.photoUrl == null
+                            ? CircleAvatar(
+                                minRadius: 30.0,
+                                maxRadius: 30.0,
+                                backgroundColor: grey,
+                                child: Icon(
+                                  user_icon,
+                                  color: Colors.black,
+                                  size: 30.0,
+                                ),
+                              )
+                            : CircleAvatar(
+                                minRadius: 30.0,
+                                maxRadius: 30.0,
+                                backgroundColor: Colors.white,
+                                backgroundImage:
+                                    NetworkImage(authAPI.user.photoUrl),
+                              )),
+                    Text(authAPI.user.displayName,
                         style: TextStyle(color: teal, fontSize: headerFont)),
                     TabBar(
                         controller: controller,

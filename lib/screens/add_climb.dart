@@ -397,7 +397,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: appBar(context, null, null, null, null),
+        appBar: appBar(context: context, profile: false),
         drawer: DrawerMenu(context: context),
         body: SafeArea(child: formWidget()));
   }

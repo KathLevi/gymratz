@@ -4,7 +4,6 @@ import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/screens/add_climb.dart';
 import 'package:gymratz/screens/route.dart';
-import 'package:gymratz/screens/add_climb.dart';
 
 class Boulder extends StatefulWidget {
   final Gym gym;
@@ -108,26 +107,28 @@ class BoulderState extends State<Boulder> with WidgetsBindingObserver {
               // Image.network(gym.bgImage, width: double.infinity),
             ],
           ),
-          Positioned(
-              bottom: 10.0,
-              right: 10.0,
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              AddClimbScreen(gym: widget.gym)))
-                      .then((Object obj) {
-                    print('attempting to rebuild!!!');
-                    this.setState(() {
-                      _counter++;
-                      print('attempting to rebuild');
-                    });
-                  });
-                },
-                child: Icon(Icons.add),
-                foregroundColor: Colors.white,
-              ))
+          authAPI.user == null
+              ? Container()
+              : Positioned(
+                  bottom: 10.0,
+                  right: 10.0,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  AddClimbScreen(gym: widget.gym)))
+                          .then((Object obj) {
+                        print('attempting to rebuild!!!');
+                        this.setState(() {
+                          _counter++;
+                          print('attempting to rebuild');
+                        });
+                      });
+                    },
+                    child: Icon(Icons.add),
+                    foregroundColor: Colors.white,
+                  ))
         ],
       ),
     );
