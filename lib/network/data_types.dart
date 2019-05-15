@@ -8,12 +8,13 @@ class Gym {
   String image;
   String logo;
   String description;
+  String website;
   List<String> features = new List<String>();
   List<String> hours = new List<String>();
   List<String> rates = new List<String>();
 
   Gym(this.id, this.name, this.address, this.bgImage, this.image, this.logo,
-      this.description, this.features, this.hours, this.rates);
+      this.description, this.website, this.features, this.hours, this.rates);
 
   Gym.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
@@ -23,6 +24,7 @@ class Gym {
         image = snapshot['image'],
         logo = snapshot['logo'],
         description = snapshot['description'],
+        website = snapshot['website'],
         features = snapshot['features'] != null
             ? List.from(snapshot['features'])
             : null,

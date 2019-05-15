@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/screens/add_climb.dart';
+import 'package:gymratz/screens/gym_pages/add_climb.dart';
 import 'package:gymratz/screens/route.dart';
 
-class TopRope extends StatefulWidget {
+class Boulder extends StatefulWidget {
   final Gym gym;
-  TopRope({Key key, @required this.gym}) : super(key: key);
+  Boulder({Key key, @required this.gym}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return TopRopeState();
+    return BoulderState();
   }
 }
 
-class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
+class BoulderState extends State<Boulder> with WidgetsBindingObserver {
+  var _counter = 0;
   _buildListItem(BuildContext context, ClimbingRoute climbingRoute) {
     theImage() {
       if (climbingRoute.pictureUrl != null) {
@@ -43,6 +44,7 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
             /* TO DO 
             * Add navigation to singular route. Should a single route be a screen or a separate widget like this?
             */
+            print('inkwell clicked!');
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) =>
                     RouteScreen(climbingRoute: climbingRoute)));
@@ -52,9 +54,10 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
 
   _makeRouteColumn() {
     return StreamBuilder<List<ClimbingRoute>>(
-        stream: fsAPI.getTopRopeRoutesByGymId(widget.gym.id),
+        stream: fsAPI.getBoulderRoutesByGymId(widget.gym.id),
         builder: (context, AsyncSnapshot<List<ClimbingRoute>> snapshot) {
           //TODO: fix progress indicator to be center
+          print(snapshot.hasData);
           if (!snapshot.hasData)
             return Center(
               child: new SizedBox(
@@ -118,6 +121,7 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
                           .then((Object obj) {
                         print('attempting to rebuild!!!');
                         this.setState(() {
+                          _counter++;
                           print('attempting to rebuild');
                         });
                       });
@@ -130,28 +134,3 @@ class TopRopeState extends State<TopRope> with WidgetsBindingObserver {
     );
   }
 }
-
-// Widget topRope(BuildContext context, Gym gym) {
-//   return Container(
-//     margin: const EdgeInsets.all(10.0),
-//     child: ListView(
-//       children: <Widget>[
-//         Container(
-//           padding: const EdgeInsets.symmetric(vertical: 20.0),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: <Widget>[
-//               Text('Top Rope',
-//                   style: TextStyle(
-//                       color: Theme.of(context).primaryColor,
-//                       fontSize: mediumFont)),
-//               Image.network(gym.logo,
-//                   width: 30.0, height: 30.0, fit: BoxFit.contain),
-//             ],
-//           ),
-//         ),
-//         Image.network(gym.bgImage, width: double.infinity),
-//       ],
-//     ),
-//   );
-// }
