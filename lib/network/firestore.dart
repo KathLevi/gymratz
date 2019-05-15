@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:gymratz/models/user.dart';
 import 'package:gymratz/network/data_types.dart';
@@ -18,7 +20,7 @@ class FirestoreAPI {
   final Firestore _firestore = Firestore.instance;
   User user;
 
-  FirestoreAPI() {}
+  FirestoreAPI();
 
   /// Routes
   Stream<List<ClimbingRoute>> getAllRoutes() {
@@ -210,10 +212,12 @@ class FirestoreAPI {
   }
 
   updateGlobalUser() {
-    String id = authAPI.user.uid;
-    _firestore.collection('users').document(id).get().then((snapshot) {
-      user = User.fromSnapshot(snapshot);
-    });
+    if (authAPI.user != null) {
+      String id = authAPI.user.uid;
+      _firestore.collection('users').document(id).get().then((snapshot) {
+        user = User.fromSnapshot(snapshot);
+      });
+    }
   }
 
   Stream<List<User>> getAllUsers() {
