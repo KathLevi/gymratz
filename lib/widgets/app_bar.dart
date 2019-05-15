@@ -28,21 +28,10 @@ Widget appBar(
 
   return AppBar(
     backgroundColor: Colors.black,
-    title: Row(
-      children: <Widget>[
-        //TODO: replace with logo image
-        Text(
-          'GYM',
-          style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold,
-              fontSize: titleFont),
-        ),
-        Text(
-          'RATZ',
-          style: TextStyle(color: Colors.white, fontSize: titleFont),
-        ),
-      ],
+    centerTitle: true,
+    title: Text(
+      'GYMRATZ',
+      style: TextStyle(color: Colors.white, fontSize: headerFont),
     ),
     bottom: controller == null
         ? null

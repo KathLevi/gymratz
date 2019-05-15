@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
+import 'package:gymratz/screens/website-viewer.dart';
 import 'package:gymratz/widgets/dropdown_menu.dart';
 import 'package:gymratz/widgets/icon_button.dart';
 
@@ -80,7 +81,14 @@ class GymInfoState extends State<GymInfo> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              iconButton(website_icon, 'Website', () => print('Website'), false,
+              iconButton(
+                  website_icon,
+                  'Website',
+                  () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => WebsiteViewer(
+                            url: gym.website,
+                          ))),
+                  false,
                   false),
               iconButton(favorite_icon, 'Favorite', () => print('Favorite'),
                   false, authAPI.user == null),

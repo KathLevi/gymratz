@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
-import 'package:gymratz/screens/boulder.dart';
-import 'package:gymratz/screens/current_set.dart';
-import 'package:gymratz/screens/gym_info.dart';
-import 'package:gymratz/screens/top_rope.dart';
+import 'package:gymratz/screens/gym_pages/boulder.dart';
+import 'package:gymratz/screens/gym_pages/current_set.dart';
+import 'package:gymratz/screens/gym_pages/gym_info.dart';
+import 'package:gymratz/screens/gym_pages/top_rope.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 
