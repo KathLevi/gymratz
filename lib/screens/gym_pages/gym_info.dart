@@ -19,6 +19,7 @@ class GymInfo extends StatefulWidget {
 class GymInfoState extends State<GymInfo> {
   Gym gym;
   var climbers;
+  bool isFavorite;
 
   @override
   void initState() {
@@ -26,6 +27,7 @@ class GymInfoState extends State<GymInfo> {
     gym = widget.gym;
     //todo: add climbers to gym widget and set number
     climbers = 12;
+    isFavorite = fsAPI.isFavoriteGym(gym.id);
   }
 
   @override
@@ -83,25 +85,30 @@ class GymInfoState extends State<GymInfo> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               iconButton(
-                  website_icon,
-                  'Website',
-                  () => Navigator.of(context).push(MaterialPageRoute(
+                  icon: website_icon,
+                  title: 'Website',
+                  function: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) => WebsiteViewer(
                             url: gym.website,
-                          ))),
-                  false,
-                  false),
-              iconButton(favorite_icon, 'Favorite', () => print('Favorite'),
-                  false, authAPI.user == null),
+                          )))),
               iconButton(
-                  directions_icon,
-                  'Directions',
-                  () => Navigator.of(context).push(MaterialPageRoute(
+                  icon: favorite_icon,
+                  title: 'Favorite',
+                  function: () {
+                    fsAPI.favoriteGym(gym, isFavorite);
+                    setState(() {
+                      isFavorite = !isFavorite;
+                    });
+                  },
+                  invert: isFavorite,
+                  inactive: authAPI.user == null),
+              iconButton(
+                  icon: directions_icon,
+                  title: 'Directions',
+                  function: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (BuildContext context) => MapsViewer(
                             address: gym.address,
-                          ))),
-                  false,
-                  false)
+                          ))))
             ],
           ),
         ),

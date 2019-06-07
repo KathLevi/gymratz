@@ -1,10 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:gymratz/models/user.dart';
-import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/main.dart';
-import 'dart:io';
+import 'package:gymratz/network/data_types.dart';
 
 //TODO: figure out if there is a way to make this a future? Needed?
 
@@ -198,6 +197,29 @@ class FirestoreAPI {
     }).then((n) {
       this.updateGlobalUser();
     });
+  }
+
+  bool isFavoriteGym(String id) {
+    DocumentReference ref = _firestore.collection('gyms').document(id);
+    return !(user.gyms.indexOf(ref) == -1);
+  }
+
+  void favoriteGym(Gym gym, bool favorite) {
+    String id = authAPI.user.uid;
+    DocumentReference ref = _firestore.collection('gyms').document(gym.id);
+    if (favorite) {
+      _firestore.collection('users').document(id).updateData({
+        "gyms": FieldValue.arrayRemove([ref])
+      }).then((n) {
+        this.updateGlobalUser();
+      });
+    } else {
+      _firestore.collection('users').document(id).updateData({
+        "gyms": FieldValue.arrayUnion([ref])
+      }).then((n) {
+        this.updateGlobalUser();
+      });
+    }
   }
 
   Stream<User> getUserById(id) {
