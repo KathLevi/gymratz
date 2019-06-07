@@ -18,12 +18,18 @@ class RouteScreen extends StatefulWidget {
 class RouteScreenState extends State<RouteScreen> {
   var currentUser;
   bool istodo = false;
+  bool isCompleted = false;
   ClimbingRoute currentRoute;
 
   @override
   void initState() {
     super.initState();
     currentRoute = widget.climbingRoute;
+
+    if (fsAPI.user != null) {
+      istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
+      isCompleted = fsAPI.isClimbCompleted(widget.climbingRoute.id);
+    }
 
     /// you cannot assume that a use is logged in, when a user is not logged in it throws an error
 //    istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
@@ -91,36 +97,33 @@ class RouteScreenState extends State<RouteScreen> {
                   iconButton(
                       icon: todo_icon,
                       title: 'To Do',
-                      function: istodo
-                          ? () {
-                              /// there should be a way to make a function call that sets or unsets the climb such as
-                              /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
-                              if (authAPI.user != null) {
-                                fsAPI.unmarkClimbAsToDo(widget.climbingRoute);
-                                setState(() {
-                                  istodo = false;
-                                });
-                              }
-                            }
-                          : () {
-                              if (authAPI.user != null) {
-                                fsAPI.markClimbAsToDo(widget.climbingRoute);
-                                setState(() {
-                                  istodo = true;
-                                });
-                              }
-                            },
+                      function: () {
+                        /// there should be a way to make a function call that sets or unsets the climb such as
+                        /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
+                        fsAPI.markToDoClimb(widget.climbingRoute, istodo);
+                        setState(() {
+                          istodo = !istodo;
+                        });
+                      },
                       invert: istodo,
                       inactive: authAPI.user == null),
                   iconButton(
                       icon: check_icon,
                       title: 'Completed',
-                      function: () => print('complete'),
+                      function: () {
+                        fsAPI.markCompletedClimb(
+                            widget.climbingRoute, isCompleted);
+                        setState(() {
+                          isCompleted = !isCompleted;
+                        });
+                      },
+                      invert: isCompleted,
                       inactive: authAPI.user == null),
                   iconButton(
                       icon: star_icon,
                       title: 'Rate',
                       function: () => print('rate'),
+                      invert: false,
                       inactive: authAPI.user == null),
                 ],
               ),
