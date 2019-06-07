@@ -169,35 +169,71 @@ class FirestoreAPI {
   /// Users
 // This must be done every single time a new user has been registered
   //TODO: add user stream? future?
-  addUser(data) {
-    return _firestore.collection('users').add(data);
+  addUser(uid) async {
+    final CollectionReference userRef = Firestore.instance.collection('/users');
+
+    // Post post = new Post(postID, "title", "content");
+    // Map<String, dynamic> postData = post.toJson();
+    await userRef.document(uid).setData({});
+
+    // return _firestore.collection('users').add(data);
   }
 
   bool isClimbToDo(String id) {
     DocumentReference ref = _firestore.collection('routes').document(id);
-    return !(user.todo.indexOf(ref) == -1);
+    if (user.todo != null) {
+      return !(user.todo.indexOf(ref) == -1);
+    } else {
+      return false;
+    }
   }
 
-  void markClimbAsToDo(ClimbingRoute climb) {
-    print('adding climb');
-    String id = authAPI.user.uid;
-    DocumentReference ref = _firestore.collection('routes').document(climb.id);
-    _firestore.collection('users').document(id).updateData({
-      "todo": FieldValue.arrayUnion([ref])
-    }).then((n) {
-      this.updateGlobalUser();
-    });
+  bool isClimbCompleted(String id) {
+    DocumentReference ref = _firestore.collection('routes').document(id);
+    if (user.completed != null) return !(user.completed.indexOf(ref) == -1);
   }
 
-  void unmarkClimbAsToDo(ClimbingRoute climb) {
-    print('removing climb');
+  void markToDoClimb(ClimbingRoute climb, bool isToDo) {
+    print('TO DO CLIMB' + isToDo.toString());
     String id = authAPI.user.uid;
     DocumentReference ref = _firestore.collection('routes').document(climb.id);
-    _firestore.collection('users').document(id).updateData({
-      "todo": FieldValue.arrayRemove([ref])
-    }).then((n) {
-      this.updateGlobalUser();
-    });
+    !isToDo
+        ? {
+            _firestore.collection('users').document(id).updateData({
+              "todo": FieldValue.arrayUnion([ref])
+            }).then((n) {
+              this.updateGlobalUser();
+            })
+          }
+        : {
+            _firestore.collection('users').document(id).updateData({
+              "todo": FieldValue.arrayRemove([ref])
+            }).then((n) {
+              this.updateGlobalUser();
+            })
+          };
+  }
+
+  void markCompletedClimb(ClimbingRoute climb, bool isCompleted) {
+    print('TO DO Completed' + isCompleted.toString());
+
+    String id = authAPI.user.uid;
+    DocumentReference ref = _firestore.collection('routes').document(climb.id);
+    !isCompleted
+        ? {
+            _firestore.collection('users').document(id).updateData({
+              "completed": FieldValue.arrayUnion([ref])
+            }).then((n) {
+              this.updateGlobalUser();
+            })
+          }
+        : {
+            _firestore.collection('users').document(id).updateData({
+              "completed": FieldValue.arrayRemove([ref])
+            }).then((n) {
+              this.updateGlobalUser();
+            })
+          };
   }
 
   Stream<User> getUserById(id) {

@@ -62,7 +62,7 @@ class Auth {
 
       //create firestore profile
 
-      fsAPI.addUser({'id': user.uid});
+      fsAPI.addUser(user.uid);
 
       //update firebase username because default is NULL
       UserUpdateInfo info = new UserUpdateInfo();
