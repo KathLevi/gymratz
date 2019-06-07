@@ -36,6 +36,7 @@ class SearchScreenState extends State<SearchScreen> {
   }
 
   _buildListItem(BuildContext context, Gym gym) {
+    bool favorite = fsAPI.isFavoriteGym(gym.id);
     return Card(
       child: InkWell(
           child: ListTile(
@@ -45,7 +46,8 @@ class SearchScreenState extends State<SearchScreen> {
             title: Text(gym.name),
             subtitle: Text(gym.address),
             //TODO: add in number of climbers
-            trailing: Icon(Icons.favorite_border),
+            trailing: Icon(favorite ? favorite_solid_icon : favorite_icon,
+                color: favorite ? teal : grey),
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

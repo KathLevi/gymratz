@@ -94,22 +94,37 @@ class RouteScreenState extends State<RouteScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  iconButton(todo_icon, 'To Do', () {
-                    /// there should be a way to make a function call that sets or unsets the climb such as
-                    /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
-                    fsAPI.markToDoClimb(widget.climbingRoute, istodo);
-                    setState(() {
-                      istodo = !istodo;
-                    });
-                  }, istodo, authAPI.user == null),
-                  iconButton(check_icon, 'Completed', () {
-                    fsAPI.markCompletedClimb(widget.climbingRoute, isCompleted);
-                    setState(() {
-                      isCompleted = !isCompleted;
-                    });
-                  }, isCompleted, authAPI.user == null),
-                  iconButton(star_icon, 'Rate', () => print('rate'), false,
-                      authAPI.user == null),
+                  iconButton(
+                      icon: todo_icon,
+                      title: 'To Do',
+                      function: () {
+                        /// there should be a way to make a function call that sets or unsets the climb such as
+                        /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
+                        fsAPI.markToDoClimb(widget.climbingRoute, istodo);
+                        setState(() {
+                          istodo = !istodo;
+                        });
+                      },
+                      invert: istodo,
+                      inactive: authAPI.user == null),
+                  iconButton(
+                      icon: check_icon,
+                      title: 'Completed',
+                      function: () {
+                        fsAPI.markCompletedClimb(
+                            widget.climbingRoute, isCompleted);
+                        setState(() {
+                          isCompleted = !isCompleted;
+                        });
+                      },
+                      invert: isCompleted,
+                      inactive: authAPI.user == null),
+                  iconButton(
+                      icon: star_icon,
+                      title: 'Rate',
+                      function: () => print('rate'),
+                      invert: false,
+                      inactive: authAPI.user == null),
                 ],
               ),
             ),

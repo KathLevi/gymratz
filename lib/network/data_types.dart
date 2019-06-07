@@ -36,7 +36,6 @@ enum Role { admin, moderator, user }
 
 class User {
   String id;
-  String userId;
   int role;
   String displayName;
   List<dynamic> completed;
@@ -44,11 +43,10 @@ class User {
   dynamic homeGym;
   List<dynamic> todo;
 
-  User(this.id, this.userId, this.role, this.displayName);
+  User(this.id, this.role, this.displayName);
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
-        userId = snapshot['userId'],
         role = snapshot['role'],
         displayName = snapshot['displayName'],
         completed = snapshot['completed'],

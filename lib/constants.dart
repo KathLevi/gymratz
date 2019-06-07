@@ -24,6 +24,7 @@ const xlIcon = 150.0;
 /// icons
 const IconData directions_icon = FontAwesomeIcons.arrowsAlt;
 const IconData favorite_icon = FontAwesomeIcons.heart;
+const IconData favorite_solid_icon = FontAwesomeIcons.solidHeart;
 const IconData website_icon = FontAwesomeIcons.globeAmericas;
 const IconData feature_icon = FontAwesomeIcons.bug;
 const IconData rates_icon = FontAwesomeIcons.dollarSign;
