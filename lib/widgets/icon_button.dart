@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 
-Widget iconButton(IconData icon, String title, Function function, bool invert,
-    bool inactive) {
+Widget iconButton(
+    {@required IconData icon,
+    @required String title,
+    @required Function function,
+    bool invert = false,
+    bool inactive = false}) {
   return InkWell(
       //todo: put a pop up here to promt them to create an account in order to do xyz
       onTap: inactive ? null : function,

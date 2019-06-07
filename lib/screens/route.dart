@@ -89,9 +89,9 @@ class RouteScreenState extends State<RouteScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   iconButton(
-                      todo_icon,
-                      'To Do',
-                      istodo
+                      icon: todo_icon,
+                      title: 'To Do',
+                      function: istodo
                           ? () {
                               /// there should be a way to make a function call that sets or unsets the climb such as
                               /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
@@ -110,12 +110,18 @@ class RouteScreenState extends State<RouteScreen> {
                                 });
                               }
                             },
-                      istodo,
-                      authAPI.user == null),
-                  iconButton(check_icon, 'Completed', () => print('complete'),
-                      false, authAPI.user == null),
-                  iconButton(star_icon, 'Rate', () => print('rate'), false,
-                      authAPI.user == null),
+                      invert: istodo,
+                      inactive: authAPI.user == null),
+                  iconButton(
+                      icon: check_icon,
+                      title: 'Completed',
+                      function: () => print('complete'),
+                      inactive: authAPI.user == null),
+                  iconButton(
+                      icon: star_icon,
+                      title: 'Rate',
+                      function: () => print('rate'),
+                      inactive: authAPI.user == null),
                 ],
               ),
             ),
