@@ -189,28 +189,29 @@ class FirestoreAPI {
 
   bool isClimbCompleted(String id) {
     DocumentReference ref = _firestore.collection('routes').document(id);
-    if (user.completed != null) return !(user.completed.indexOf(ref) == -1);
+    if (user.completed != null) {
+      return !(user.completed.indexOf(ref) == -1);
+    }
+    return false;
   }
 
   void markToDoClimb(ClimbingRoute climb, bool isToDo) {
     print('TO DO CLIMB' + isToDo.toString());
     String id = authAPI.user.uid;
     DocumentReference ref = _firestore.collection('routes').document(climb.id);
-    !isToDo
-        ? {
-            _firestore.collection('users').document(id).updateData({
-              "todo": FieldValue.arrayUnion([ref])
-            }).then((n) {
-              this.updateGlobalUser();
-            })
-          }
-        : {
-            _firestore.collection('users').document(id).updateData({
-              "todo": FieldValue.arrayRemove([ref])
-            }).then((n) {
-              this.updateGlobalUser();
-            })
-          };
+    if (!isToDo) {
+      _firestore.collection('users').document(id).updateData({
+        "todo": FieldValue.arrayUnion([ref])
+      }).then((n) {
+        this.updateGlobalUser();
+      });
+    } else {
+      _firestore.collection('users').document(id).updateData({
+        "todo": FieldValue.arrayRemove([ref])
+      }).then((n) {
+        this.updateGlobalUser();
+      });
+    }
   }
 
   void markCompletedClimb(ClimbingRoute climb, bool isCompleted) {
@@ -218,21 +219,19 @@ class FirestoreAPI {
 
     String id = authAPI.user.uid;
     DocumentReference ref = _firestore.collection('routes').document(climb.id);
-    !isCompleted
-        ? {
-            _firestore.collection('users').document(id).updateData({
-              "completed": FieldValue.arrayUnion([ref])
-            }).then((n) {
-              this.updateGlobalUser();
-            })
-          }
-        : {
-            _firestore.collection('users').document(id).updateData({
-              "completed": FieldValue.arrayRemove([ref])
-            }).then((n) {
-              this.updateGlobalUser();
-            })
-          };
+    if (!isCompleted) {
+      _firestore.collection('users').document(id).updateData({
+        "completed": FieldValue.arrayUnion([ref])
+      }).then((n) {
+        this.updateGlobalUser();
+      });
+    } else {
+      _firestore.collection('users').document(id).updateData({
+        "completed": FieldValue.arrayRemove([ref])
+      }).then((n) {
+        this.updateGlobalUser();
+      });
+    }
   }
 
   bool isFavoriteGym(String id) {

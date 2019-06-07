@@ -30,9 +30,6 @@ class RouteScreenState extends State<RouteScreen> {
       istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
       isCompleted = fsAPI.isClimbCompleted(widget.climbingRoute.id);
     }
-
-    /// you cannot assume that a use is logged in, when a user is not logged in it throws an error
-//    istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
   }
 
   theImage() {
@@ -123,7 +120,6 @@ class RouteScreenState extends State<RouteScreen> {
                       icon: star_icon,
                       title: 'Rate',
                       function: () => print('rate'),
-                      invert: false,
                       inactive: authAPI.user == null),
                 ],
               ),
