@@ -137,7 +137,7 @@ class GymInfoState extends State<GymInfo> {
                   ],
                 ),
               ),
-        gym.rates == null
+        gym.features == null
             ? Container()
             : DropdownMenu(
                 title: 'Features',
@@ -147,7 +147,7 @@ class GymInfoState extends State<GymInfo> {
                   style: TextStyle(fontSize: subheaderFont),
                 ),
               ),
-        gym.hours == null
+        gym.rates == null
             ? Container()
             : DropdownMenu(
                 title: 'Rates',
@@ -157,7 +157,7 @@ class GymInfoState extends State<GymInfo> {
                   style: TextStyle(fontSize: subheaderFont),
                 ),
               ),
-        gym.features == null
+        gym.hours == null
             ? Container()
             : DropdownMenu(
                 title: 'Hours',

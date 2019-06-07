@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gymratz/widgets/app_bar.dart';
-//import 'package:url_launcher/url_launcher.dart';
 
 class MapsViewer extends StatefulWidget {
   MapsViewer({Key key, this.address}) : super(key: key);
@@ -14,21 +16,14 @@ class MapsViewer extends StatefulWidget {
 }
 
 class MapsViewerState extends State<MapsViewer> {
-//  _launchMaps() async {
-//    String googleUrl =
-//        'comgooglemaps://?center=${trip.origLocationObj.lat},${trip.origLocationObj.lon}';
-//    String appleUrl =
-//        'https://maps.apple.com/?sll=${trip.origLocationObj.lat},${trip.origLocationObj.lon}';
-//    if (await canLaunch("comgooglemaps://")) {
-//      print('launching com googleUrl');
-//      await launch(googleUrl);
-//    } else if (await canLaunch(appleUrl)) {
-//      print('launching apple url');
-//      await launch(appleUrl);
-//    } else {
-//      throw 'Could not launch url';
-//    }
-//  }
+  Completer<GoogleMapController> _controller = Completer();
+
+  static const LatLng _center = const LatLng(32.942908, -117.043271);
+  // todo: find lat and long for each gym and add marker for the gym
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
 
   @override
   void initState() {
@@ -39,7 +34,18 @@ class MapsViewerState extends State<MapsViewer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context: context, profile: false),
-      body: SafeArea(child: Container()),
+      body: SafeArea(
+          child: Column(children: <Widget>[
+        Expanded(
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 15.0,
+            ),
+          ),
+        )
+      ])),
     );
   }
 }
