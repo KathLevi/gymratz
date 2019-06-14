@@ -15,6 +15,9 @@ class MapsViewer extends StatefulWidget {
 
 class MapsViewerState extends State<MapsViewer> {
 // todo: find lat and long for each gym
+// https://developers.google.com/places/web-service/search#PlaceSearchResponses
+// use this as the http request for finding lat and long
+// https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=YOUR_API_KEY
 
   GoogleMapController controller;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
