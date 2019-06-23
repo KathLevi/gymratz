@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
-import 'package:gymratz/screens/maps_viewer.dart';
 import 'package:gymratz/screens/website_viewer.dart';
 import 'package:gymratz/widgets/dropdown_menu.dart';
 import 'package:gymratz/widgets/icon_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GymInfo extends StatefulWidget {
   final Gym gym;
@@ -28,6 +28,25 @@ class GymInfoState extends State<GymInfo> {
     //todo: add climbers to gym widget and set number
     climbers = 12;
     isFavorite = fsAPI.isFavoriteGym(gym.id);
+  }
+
+  void _openMap() async {
+    // Android/ Google Maps
+    var url =
+        'https://www.google.com/maps/search/?api=1&query=${gym.address.replaceAll(' ', '+')}';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      //todo: test apple maps on iPhone
+      // iOS
+      url =
+          'http://maps.apple.com/?address=${gym.address.replaceAll(' ', '+')}';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
   }
 
   @override
@@ -105,10 +124,8 @@ class GymInfoState extends State<GymInfo> {
               iconButton(
                   icon: directions_icon,
                   title: 'Directions',
-                  function: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) => MapsViewer(
-                            address: gym.address,
-                          ))))
+                  function: () => _openMap(),
+                  inactive: gym.address == null)
             ],
           ),
         ),
