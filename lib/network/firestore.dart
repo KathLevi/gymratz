@@ -236,7 +236,7 @@ class FirestoreAPI {
 
   bool isFavoriteGym(String id) {
     DocumentReference ref = _firestore.collection('gyms').document(id);
-    if (user.gyms != null) {
+    if (user?.gyms != null) {
       return !(user.gyms.indexOf(ref) == -1);
     } else {
       return false;
