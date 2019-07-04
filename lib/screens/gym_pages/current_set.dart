@@ -73,7 +73,7 @@ class CurrentSetState extends State<CurrentSet> {
         Container(
             padding: const EdgeInsets.all(20.0),
             width: double.infinity,
-            color: darkTeal,
+            color: teal,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

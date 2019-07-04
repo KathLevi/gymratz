@@ -126,7 +126,7 @@ class RouteScreenState extends State<RouteScreen> {
             ),
             Container(
                 padding: const EdgeInsets.all(20.0),
-                color: darkTeal,
+                color: teal,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

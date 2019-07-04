@@ -1,10 +1,9 @@
 part of 'main.dart';
 
 /// colors
-const Color teal = Color(0xFF0097A7);
-const Color orange = Color(0xFFFF9800);
+const Color teal = Color(0xFF248F8F);
 const Color grey = Color(0xFF777777);
-const Color darkTeal = Color(0xFF00454D);
+const Color lightGrey = Color(0xFFe6e6e6);
 
 /// font sizes
 const bodyFont = 15.0;
@@ -17,7 +16,7 @@ const xlFont = 50.0;
 const xxsIcon = 20.0;
 const xsIcon = 30.0;
 const smallIcon = 40.0;
-const mediumIcon = 40.0;
+const mediumIcon = 50.0;
 const largeIcon = 60.0;
 const xlIcon = 150.0;
 

@@ -27,48 +27,65 @@ Widget appBar(
   }
 
   return AppBar(
-    backgroundColor: Colors.black,
+    backgroundColor: teal,
     centerTitle: true,
-    title: Text(
-      'GYMRATZ',
-      style: TextStyle(color: Colors.white, fontSize: headerFont),
-    ),
+    title: Text('GYMRATZ',
+        style: TextStyle(color: Colors.white, fontSize: subheaderFont)),
     bottom: controller == null
         ? null
         : !profile
             ? TabBar(
                 controller: controller,
                 tabs: myTabs,
-                indicatorColor: teal,
+                indicatorColor: Colors.white,
                 indicatorWeight: 4.0)
             : PreferredSize(
                 preferredSize: Size.fromHeight(150.0),
                 child: Column(
                   children: <Widget>[
-                    InkWell(
-                        onTap: () {
-                          getImage();
-                        },
-                        child: authAPI.user?.photoUrl == null
-                            ? CircleAvatar(
-                                minRadius: 30.0,
-                                maxRadius: 30.0,
-                                backgroundColor: grey,
-                                child: Icon(
-                                  user_icon,
-                                  color: Colors.black,
-                                  size: 30.0,
-                                ),
-                              )
-                            : CircleAvatar(
-                                minRadius: 30.0,
-                                maxRadius: 30.0,
-                                backgroundColor: Colors.white,
-                                backgroundImage:
-                                    NetworkImage(authAPI.user.photoUrl),
-                              )),
-                    Text(authAPI.user.displayName,
-                        style: TextStyle(color: teal, fontSize: headerFont)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        InkWell(
+                            onTap: () {
+                              getImage();
+                            },
+                            child: authAPI.user?.photoUrl == null
+                                ? CircleAvatar(
+                                    minRadius: 35.0,
+                                    maxRadius: 35.0,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      user_icon,
+                                      color: lightGrey,
+                                      size: 30.0,
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    minRadius: 35.0,
+                                    maxRadius: 35.0,
+                                    backgroundColor: Colors.white,
+                                    backgroundImage:
+                                        NetworkImage(authAPI.user.photoUrl),
+                                  )),
+                        Container(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(authAPI.user.displayName,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: headerFont)),
+                              Text('12 friends',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: subheaderFont))
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     TabBar(
                         controller: controller,
                         tabs: myTabs,

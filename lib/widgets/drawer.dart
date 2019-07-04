@@ -30,7 +30,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             child: ListView(
       children: <Widget>[
         DrawerHeader(
-          decoration: BoxDecoration(color: Colors.black),
+          decoration: BoxDecoration(color: teal),
           child: user == null
               ? Container(
                   alignment: Alignment.centerLeft,
@@ -76,10 +76,9 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ),
         ListTile(
           leading: Icon(Icons.star),
-          title: Text(GymratzLocalizations.of(context).text('MyGyms'),
-              style: TextStyle(fontSize: subheaderFont)),
+          title: Text('My Problems', style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
-            Navigator.pushNamed(context, '/myGyms');
+            Navigator.pushNamed(context, '/myProblems');
           },
         ),
         ListTile(
@@ -88,6 +87,13 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
               style: TextStyle(fontSize: subheaderFont)),
           onTap: () {
             Navigator.pushNamed(context, '/settings');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.verified_user),
+          title: Text('Admin', style: TextStyle(fontSize: subheaderFont)),
+          onTap: () {
+            Navigator.pushNamed(context, '/admin');
           },
         ),
         (user == null)
