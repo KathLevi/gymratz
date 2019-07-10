@@ -76,11 +76,13 @@ Widget appBar(
                               Text(authAPI.user.displayName,
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: headerFont)),
+                                      fontSize: headerFont,
+                                      fontWeight: FontWeight.w300)),
                               Text('12 friends',
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: subheaderFont))
+                                      fontSize: subheaderFont,
+                                      fontWeight: FontWeight.w300))
                             ],
                           ),
                         ),
@@ -89,6 +91,8 @@ Widget appBar(
                     TabBar(
                         controller: controller,
                         tabs: myTabs,
+                        unselectedLabelStyle:
+                            TextStyle(fontWeight: FontWeight.w300),
                         indicatorColor: teal,
                         indicatorWeight: 4.0)
                   ],

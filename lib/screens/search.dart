@@ -35,6 +35,7 @@ class SearchScreenState extends State<SearchScreen> {
   }
 
   static const height = 90.0;
+  //todo: figure out how to make each list item taller?
   _buildListItem(BuildContext context, Gym gym) {
     bool favorite = fsAPI.isFavoriteGym(gym.id);
     return InkWell(
@@ -55,10 +56,14 @@ class SearchScreenState extends State<SearchScreen> {
                     children: <Widget>[
                       Text(
                         gym.name,
-                        style: TextStyle(fontSize: subheaderFont),
+                        style: TextStyle(
+                            fontSize: subheaderFont,
+                            fontWeight: FontWeight.w300),
                       ),
-                      Text('San Diego, CA'),
-                      Text('12 climbers'),
+                      Text('San Diego, CA',
+                          style: TextStyle(fontWeight: FontWeight.w300)),
+                      Text('12 climbers',
+                          style: TextStyle(fontWeight: FontWeight.w300)),
                     ],
                   ),
                 ),

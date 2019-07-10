@@ -15,8 +15,6 @@ class Boulder extends StatefulWidget {
 }
 
 class BoulderState extends State<Boulder> with WidgetsBindingObserver {
-  var _counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
