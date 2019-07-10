@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/drawer.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddClimbScreen extends StatefulWidget {
@@ -38,64 +37,15 @@ class AddClimbScreenState extends State<AddClimbScreen>
   var showCamera = false;
 
   final TextEditingController _routeNameCtrl = TextEditingController();
-  final TextEditingController _routeColorCtrl = TextEditingController();
   final TextEditingController _routeDescriptionCtrl = TextEditingController();
   var routeType;
   var routeGrade;
+  var colorOption;
   File _image;
 
   final List<String> routeTypes = ['boulder', 'rope'];
-  final boulderGrades = <String>[
-    'VB',
-    'V0',
-    'V1',
-    'V2',
-    'V3',
-    'V4',
-    'V5',
-    'V6',
-    'V7',
-    'V8',
-    'V9',
-    'V10',
-    'V12',
-    'V13',
-    'V14',
-    'V15',
-    'V16',
-    'V17',
-  ];
-  final List<String> ropeGrades = [
-    '5.5',
-    '5.6',
-    '5.7',
-    '5.8',
-    '5.9',
-    '5.10a',
-    '5.10b',
-    '5.10c',
-    '5.10d',
-    '5.11a',
-    '5.11b',
-    '5.11c',
-    '5.11d',
-    '5.12a',
-    '5.12b',
-    '5.12c',
-    '5.12d',
-    '5.13a',
-    '5.13b',
-    '5.13c',
-    '5.13d',
-    '5.14a',
-    '5.14b',
-    '5.14c',
-    '5.14d',
-    '5.15-',
-  ];
 
   FocusNode _routeNameFocusNode;
-  FocusNode _routeColorFocusNode;
   FocusNode _routeTypeFocusNode;
   FocusNode _routeGradeFocusNode;
   FocusNode _routeDescriptionFocusNode;
@@ -112,10 +62,8 @@ class AddClimbScreenState extends State<AddClimbScreen>
             value: value, child: new Text(value));
       }).toList();
     } else {
-      return [
-        new DropdownMenuItem<String>(
-            value: null, child: new Text("Select a route type first."))
-      ];
+      // returning null disables the dropdown menu until an option is chosen
+      return null;
     }
   }
 
@@ -140,17 +88,18 @@ class AddClimbScreenState extends State<AddClimbScreen>
       );
     } else {
       return Container(
+        color: lightGrey,
         margin: EdgeInsets.all(10.0),
         height: 140.0,
         width: 112.0,
         alignment: Alignment(0.0, 0.0),
         child: Column(
           children: <Widget>[
-            Icon(Icons.not_interested, size: 60.0),
             Text(
-              'PHOTO NOT ADDED',
+              'NO PHOTO AVAILABLE',
+              style: TextStyle(fontWeight: FontWeight.w300, fontSize: bodyFont),
               textAlign: TextAlign.center,
-            )
+            ),
           ],
           mainAxisAlignment: MainAxisAlignment.center,
         ),
@@ -159,216 +108,185 @@ class AddClimbScreenState extends State<AddClimbScreen>
   }
 
   formWidget() {
-    return Container(
-        padding: EdgeInsets.all(8.0),
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                      child: Text("Add a new route",
-                          style: TextStyle(fontSize: headerFont))),
-                ],
-              ),
-            ),
-            Container(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: <Widget>[
-                    //route name
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          "Name:",
+    return ListView(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+          child: Container(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text("Add a new route",
+                  style: TextStyle(
+                      fontSize: headerFont, fontWeight: FontWeight.w300))),
+        ),
+        Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: TextStyle(
+                          fontSize: subheaderFont,
+                          fontWeight: FontWeight.w300)),
+                  controller: _routeNameCtrl,
+                  autocorrect: false,
+                  textCapitalization: TextCapitalization.words,
+                  focusNode: _routeNameFocusNode,
+                  onFieldSubmitted: (str) {
+                    _routeNameFocusNode.unfocus();
+                  },
+                  textInputAction: TextInputAction.next,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: DropdownButtonFormField(
+                      hint: Text('Color',
                           style: TextStyle(
-                              fontSize: bodyFont,
-                              color: Theme.of(context).accentColor),
-                        ),
-                        Container(
-                            width: 200.0,
-                            child: TextFormField(
-                              controller: _routeNameCtrl,
-                              autocorrect: false,
-                              focusNode: _routeNameFocusNode,
-                              onFieldSubmitted: (str) {
-                                _routeNameFocusNode.unfocus();
-                                FocusScope.of(context)
-                                    .requestFocus(_routeColorFocusNode);
-                              },
-                              textInputAction: TextInputAction.next,
-                            ))
-                      ],
-                    ),
-                    //route color
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Color:",
-                            style: TextStyle(
-                                fontSize: bodyFont,
-                                color: Theme.of(context).accentColor)),
-                        Container(
-                          width: 200.0,
-                          child: TextFormField(
-                            controller: _routeColorCtrl,
-                            autocorrect: true,
-                            focusNode: _routeColorFocusNode,
-                            onFieldSubmitted: (str) {
-                              _routeColorFocusNode.unfocus();
-                              FocusScope.of(context)
-                                  .requestFocus(_routeTypeFocusNode);
-                            },
-                            textInputAction: TextInputAction.next,
-                          ),
-                        )
-                      ],
-                    ),
-                    //route type
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Type:",
-                            style: TextStyle(
-                                fontSize: bodyFont,
-                                color: Theme.of(context).accentColor)),
-                        Container(
-                          width: 200.0,
-                          child: DropdownButtonFormField(
-                              hint: Text("select a route type"),
-                              value: routeType,
-                              items: routeTypes.map((String value) {
-                                return new DropdownMenuItem<String>(
-                                    value: value, child: new Text(value));
-                              }).toList(),
-                              onChanged: (val) {
-                                if (val != routeType) {
-                                  setState(() {
-                                    routeType = val;
-                                    routeGrade = null;
-                                  });
-                                }
-                              }),
-                        )
-                      ],
-                    ),
-                    //route grade
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Grade:",
-                            style: TextStyle(
-                                fontSize: bodyFont,
-                                color: Theme.of(context).accentColor)),
-                        Container(
-                          width: 200.0,
-                          child: DropdownButtonFormField(
-                              hint: Text("select a grade"),
-                              value: routeGrade,
-                              items: getGradeItems(),
-                              onChanged: (val) {
-                                setState(() {
-                                  routeGrade = val;
-                                });
-                              }),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        getPreview(),
-                        Container(
-                            margin: EdgeInsets.all(10.0),
-                            height: 140.0,
-                            width: 112.0,
-                            alignment: Alignment(0.0, 0.0),
-                            child: SizedBox.expand(
-                              child: RaisedButton(
-                                color: Colors.white,
-                                onPressed: () {
-                                  print('show camera');
-                                  getImage();
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Icon(Icons.add_a_photo, size: 40.0),
-                                    Text(
-                                      'ADD PHOTO',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                ),
-                              ),
-                            ))
-                      ],
-                    ),
-                    // description
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                            margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0)),
-                        Text("Description:",
-                            style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontSize: bodyFont)),
-                        TextFormField(
-                            controller: _routeDescriptionCtrl,
-                            autocorrect: true,
-                            focusNode: _routeDescriptionFocusNode,
-                            onFieldSubmitted: (str) {
-                              _routeDescriptionFocusNode.unfocus();
-                            },
-                            decoration:
-                                InputDecoration(labelText: '(optional)'),
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null),
-                      ],
-                    ),
-
-                    Container(
-                      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-                      width: 150.0,
-                      child: RaisedButton(
-                        padding: const EdgeInsets.all(10.0),
-                        color: Theme.of(context).primaryColor,
-                        child: Row(
-                          children: <Widget>[
-                            Text("Submit",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: bodyFont)),
-                            Icon(
-                              Icons.send,
-                              color: Colors.white,
-                            )
-                          ],
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        ),
-                        onPressed: () {
-                          ClimbingRoute climbingRoute = new ClimbingRoute(
-                              _routeNameCtrl.text,
-                              _routeColorCtrl.text,
-                              _routeDescriptionCtrl.text,
-                              routeGrade,
-                              widget.gym.id,
-                              routeType,
-                              "some random user id");
-                          fsAPI.addRoute(climbingRoute, _image).then((res) {
-                            Navigator.pop(context);
+                              fontSize: subheaderFont,
+                              fontWeight: FontWeight.w300)),
+                      value: colorOption,
+                      items: routeColors.map((String value) {
+                        return new DropdownMenuItem<String>(
+                            value: value, child: new Text(value));
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != colorOption) {
+                          setState(() {
+                            colorOption = val;
                           });
-                        },
-                      ),
-                    )
-                  ],
-                ))
-          ],
-        ));
+                        }
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: DropdownButtonFormField(
+                      hint: Text('Type',
+                          style: TextStyle(
+                              fontSize: subheaderFont,
+                              fontWeight: FontWeight.w300)),
+                      value: routeType,
+                      items: routeTypes.map((String value) {
+                        return new DropdownMenuItem<String>(
+                            value: value, child: new Text(value));
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != routeType) {
+                          setState(() {
+                            routeType = val;
+                            routeGrade = null;
+                          });
+                        }
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: DropdownButtonFormField(
+                      hint: Text('Grade',
+                          style: TextStyle(
+                              fontSize: subheaderFont,
+                              fontWeight: FontWeight.w300)),
+                      value: routeGrade,
+                      items: getGradeItems(),
+                      onChanged: (val) {
+                        setState(() {
+                          routeGrade = val;
+                        });
+                      }),
+                ),
+                TextFormField(
+                    controller: _routeDescriptionCtrl,
+                    autocorrect: true,
+                    textCapitalization: TextCapitalization.sentences,
+                    focusNode: _routeDescriptionFocusNode,
+                    onFieldSubmitted: (str) {
+                      _routeDescriptionFocusNode.unfocus();
+                    },
+                    decoration: InputDecoration(
+                        labelText: 'Description',
+                        labelStyle: TextStyle(
+                            fontSize: subheaderFont,
+                            fontWeight: FontWeight.w300)),
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      getPreview(),
+                      Container(
+                          margin: EdgeInsets.all(10.0),
+                          height: 140.0,
+                          width: 112.0,
+                          alignment: Alignment(0.0, 0.0),
+                          child: SizedBox.expand(
+                            child: OutlineButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                print('show camera');
+                                getImage();
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Text(
+                                    'Click to add photo',
+                                    style: TextStyle(
+                                        color: grey,
+                                        fontSize: subheaderFont,
+                                        fontWeight: FontWeight.w300),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Icon(
+                                    Icons.add_a_photo,
+                                    size: smallIcon,
+                                    color: grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ))
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 150.0,
+                  child: RaisedButton(
+                    padding: const EdgeInsets.all(10.0),
+                    color: Theme.of(context).primaryColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text("Submit",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: subheaderFont)),
+                        Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
+                    onPressed: () {
+                      ClimbingRoute climbingRoute = new ClimbingRoute(
+                          _routeNameCtrl.text,
+                          colorOption,
+                          _routeDescriptionCtrl.text,
+                          routeGrade,
+                          widget.gym.id,
+                          routeType,
+                          "some random user id");
+                      fsAPI.addRoute(climbingRoute, _image).then((res) {
+                        Navigator.pop(context);
+                      });
+                    },
+                  ),
+                )
+              ],
+            ))
+      ],
+    );
   }
 
   @override
@@ -377,7 +295,6 @@ class AddClimbScreenState extends State<AddClimbScreen>
     WidgetsBinding.instance.addObserver(
         this); //I have no idea what this does but, it seems important
     _routeNameFocusNode = FocusNode();
-    _routeColorFocusNode = FocusNode();
     _routeTypeFocusNode = FocusNode();
     _routeGradeFocusNode = FocusNode();
     _routeDescriptionFocusNode = FocusNode();
@@ -398,7 +315,6 @@ class AddClimbScreenState extends State<AddClimbScreen>
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         appBar: appBar(context: context, profile: false),
-        drawer: DrawerMenu(context: context),
         body: SafeArea(child: formWidget()));
   }
 }

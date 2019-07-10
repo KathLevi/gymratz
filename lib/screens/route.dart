@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/drawer.dart';
 import 'package:gymratz/widgets/icon_button.dart';
 
 class RouteScreen extends StatefulWidget {
@@ -44,9 +43,6 @@ class RouteScreenState extends State<RouteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context: context, profile: false),
-        drawer: DrawerMenu(
-          context: context,
-        ),
         body: SafeArea(
             child: ListView(
           children: <Widget>[

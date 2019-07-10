@@ -5,6 +5,7 @@ import 'package:gymratz/resources/gymratz_localizations.dart';
 import 'package:gymratz/screens/gym_pages/gyms.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/widgets/loading_indicator.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -42,8 +43,8 @@ class SearchScreenState extends State<SearchScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                gym.image != null
-                    ? Image.network(gym.image,
+                gym.bgImage != null
+                    ? Image.network(gym.bgImage,
                         width: height, height: height, fit: BoxFit.cover)
                     : Container(color: teal, height: height, width: height),
                 Container(
@@ -108,18 +109,7 @@ class SearchScreenState extends State<SearchScreen> {
     return StreamBuilder<List<Gym>>(
         stream: fsAPI.loadAllGyms(filter),
         builder: (context, AsyncSnapshot<List<Gym>> snapshot) {
-          //TODO: fix progress indicator to be center
-          if (!snapshot.hasData)
-            return Center(
-              child: new SizedBox(
-                height: 50.0,
-                width: 50.0,
-                child: new CircularProgressIndicator(
-                  value: null,
-                  strokeWidth: 7.0,
-                ),
-              ),
-            );
+          if (!snapshot.hasData) return loadingIndicator();
           return Container(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -14,7 +14,7 @@ final ThemeData gymRatzdefault = new ThemeData(
 class CompanyColors {
   CompanyColors._(); // this basically makes it so you can instantiate this class
 
-  static const _teal = Color(0xFF0097A7);
+  static const _teal = Color(0xFF248F8F);
   static const _orange = Color(0xFFFF9800);
 
   // static const MaterialColor _grey = const MaterialColor(
