@@ -6,14 +6,14 @@ import 'package:gymratz/widgets/account_needed.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
 
-class MyGymsScreen extends StatefulWidget {
+class MyProblemsScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyGymsScreenState();
+    return MyProblemsScreenState();
   }
 }
 
-class MyGymsScreenState extends State<MyGymsScreen> {
+class MyProblemsScreenState extends State<MyProblemsScreen> {
   var currentUser;
   bool auth = false;
   GymratzLocalizationsDelegate _newLocaleDelegate;

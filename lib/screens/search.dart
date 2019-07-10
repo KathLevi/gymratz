@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/screens/gym_pages/gyms.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+import 'package:gymratz/widgets/loading_indicator.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -17,7 +17,6 @@ class SearchScreen extends StatefulWidget {
 class SearchScreenState extends State<SearchScreen> {
   var currentUser;
   String filter;
-  GymratzLocalizationsDelegate _newLocaleDelegate;
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
@@ -35,26 +34,79 @@ class SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  static const height = 90.0;
+  //todo: figure out how to make each list item taller?
   _buildListItem(BuildContext context, Gym gym) {
     bool favorite = fsAPI.isFavoriteGym(gym.id);
-    return Card(
-      child: InkWell(
-          child: ListTile(
-            isThreeLine: true,
-            leading: Image.network(gym.logo,
-                width: 45.0, height: 45.0, fit: BoxFit.contain),
-            title: Text(gym.name),
-            subtitle: Text(gym.address),
-            //TODO: add in number of climbers
-            trailing: Icon(favorite ? favorite_solid_icon : favorite_icon,
-                color: favorite ? teal : grey),
-          ),
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => GymInfoScreen(
-                      gym: gym,
-                    )));
-          }),
+    return InkWell(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                gym.bgImage != null
+                    ? Image.network(gym.bgImage,
+                        width: height, height: height, fit: BoxFit.cover)
+                    : Container(color: teal, height: height, width: height),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        gym.name,
+                        style: TextStyle(
+                            fontSize: subheaderFont,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      Text('San Diego, CA',
+                          style: TextStyle(fontWeight: FontWeight.w300)),
+                      Text('12 climbers',
+                          style: TextStyle(fontWeight: FontWeight.w300)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(favorite ? favorite_solid_icon : favorite_icon,
+                  color: favorite ? teal : grey),
+            ),
+          ],
+        ),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => GymInfoScreen(
+                    gym: gym,
+                  )));
+        });
+  }
+
+  _searchCard(resultsLen) {
+    return Column(
+      children: <Widget>[
+        TextField(
+            onChanged: (val) {
+              setState(() {
+                filter = val;
+              });
+            },
+            decoration: InputDecoration(
+                labelText: "search",
+                labelStyle: TextStyle(color: Theme.of(context).primaryColor))),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+              resultsLen.toString() +
+                  ' ' +
+                  GymratzLocalizations.of(context).text('Results'),
+              style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontWeight: FontWeight.bold)),
+        ),
+      ],
     );
   }
 
@@ -62,42 +114,10 @@ class SearchScreenState extends State<SearchScreen> {
     return StreamBuilder<List<Gym>>(
         stream: fsAPI.loadAllGyms(filter),
         builder: (context, AsyncSnapshot<List<Gym>> snapshot) {
-          //TODO: fix progress indicator to be center
-          if (!snapshot.hasData)
-            return Center(
-              child: new SizedBox(
-                height: 50.0,
-                width: 50.0,
-                child: new CircularProgressIndicator(
-                  value: null,
-                  strokeWidth: 7.0,
-                ),
-              ),
-            );
+          if (!snapshot.hasData) return loadingIndicator();
           return Container(
-            margin: const EdgeInsets.all(10.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TextField(
-                  onChanged: (val) {
-                    setState(() {
-                      filter = val;
-                    });
-                  },
-                  decoration: InputDecoration(
-                      labelText: "search",
-                      labelStyle:
-                          TextStyle(color: Theme.of(context).primaryColor))),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                    snapshot.data.length.toString() +
-                        ' ' +
-                        GymratzLocalizations.of(context).text('Results'),
-                    style: TextStyle(
-                        color: Theme.of(context).accentColor,
-                        fontWeight: FontWeight.bold)),
-              ),
               Expanded(
                 child: ListView.builder(
                     itemExtent: 80.0,
@@ -114,7 +134,6 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
     filter = '';
     checkForToken();
   }
@@ -122,7 +141,6 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //TODO: edit app bar so that it can handle bottom navigation/ tab bar view?
         appBar: appBar(context: context, profile: false),
         drawer: DrawerMenu(context: context),
         body: SafeArea(child: _makeGymColumn()));

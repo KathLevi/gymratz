@@ -49,7 +49,7 @@ class DropdownMenuState extends State<DropdownMenu> {
                 children: <Widget>[
                   Icon(
                     icon,
-                    size: xsIcon,
+                    size: xxsIcon,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),

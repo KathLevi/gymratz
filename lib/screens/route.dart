@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/widgets/app_bar.dart';
-import 'package:gymratz/widgets/drawer.dart';
 import 'package:gymratz/widgets/icon_button.dart';
 
 class RouteScreen extends StatefulWidget {
@@ -32,21 +31,41 @@ class RouteScreenState extends State<RouteScreen> {
     }
   }
 
+  // todo: on iamge tap enable full screen image (scrollable as well)
   theImage() {
     if (currentRoute.pictureUrl != null) {
-      return Image.network(currentRoute.pictureUrl, fit: BoxFit.contain);
+      return InkWell(
+        onTap: () => print('please make me full screen'),
+        child: Image.network(currentRoute.pictureUrl, fit: BoxFit.cover),
+      );
     } else {
       return Text("No Image");
     }
+  }
+
+  //todo: get more than one image (maybe a scrollable carousel)
+  images() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Container(
+          height: 150.0,
+          width: MediaQuery.of(context).size.width * 0.45,
+          child: theImage(),
+        ),
+        Container(
+          height: 150.0,
+          width: MediaQuery.of(context).size.width * 0.45,
+          child: theImage(),
+        )
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: appBar(context: context, profile: false),
-        drawer: DrawerMenu(
-          context: context,
-        ),
         body: SafeArea(
             child: ListView(
           children: <Widget>[
@@ -61,14 +80,23 @@ class RouteScreenState extends State<RouteScreen> {
                       Text(
                         currentRoute.name,
                         style: TextStyle(
-                          fontSize: headerFont,
-                        ),
+                            fontSize: titleFont, fontWeight: FontWeight.w300),
                       ),
-                      Text(
-                        'favorites',
-                        style: TextStyle(
-                          fontSize: bodyFont,
-                        ),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            'favorites',
+                            style: TextStyle(
+                              fontSize: subheaderFont,
+                            ),
+                          ),
+                          Text(
+                            '(20)',
+                            style: TextStyle(
+                                fontSize: subheaderFont,
+                                fontWeight: FontWeight.w300),
+                          )
+                        ],
                       )
                     ],
                   ),
@@ -81,11 +109,17 @@ class RouteScreenState extends State<RouteScreen> {
                           borderRadius: BorderRadius.circular(1000.0)),
                       child: Text(currentRoute.grade,
                           style: TextStyle(
-                              color: Colors.white, fontSize: subheaderFont)))
+                              color: currentRoute.color == 'white'
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontSize: subheaderFont)))
                 ],
               ),
             ),
-            theImage(),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: images(),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30.0),
               child: Row(
@@ -126,25 +160,58 @@ class RouteScreenState extends State<RouteScreen> {
             ),
             Container(
                 padding: const EdgeInsets.all(20.0),
-                color: darkTeal,
+                color: teal,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       'Description',
-                      style: TextStyle(
-                          color: Colors.white, fontSize: subheaderFont),
+                      style:
+                          TextStyle(color: Colors.white, fontSize: headerFont),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
                         currentRoute.description,
-                        style:
-                            TextStyle(color: Colors.white, fontSize: bodyFont),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: subheaderFont,
+                            fontWeight: FontWeight.w300),
                       ),
                     )
                   ],
-                ))
+                )),
+            Container(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Comments',
+                      style: TextStyle(fontSize: headerFont),
+                    ),
+                    //todo: use the padding down to repeat comments
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'OgGymRat, 1mo',
+                              style: TextStyle(
+                                  fontSize: subheaderFont,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            Text(
+                              'Some random comments and shit about a really rad route. I wish I could climb.',
+                              style: TextStyle(
+                                  fontSize: bodyFont,
+                                  fontWeight: FontWeight.w300),
+                            )
+                          ],
+                        ))
+                  ],
+                )),
           ],
         )));
   }

@@ -134,7 +134,7 @@ class GymInfoState extends State<GymInfo> {
             : Container(
                 padding: const EdgeInsets.all(20.0),
                 width: double.infinity,
-                color: darkTeal,
+                color: teal,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -161,7 +161,8 @@ class GymInfoState extends State<GymInfo> {
                 icon: feature_icon,
                 content: Text(
                   gym.features.join('\n'),
-                  style: TextStyle(fontSize: subheaderFont),
+                  style: TextStyle(
+                      fontSize: subheaderFont, fontWeight: FontWeight.w300),
                 ),
               ),
         gym.rates == null
@@ -171,7 +172,8 @@ class GymInfoState extends State<GymInfo> {
                 icon: rates_icon,
                 content: Text(
                   gym.rates.join('\n'),
-                  style: TextStyle(fontSize: subheaderFont),
+                  style: TextStyle(
+                      fontSize: subheaderFont, fontWeight: FontWeight.w300),
                 ),
               ),
         gym.hours == null
@@ -181,7 +183,8 @@ class GymInfoState extends State<GymInfo> {
                 icon: clock_icon,
                 content: Text(
                   gym.hours.join('\n'),
-                  style: TextStyle(fontSize: subheaderFont),
+                  style: TextStyle(
+                      fontSize: subheaderFont, fontWeight: FontWeight.w300),
                 ),
               )
       ],

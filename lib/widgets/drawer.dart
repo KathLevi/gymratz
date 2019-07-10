@@ -15,6 +15,8 @@ class DrawerMenu extends StatefulWidget {
   }
 }
 
+const fontStyle = TextStyle(fontSize: headerFont, fontWeight: FontWeight.w300);
+
 class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
   FirebaseUser user;
   @override
@@ -30,7 +32,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             child: ListView(
       children: <Widget>[
         DrawerHeader(
-          decoration: BoxDecoration(color: Colors.black),
+          decoration: BoxDecoration(color: teal),
           child: user == null
               ? Container(
                   alignment: Alignment.centerLeft,
@@ -38,22 +40,24 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                       style:
                           TextStyle(color: Colors.white, fontSize: headerFont)))
               : Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(user.displayName,
                         style: TextStyle(
-                            color: Colors.white, fontSize: headerFont)),
+                            color: Colors.white, fontSize: titleFont)),
                     Text(user.email,
                         style: TextStyle(
-                            color: Colors.white, fontSize: subheaderFont)),
+                            color: Colors.white,
+                            fontSize: subheaderFont,
+                            fontWeight: FontWeight.w300)),
                   ],
                 ),
         ),
         ListTile(
           leading: Icon(Icons.home),
           title: Text(GymratzLocalizations.of(context).text('Home'),
-              style: TextStyle(fontSize: subheaderFont)),
+              style: fontStyle),
           onTap: () {
             Navigator.pushNamed(context, '/');
           },
@@ -61,7 +65,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.search),
           title: Text(GymratzLocalizations.of(context).text('Search'),
-              style: TextStyle(fontSize: subheaderFont)),
+              style: fontStyle),
           onTap: () {
             Navigator.pushNamed(context, '/search');
           },
@@ -69,31 +73,37 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
         ListTile(
           leading: Icon(Icons.person),
           title: Text(GymratzLocalizations.of(context).text('Profile'),
-              style: TextStyle(fontSize: subheaderFont)),
+              style: fontStyle),
           onTap: () {
             Navigator.pushNamed(context, '/profile');
           },
         ),
         ListTile(
           leading: Icon(Icons.star),
-          title: Text(GymratzLocalizations.of(context).text('MyGyms'),
-              style: TextStyle(fontSize: subheaderFont)),
+          title: Text('My Problems', style: fontStyle),
           onTap: () {
-            Navigator.pushNamed(context, '/myGyms');
+            Navigator.pushNamed(context, '/myProblems');
           },
         ),
         ListTile(
           leading: Icon(Icons.settings),
           title: Text(GymratzLocalizations.of(context).text('Settings'),
-              style: TextStyle(fontSize: subheaderFont)),
+              style: fontStyle),
           onTap: () {
             Navigator.pushNamed(context, '/settings');
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.verified_user),
+          title: Text('Admin', style: fontStyle),
+          onTap: () {
+            Navigator.pushNamed(context, '/admin');
           },
         ),
         (user == null)
             ? ListTile(
                 leading: Icon(Icons.account_box),
-                title: Text("Login", style: TextStyle(fontSize: subheaderFont)),
+                title: Text("Login", style: fontStyle),
                 onTap: () {
                   Navigator.of(context).pushNamed('/login');
                 },
@@ -101,15 +111,18 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             : ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text(GymratzLocalizations.of(context).text('LogOut'),
-                    style: TextStyle(fontSize: subheaderFont)),
+                    style: fontStyle),
                 onTap: () {
-                  //TODO: clear information and kill authentication
+                  //TODO: clear information and kill authentication doesn't work
                   authAPI.logout();
                   setState(() {
                     user = authAPI.user;
                   });
                   print('SET STATE');
                   print(user);
+                  //todo: navigate all the way back and kill previous screens
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('login', (route) => false);
                   //Remove all routes in the stack so that user cannot go back to the previous routes after they have logged out.
                 },
               ),

@@ -139,7 +139,7 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                           .text('PasswordIsNotLongEnough')
                                       : null;
                                 },
-                                // onFieldSubmitted: onSubmitted,
+//                                 onFieldSubmitted: onSubmitted,
                                 decoration: InputDecoration(
                                     labelText:
                                         _currentLocalizations.text('Password'),
@@ -195,7 +195,6 @@ class LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                                     child: RaisedButton(
                                       padding: const EdgeInsets.all(10.0),
                                       onPressed: () {
-                                        //TODO: navigate to home page after authenticating
                                         if (this
                                             ._signInFormKey
                                             .currentState
