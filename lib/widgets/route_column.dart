@@ -13,13 +13,18 @@ Widget routeColumn({@required Gym gym, @required bool boulder}) {
         if (!snapshot.hasData) return loadingIndicator();
         List<dynamic> myRoutes = [];
         List<dynamic> otherRoutes = [];
-        snapshot.data.forEach((route) {
-          if (fsAPI.isClimbToDo(route.id)) {
-            myRoutes.add(route);
-          } else {
-            otherRoutes.add(route);
-          }
-        });
+        if (authAPI.user != null) {
+          snapshot.data.forEach((route) {
+            if (fsAPI.isClimbToDo(route.id)) {
+              myRoutes.add(route);
+            } else {
+              otherRoutes.add(route);
+            }
+          });
+        } else {
+          otherRoutes = snapshot.data;
+        }
+
         return ListView(
           children: <Widget>[
             myRoutes.length == 0

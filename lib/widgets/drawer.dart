@@ -113,13 +113,16 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                 title: Text(GymratzLocalizations.of(context).text('LogOut'),
                     style: fontStyle),
                 onTap: () {
-                  //TODO: clear information and kill authentication
+                  //TODO: clear information and kill authentication doesn't work
                   authAPI.logout();
                   setState(() {
                     user = authAPI.user;
                   });
                   print('SET STATE');
                   print(user);
+                  //todo: navigate all the way back and kill previous screens
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('login', (route) => false);
                   //Remove all routes in the stack so that user cannot go back to the previous routes after they have logged out.
                 },
               ),

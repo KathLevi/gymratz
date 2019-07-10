@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gymratz/main.dart';
 import 'package:flutter/services.dart';
+import 'package:gymratz/main.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
