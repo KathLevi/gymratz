@@ -38,23 +38,19 @@ enum Role { admin, moderator, user }
 
 class User {
   String id;
-  int role;
-  String displayName;
   List<dynamic> completed;
   List<dynamic> gyms;
-  dynamic homeGym;
   List<dynamic> todo;
+  dynamic homeGym;
 
-  User(this.id, this.role, this.displayName);
+  User(this.id);
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
-        role = snapshot['role'],
-        displayName = snapshot['displayName'],
         completed = snapshot['completed'],
-        homeGym = snapshot['homeGym'],
         gyms = snapshot['gyms'],
-        todo = snapshot['todo'];
+        todo = snapshot['todo'],
+        homeGym = snapshot['homeGym'];
 }
 
 enum RouteTypes { boulder, rope, lead }

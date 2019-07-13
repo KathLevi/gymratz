@@ -94,7 +94,7 @@ class RouteScreenState extends State<RouteScreen> {
     }
     //todo KL: figure out how to get the display name of other users if they aren't stored in the user table
     fsAPI.getUserById(userId).first.then((user) {
-      return user.displayName;
+      return user.id;
     });
     return '';
   }

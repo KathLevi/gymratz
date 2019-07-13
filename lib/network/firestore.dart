@@ -16,7 +16,7 @@ import 'package:gymratz/network/data_types.dart';
 class Collections {
   String ratings = 'ratings';
   String routes = 'routes';
-  String users = 'Users';
+  String users = 'users';
   String comments = 'comments';
   String gyms = 'gyms';
 }
