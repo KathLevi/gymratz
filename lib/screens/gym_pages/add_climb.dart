@@ -269,6 +269,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                       ],
                     ),
                     onPressed: () {
+                      //todo KL: need to validate the form and make sure every element is not null
                       ClimbingRoute climbingRoute = new ClimbingRoute(
                           _routeNameCtrl.text,
                           colorOption,
@@ -277,7 +278,7 @@ class AddClimbScreenState extends State<AddClimbScreen>
                           widget.gym.id,
                           routeType,
                           "some random user id");
-                      fsAPI.addRoute(climbingRoute, _image).then((res) {
+                      fsAPI.addClimb(climbingRoute, _image).then((res) {
                         Navigator.pop(context);
                       });
                     },

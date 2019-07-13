@@ -10,7 +10,7 @@ Widget accountNeeded(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
-            //TODO: replace with GYMRATZ logoS
+            //TODO KL: replace with GYMRATZ logo
             child: Icon(
               Icons.star_border,
               size: mediumIcon,

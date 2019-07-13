@@ -29,6 +29,13 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
     super.dispose();
   }
 
+  void sendEmail() {
+    authAPI.sendPasResetEmail(_emailCtrl.text).then((msg) {
+      print(msg);
+      // todo KL: Alert that an email has been sent.
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +86,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                         textCapitalization: TextCapitalization.none,
                         autocorrect: false,
                         onFieldSubmitted: (str) {
-                          //TODO: submit and send the email
+                          sendEmail();
                           Navigator.pushNamed(context, '/');
                         },
                         style: TextStyle(color: Colors.white),
@@ -106,13 +113,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                         child: RaisedButton(
                           padding: const EdgeInsets.all(10.0),
                           onPressed: () {
-                            //TODO: send forgot password email
-                            authAPI
-                                .sendPasResetEmail(_emailCtrl.text)
-                                .then((msg) {
-                              print(msg);
-                              // Alert that an email has been sent.
-                            });
+                            sendEmail();
                             Navigator.pushNamed(context, '/');
                           },
                           color: Theme.of(context).primaryColor,

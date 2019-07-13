@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 
-//TODO: eventually replace with our own loading indicator
+//TODO KL: eventually replace with our own loading indicator
 Widget loadingIndicator() {
   return Center(
     child: new SizedBox(

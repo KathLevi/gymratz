@@ -8,7 +8,7 @@ Widget iconButton(
     bool invert = false,
     bool inactive = false}) {
   return InkWell(
-      //todo: put a pop up here to promt them to create an account in order to do xyz
+      //todo KL: put a pop up here to promt them to create an account in order to do xyz
       onTap: inactive ? null : function,
       child: Column(
         children: <Widget>[

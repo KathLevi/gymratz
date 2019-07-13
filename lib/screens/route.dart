@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
 import 'package:gymratz/network/data_types.dart';
+import 'package:gymratz/widgets/add_comment_overlay.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/icon_button.dart';
 
@@ -18,20 +19,44 @@ class RouteScreenState extends State<RouteScreen> {
   var currentUser;
   bool istodo = false;
   bool isCompleted = false;
+  Rating rate;
   ClimbingRoute currentRoute;
+  TextEditingController _newCommentCtrl;
 
   @override
   void initState() {
-    super.initState();
+    _newCommentCtrl = new TextEditingController();
     currentRoute = widget.climbingRoute;
+    currentRoute.comments = [];
 
+    getComments();
+    super.initState();
+  }
+
+  void getComments() {
     if (fsAPI.user != null) {
       istodo = fsAPI.isClimbToDo(widget.climbingRoute.id);
       isCompleted = fsAPI.isClimbCompleted(widget.climbingRoute.id);
+      fsAPI.getClimbRating(widget.climbingRoute.id).listen((data) {
+        setState(() {
+          rate = data;
+        });
+      });
     }
+    fsAPI.getCommentsByClimbId(currentRoute.id).listen((data) {
+      setState(() {
+        currentRoute.comments = data;
+      });
+    });
   }
 
-  // todo: on iamge tap enable full screen image (scrollable as well)
+  @override
+  void dispose() {
+    _newCommentCtrl.dispose();
+    super.dispose();
+  }
+
+  // todo KL: on iamge tap enable full screen image (scrollable as well)
   theImage() {
     if (currentRoute.pictureUrl != null) {
       return InkWell(
@@ -43,7 +68,7 @@ class RouteScreenState extends State<RouteScreen> {
     }
   }
 
-  //todo: get more than one image (maybe a scrollable carousel)
+  //todo KL: get more than one image (maybe a scrollable carousel)
   images() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,6 +85,53 @@ class RouteScreenState extends State<RouteScreen> {
         )
       ],
     );
+  }
+
+  String getUser(String userId) {
+    print(authAPI.user.uid);
+    if (userId == authAPI.user.uid) {
+      return 'Me';
+    }
+    //todo KL: figure out how to get the display name of other users if they aren't stored in the user table
+    fsAPI.getUserById(userId).first.then((user) {
+      return user.displayName;
+    });
+    return '';
+  }
+
+  String getDate(DateTime date) {
+    var day, month, year, hour;
+    DateTime today = DateTime.now();
+
+    if (date != null) {
+      day = date.day;
+      month = date.month;
+      year = date.year;
+      hour = date.hour;
+
+      // this year
+      if (today.year == year) {
+        // this month of this year
+        if (today.month == month) {
+          //this day of this month
+          if (today.day == day) {
+            // hours since the post has been made
+            if (today.hour == hour) {
+              return 'now';
+            } else {
+              return (today.hour - hour).toString() + ' hr';
+            }
+          } else {
+            return (today.day - day).toString() + ' days';
+          }
+        } else {
+          return (today.month - month).toString() + ' mo';
+        }
+      } else {
+        return (today.year - year).toString() + ' yr';
+      }
+    }
+    return '';
   }
 
   @override
@@ -129,8 +201,6 @@ class RouteScreenState extends State<RouteScreen> {
                       icon: todo_icon,
                       title: 'To Do',
                       function: () {
-                        /// there should be a way to make a function call that sets or unsets the climb such as
-                        /// fsAPI.climbAsToDo(widget.climbingRoute, false); or fsAPI.climbAsToDo(widget.climbingRoute, true);
                         fsAPI.markToDoClimb(widget.climbingRoute, istodo);
                         setState(() {
                           istodo = !istodo;
@@ -153,8 +223,14 @@ class RouteScreenState extends State<RouteScreen> {
                   iconButton(
                       icon: star_icon,
                       title: 'Rate',
-                      function: () => print('rate'),
-                      inactive: authAPI.user == null),
+                      function: () => Navigator.of(context)
+                              .push(CommentsOverlay(
+                                  route: widget.climbingRoute, myRating: rate))
+                              .then((_) {
+                            getComments();
+                          }),
+                      inactive: authAPI.user == null,
+                      invert: rate != null),
                 ],
               ),
             ),
@@ -190,26 +266,75 @@ class RouteScreenState extends State<RouteScreen> {
                       'Comments',
                       style: TextStyle(fontSize: headerFont),
                     ),
-                    //todo: use the padding down to repeat comments
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'OgGymRat, 1mo',
+                    currentRoute.comments.length == 0
+                        ? Container(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: Text(
+                              'So sad, no comments.',
                               style: TextStyle(
                                   fontSize: subheaderFont,
                                   fontWeight: FontWeight.w300),
+                            ))
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                                currentRoute.comments.length, (index) {
+                              return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        getUser(currentRoute
+                                                .comments[index].userId) +
+                                            ', ' +
+                                            getDate(currentRoute
+                                                .comments[index].date),
+                                        style: TextStyle(
+                                            fontSize: subheaderFont,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      Text(
+                                        currentRoute.comments[index].comment,
+                                        style: TextStyle(
+                                            fontSize: bodyFont,
+                                            fontWeight: FontWeight.w300),
+                                      )
+                                    ],
+                                  ));
+                            }),
+                          ),
+                    authAPI.user == null
+                        ? Container()
+                        : InkWell(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Text('Add Comment',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: subheaderFont,
+                                          color: grey)),
+                                ),
+                                Container(
+                                  color: grey,
+                                  height: 1.0,
+                                ),
+                              ],
                             ),
-                            Text(
-                              'Some random comments and shit about a really rad route. I wish I could climb.',
-                              style: TextStyle(
-                                  fontSize: bodyFont,
-                                  fontWeight: FontWeight.w300),
-                            )
-                          ],
-                        ))
+                            onTap: () => Navigator.of(context)
+                                    .push(CommentsOverlay(
+                                        route: widget.climbingRoute,
+                                        myRating: rate))
+                                    .then((_) {
+                                  getComments();
+                                }),
+                          )
                   ],
                 )),
           ],
