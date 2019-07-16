@@ -296,7 +296,7 @@ class RouteScreenState extends State<RouteScreen> {
                                             getDate(currentRoute
                                                 .comments[index].date),
                                         style: TextStyle(
-                                            // fontSize: subheaderFont,
+                                            fontSize: subheaderFont,
                                             fontWeight: FontWeight.w300),
                                       ),
                                       Text(
