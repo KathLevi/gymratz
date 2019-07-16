@@ -91,6 +91,8 @@ class RouteScreenState extends State<RouteScreen> {
     print(authAPI.user.uid);
     if (userId == authAPI.user.uid) {
       return 'Me';
+    } else {
+      return 'Someone Else';
     }
     //todo KL: figure out how to get the display name of other users if they aren't stored in the user table
     fsAPI.getUserById(userId).first.then((user) {
@@ -277,6 +279,7 @@ class RouteScreenState extends State<RouteScreen> {
                             ))
                         : Column(
                             mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: List.generate(
                                 currentRoute.comments.length, (index) {
                               return Padding(
@@ -293,7 +296,7 @@ class RouteScreenState extends State<RouteScreen> {
                                             getDate(currentRoute
                                                 .comments[index].date),
                                         style: TextStyle(
-                                            fontSize: subheaderFont,
+                                            // fontSize: subheaderFont,
                                             fontWeight: FontWeight.w300),
                                       ),
                                       Text(
@@ -328,12 +331,12 @@ class RouteScreenState extends State<RouteScreen> {
                               ],
                             ),
                             onTap: () => Navigator.of(context)
-                                    .push(CommentsOverlay(
-                                        route: widget.climbingRoute,
-                                        myRating: rate))
-                                    .then((_) {
-                                  getComments();
-                                }),
+                                .push(CommentsOverlay(
+                                    route: widget.climbingRoute,
+                                    myRating: rate))
+                                .then((_) {
+                              getComments();
+                            }),
                           )
                   ],
                 )),
