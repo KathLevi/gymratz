@@ -7,8 +7,8 @@ import 'package:gymratz/widgets/route_list_item.dart';
 Widget routeColumn({@required Gym gym, @required bool boulder}) {
   return StreamBuilder<List<ClimbingRoute>>(
       stream: boulder
-          ? fsAPI.getBoulderRoutesByGymId(gym.id)
-          : fsAPI.getTopRopeRoutesByGymId(gym.id),
+          ? fsAPI.getClimbsForGymByType(gym.id, 'boulder')
+          : fsAPI.getClimbsForGymByType(gym.id, 'rope'),
       builder: (context, AsyncSnapshot<List<ClimbingRoute>> snapshot) {
         if (!snapshot.hasData) return loadingIndicator();
         List<dynamic> myRoutes = [];

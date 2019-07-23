@@ -35,7 +35,7 @@ class SearchScreenState extends State<SearchScreen> {
   }
 
   static const height = 90.0;
-  //todo: figure out how to make each list item taller?
+  //todo KL: figure out how to make each list item taller?
   _buildListItem(BuildContext context, Gym gym) {
     bool favorite = fsAPI.isFavoriteGym(gym.id);
     return InkWell(

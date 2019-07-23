@@ -25,7 +25,7 @@ class GymInfoState extends State<GymInfo> {
   void initState() {
     super.initState();
     gym = widget.gym;
-    //todo: add climbers to gym widget and set number
+    //todo KL: add climbers to gym widget and set number
     climbers = 12;
     isFavorite = fsAPI.isFavoriteGym(gym.id);
   }
@@ -37,7 +37,7 @@ class GymInfoState extends State<GymInfo> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      //todo: test apple maps on iPhone
+      //todo KL: test apple maps on iPhone
       // iOS
       url =
           'http://maps.apple.com/?address=${gym.address.replaceAll(' ', '+')}';

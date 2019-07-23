@@ -14,7 +14,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //TODO: edit app bar so that it can handle bottom navigation/ tab bar view?
         appBar: appBar(context: context, profile: false),
         drawer: DrawerMenu(context: context),
         body: SafeArea(

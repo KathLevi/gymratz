@@ -42,6 +42,7 @@ class Auth {
   Future updateFirebaseAuthProfile(UserUpdateInfo user) async {
     await this.user.updateProfile(user);
     this.user = await _auth.currentUser();
+    await fsAPI.updateUser(this.user.uid, user.displayName);
     fsAPI.updateGlobalUser();
     return this.user;
   }
@@ -62,7 +63,7 @@ class Auth {
 
       //create firestore profile
 
-      fsAPI.addUser(user.uid);
+      fsAPI.addUser(user.uid, username);
 
       //update firebase username because default is NULL
       UserUpdateInfo info = new UserUpdateInfo();

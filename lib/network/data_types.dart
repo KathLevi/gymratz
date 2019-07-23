@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+// set map is used for adding data to a collection
+// from snapshot is used for getting data and converting it into an object for ease of use
 
 class Gym {
   String id;
@@ -36,26 +38,24 @@ enum Role { admin, moderator, user }
 
 class User {
   String id;
-  int role;
-  String displayName;
+  String username;
   List<dynamic> completed;
   List<dynamic> gyms;
-  dynamic homeGym;
   List<dynamic> todo;
+  dynamic homeGym;
 
-  User(this.id, this.role, this.displayName);
+  User(this.id);
 
   User.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.documentID,
-        role = snapshot['role'],
-        displayName = snapshot['displayName'],
         completed = snapshot['completed'],
-        homeGym = snapshot['homeGym'],
         gyms = snapshot['gyms'],
-        todo = snapshot['todo'];
+        todo = snapshot['todo'],
+        homeGym = snapshot['homeGym'],
+        username = snapshot['username'];
 }
 
-enum RouteTypes { boulder, toprope, lead }
+enum RouteTypes { boulder, rope, lead }
 
 class ClimbingRoute {
   String id;
@@ -68,6 +68,7 @@ class ClimbingRoute {
   String type;
   int rating;
   String userId;
+  List<Comment> comments;
 
   ClimbingRoute(this.name, this.color, this.description, this.grade, this.gymId,
       this.type, this.userId);
@@ -83,4 +84,50 @@ class ClimbingRoute {
         rating = snapshot['rating'],
         type = snapshot['string'],
         userId = snapshot['userId'];
+}
+
+class Comment {
+  String id;
+  String comment;
+  DateTime date;
+  dynamic userId;
+
+  Comment(this.comment, this.userId, this.date);
+
+  Comment.fromSnapshot(DocumentSnapshot snapshot)
+      : id = snapshot.documentID,
+        comment = snapshot['comment'],
+        date = snapshot['date'].toDate(),
+        userId = snapshot['userId'];
+
+  Map<String, dynamic> setMap() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['comment'] = this.comment;
+    data['userId'] = this.userId;
+    data['date'] = this.date;
+    return data;
+  }
+}
+
+class Rating {
+  String id;
+  int rate;
+  DateTime date;
+  dynamic userId;
+
+  Rating(this.rate, this.userId, this.date);
+
+  Rating.fromSnapshot(DocumentSnapshot snapshot)
+      : id = snapshot.documentID,
+        rate = snapshot['rate'],
+        date = snapshot['date'].toDate(),
+        userId = snapshot['userId'];
+
+  Map<String, dynamic> setMap() {
+    Map<String, dynamic> data = new Map<String, dynamic>();
+    data['rate'] = this.rate;
+    data['userId'] = this.userId;
+    data['date'] = this.date;
+    return data;
+  }
 }
