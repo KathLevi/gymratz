@@ -87,18 +87,15 @@ class RouteScreenState extends State<RouteScreen> {
     );
   }
 
-  String getUser(String userId) {
+  Future<String> getUser(String userId) async {
     print(authAPI.user.uid);
     if (userId == authAPI.user.uid) {
       return 'Me';
     } else {
-      return 'Someone Else';
+      //todo KL: figure out how to get the display name of other users if they aren't stored in the user table
+      User user = await fsAPI.getUserById(userId).first;
+      return user.username;
     }
-    //todo KL: figure out how to get the display name of other users if they aren't stored in the user table
-    fsAPI.getUserById(userId).first.then((user) {
-      return user.id;
-    });
-    return '';
   }
 
   String getDate(DateTime date) {
@@ -289,16 +286,22 @@ class RouteScreenState extends State<RouteScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Text(
-                                        getUser(currentRoute
-                                                .comments[index].userId) +
-                                            ', ' +
-                                            getDate(currentRoute
-                                                .comments[index].date),
-                                        style: TextStyle(
-                                            fontSize: subheaderFont,
-                                            fontWeight: FontWeight.w300),
-                                      ),
+                                      FutureBuilder(
+                                          future: getUser(currentRoute
+                                              .comments[index].userId),
+                                          initialData: 'Loading Author...',
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<String> text) {
+                                            return new Text(
+                                                text.data +
+                                                    ', ' +
+                                                    getDate(currentRoute
+                                                        .comments[index].date),
+                                                style: TextStyle(
+                                                    fontSize: subheaderFont,
+                                                    fontWeight:
+                                                        FontWeight.w300));
+                                          }),
                                       Text(
                                         currentRoute.comments[index].comment,
                                         style: TextStyle(

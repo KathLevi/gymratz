@@ -32,14 +32,19 @@ class FirestoreAPI {
   /// Users
 // This must be done every single time a new user has been registered
   //TODO: add user stream? future?
-  addUser(uid) async {
+  addUser(uid, username) async {
     final CollectionReference userRef = Firestore.instance.collection('/users');
 
     // Post post = new Post(postID, "title", "content");
     // Map<String, dynamic> postData = post.toJson();
-    await userRef.document(uid).setData({});
+    await userRef.document(uid).setData({username: username});
 
     // return _firestore.collection('users').add(data);
+  }
+
+  updateUser(uid, username) async {
+    final CollectionReference userRef = Firestore.instance.collection('/users');
+    await userRef.document(uid).updateData({username: username});
   }
 
   Stream<User> getUserById(id) {

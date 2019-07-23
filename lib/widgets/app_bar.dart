@@ -73,7 +73,7 @@ Widget appBar(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(authAPI.user.displayName,
+                              Text(fsAPI.user.username,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: headerFont,

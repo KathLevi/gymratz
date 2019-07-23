@@ -38,6 +38,7 @@ enum Role { admin, moderator, user }
 
 class User {
   String id;
+  String username;
   List<dynamic> completed;
   List<dynamic> gyms;
   List<dynamic> todo;
@@ -50,7 +51,8 @@ class User {
         completed = snapshot['completed'],
         gyms = snapshot['gyms'],
         todo = snapshot['todo'],
-        homeGym = snapshot['homeGym'];
+        homeGym = snapshot['homeGym'],
+        username = snapshot['username'];
 }
 
 enum RouteTypes { boulder, rope, lead }

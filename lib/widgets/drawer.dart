@@ -43,7 +43,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(user.displayName,
+                    Text(fsAPI.user.username,
                         style: TextStyle(
                             color: Colors.white, fontSize: titleFont)),
                     Text(user.email,
