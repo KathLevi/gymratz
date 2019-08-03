@@ -72,6 +72,8 @@ class FirestoreAPI {
           .then((snapshot) {
         user = User.fromSnapshot(snapshot);
       });
+    } else {
+      user = null;
     }
   }
 

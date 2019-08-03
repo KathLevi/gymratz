@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
 
 class DrawerMenu extends StatefulWidget {
@@ -18,11 +19,17 @@ class DrawerMenu extends StatefulWidget {
 const fontStyle = TextStyle(fontSize: headerFont, fontWeight: FontWeight.w300);
 
 class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
-  FirebaseUser user;
+  User firestoreUser;
+  FirebaseUser authUser;
+  bool loggedIn = false;
   @override
   void initState() {
     super.initState();
-    this.user = authAPI.user;
+    this.firestoreUser = fsAPI.user;
+    this.authUser = authAPI.user;
+    if (this.firestoreUser != null && this.authUser != null) {
+      this.loggedIn = true;
+    }
   }
 
   @override
@@ -33,7 +40,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
       children: <Widget>[
         DrawerHeader(
           decoration: BoxDecoration(color: teal),
-          child: user == null
+          child: !this.loggedIn
               ? Container(
                   alignment: Alignment.centerLeft,
                   child: Text(GymratzLocalizations.of(context).text('Guest'),
@@ -43,10 +50,13 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(fsAPI.user.username,
+                    Text(
+                        this.firestoreUser != null
+                            ? this.firestoreUser.username
+                            : 'no username',
                         style: TextStyle(
                             color: Colors.white, fontSize: titleFont)),
-                    Text(user.email,
+                    Text(this.authUser.email,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: subheaderFont,
@@ -100,7 +110,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             Navigator.pushNamed(context, '/admin');
           },
         ),
-        (user == null)
+        (this.loggedIn)
             ? ListTile(
                 leading: Icon(Icons.account_box),
                 title: Text("Login", style: fontStyle),
@@ -116,10 +126,11 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                   //TODO KL: clear information and kill authentication doesn't work
                   authAPI.logout();
                   setState(() {
-                    user = authAPI.user;
+                    authUser = authAPI.user;
+                    firestoreUser = fsAPI.user;
                   });
                   print('SET STATE');
-                  print(user);
+
                   //todo KL: navigate all the way back and kill previous screens
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('login', (route) => false);
