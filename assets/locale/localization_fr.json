@@ -21,7 +21,7 @@
   "NeverMind": "Never Mind-fr",
   "Loading...": "Loading...-fr",
   "Results": "Results-fr",
-  "MyGyms": "My Gyms-fr",
+  "MyProblems": "My Problems-fr",
   "MyProfile": "My Profile-fr",
   "Friends": "Friends-fr",
   "Comments": "Comments-fr",
@@ -40,5 +40,11 @@
   "On": "On-fr",
   "Off": "Off-fr",
   "Save": "Save-fr",
-  "Ok": "Ok-fr"
+  "Ok": "Ok-fr",
+  "Boulder": "Boulder-fr",
+  "TopRope": "Top Rope-fr",
+  "CurrentSet": "Current Set-fr",
+  "GymInfo": "Gym Info-fr",
+  "Completed": "Completed-fr",
+  "ToDos": "To-Dos-fr"
 }

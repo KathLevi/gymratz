@@ -21,7 +21,7 @@
   "NeverMind": "Never Mind",
   "Loading...": "Loading...",
   "Results": "Results",
-  "MyGyms": "My Gyms",
+  "MyProblems": "My Problems",
   "MyProfile": "My Profile",
   "Friends": "Friends",
   "Comments": "Comments",
@@ -40,5 +40,11 @@
   "On": "On",
   "Off": "Off",
   "Save": "Save",
-  "Ok": "Ok"
+  "Ok": "Ok",
+  "Boulder": "Boulder",
+  "TopRope": "Top Rope",
+  "CurrentSet": "Current Set",
+  "GymInfo": "Gym Info",
+  "Completed": "Completed",
+  "ToDos": "To-Dos"
 }
