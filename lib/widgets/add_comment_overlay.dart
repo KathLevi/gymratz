@@ -135,9 +135,11 @@ class CommentsOverlay extends ModalRoute<void> {
         ),
         Expanded(
           child: InkWell(
-            child: Container(),
-            onTap: () => _newCommentFocusNode.requestFocus(),
-          ),
+              child: Container(),
+              onTap: () =>
+                  FocusScope.of(context).requestFocus(_newCommentFocusNode)
+              // onTap: () => _newCommentFocusNode.requestFocus(),
+              ),
         )
       ],
     );

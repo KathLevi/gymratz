@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gymratz/main.dart';
+import 'package:gymratz/network/data_types.dart';
 import 'package:gymratz/resources/gymratz_localizations.dart';
-import 'package:gymratz/resources/gymratz_localizations_delegate.dart';
 import 'package:gymratz/widgets/account_needed.dart';
 import 'package:gymratz/widgets/app_bar.dart';
 import 'package:gymratz/widgets/drawer.dart';
+
+import 'gym_pages/boulder.dart';
 
 class MyProblemsScreen extends StatefulWidget {
   @override
@@ -13,17 +15,18 @@ class MyProblemsScreen extends StatefulWidget {
   }
 }
 
-class MyProblemsScreenState extends State<MyProblemsScreen> {
+class MyProblemsScreenState extends State<MyProblemsScreen>
+    with TickerProviderStateMixin {
+  // get gyms from the database
   var currentUser;
-  bool auth = false;
-  GymratzLocalizationsDelegate _newLocaleDelegate;
+  User gymUser;
+  TabController _controller;
 
   void checkForToken() {
     authAPI.getAuthenticatedUser().then((user) {
       if (user != null) {
         if (!user.isAnonymous) {
           setState(() {
-            auth = true;
             currentUser = user;
           });
         } else {
@@ -38,20 +41,42 @@ class MyProblemsScreenState extends State<MyProblemsScreen> {
   @override
   void initState() {
     super.initState();
-    _newLocaleDelegate = GymratzLocalizationsDelegate(newLocale: null);
     checkForToken();
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final List<Tab> myTabs = <Tab>[
+      Tab(text: GymratzLocalizations.of(context).text('Boulder')),
+      Tab(text: GymratzLocalizations.of(context).text('TopRope')),
+      Tab(text: GymratzLocalizations.of(context).text('Completed')),
+      Tab(text: GymratzLocalizations.of(context).text('ToDos')),
+    ];
+    _controller = TabController(vsync: this, length: myTabs.length);
+
     return Scaffold(
-        appBar: appBar(context: context, profile: false),
-        drawer: DrawerMenu(context: context),
-        body: SafeArea(
-            child: auth
-                ? Container(
-                    child:
-                        Text(GymratzLocalizations.of(context).text('MyGyms')))
-                : accountNeeded(context)));
+      appBar: appBar(
+          context: context,
+          controller: _controller,
+          myTabs: myTabs,
+          profile: false),
+      drawer: DrawerMenu(context: context),
+      body: SafeArea(
+          child: currentUser != null ? TabBarView(controller: _controller, children: <Widget>[
+        FutureBuilder(
+          future: fsAPI.getUserById(currentUser.uid).first,
+          builder: (BuildContext context, AsyncSnapshot<User> user) {
+            return Boulder(user: user.data); }),
+        Text(GymratzLocalizations.of(context).text('TopRope')),
+        Text(GymratzLocalizations.of(context).text('Completed')),
+        Text(GymratzLocalizations.of(context).text('ToDos')),
+      ]) : accountNeeded(context)),
+    );
   }
 }

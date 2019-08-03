@@ -18,11 +18,24 @@ class DrawerMenu extends StatefulWidget {
 const fontStyle = TextStyle(fontSize: headerFont, fontWeight: FontWeight.w300);
 
 class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
-  FirebaseUser user;
+  var currentUser;
+
+  void checkForToken() {
+    authAPI.getAuthenticatedUser().then((user) {
+      print(user);
+      if (user != null) {
+        if (!user.isAnonymous) {
+          setState(() {
+            currentUser = user;
+          });
+        }
+      }
+    });
+  }
   @override
   void initState() {
     super.initState();
-    this.user = authAPI.user;
+    checkForToken();
   }
 
   @override
@@ -33,7 +46,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
       children: <Widget>[
         DrawerHeader(
           decoration: BoxDecoration(color: teal),
-          child: user == null
+          child: currentUser == null
               ? Container(
                   alignment: Alignment.centerLeft,
                   child: Text(GymratzLocalizations.of(context).text('Guest'),
@@ -43,10 +56,10 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(fsAPI.user.username,
+                    Text(currentUser.displayName,
                         style: TextStyle(
                             color: Colors.white, fontSize: titleFont)),
-                    Text(user.email,
+                    Text(currentUser.email,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: subheaderFont,
@@ -100,7 +113,7 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
             Navigator.pushNamed(context, '/admin');
           },
         ),
-        (user == null)
+        (currentUser == null)
             ? ListTile(
                 leading: Icon(Icons.account_box),
                 title: Text("Login", style: fontStyle),
@@ -116,10 +129,10 @@ class DrawerMenuState extends State<DrawerMenu> with WidgetsBindingObserver {
                   //TODO KL: clear information and kill authentication doesn't work
                   authAPI.logout();
                   setState(() {
-                    user = authAPI.user;
+                    currentUser = authAPI.user;
                   });
                   print('SET STATE');
-                  print(user);
+                  print(currentUser);
                   //todo KL: navigate all the way back and kill previous screens
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('login', (route) => false);
